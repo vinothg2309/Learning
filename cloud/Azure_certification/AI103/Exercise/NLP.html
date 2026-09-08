@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Analyze Text | 
+            
+            Develop AI Language and Speech solutions on Azure
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./NLP_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./NLP_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./NLP_files/vs.min.css">
+        <script src="./NLP_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./NLP_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop AI Language and Speech solutions on Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-language" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-language">
+                Develop AI Language and Speech solutions on Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-language" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#create-a-microsoft-foundry-project">Create a Microsoft Foundry project</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#get-the-application-files-from-github">Get the application files from GitHub</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#configure-your-application">Configure your application</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#add-code-to-connect-to-your-azure-ai-language-resource">Add code to connect to your Azure AI Language resource</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#add-code-to-detect-language">Add code to detect language</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#add-code-to-extract-entities">Add code to extract entities</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#add-code-to-redact-pii">Add code to redact PII</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-language/Instructions/Exercises/01-analyze-text.html#clean-up">Clean up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="analyze-text">Analyze Text</h1>
+<p><strong>Azure Language in Foundry Tools</strong> supports analysis of text, including language detection, entity recognition, and PII redaction.</p>
+<p>For example, suppose a travel agency wants to process hotel reviews that have been submitted to the company's web site. By using the Azure Language, they can determine the language each review is written in, identify named entities, such as places, landmarks, or people mentioned in the reviews, and redact any personally identifiable information before publishing them on the company's website. In this exercise, you'll use the Azure Language Python SDK for text analytics to implement a simple hotel review application.</p>
+<p>While this exercise is based on Python, you can develop text analytics applications using multiple language-specific SDKs; including:</p>
+<p>The code used in this exercise is based on the for Microsoft Foundry Tools SDK for Python. You can develop similar solutions using the SDKs for Microsoft .NET, JavaScript, and Java. Refer to <a href="https://learn.microsoft.com/azure/ai-foundry/how-to/develop/sdk-overview">Microsoft Foundry SDK client libraries</a> for details.</p>
+<p>This exercise takes approximately <strong>30</strong> minutes.</p>
+<blockquote>
+<p><strong>Note</strong>: Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors.</p>
+</blockquote>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before starting this exercise, ensure you have:</p>
+<ul>
+<li>An active <a href="https://azure.microsoft.com/pricing/purchase-options/azure-account">Azure subscription</a></li>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed</li>
+<li><a href="https://www.python.org/downloads/release/python-31312/">Python version <strong>3.13.xx</strong></a> installed*</li>
+<li><a href="https://git-scm.com/install/">Git</a> installed and configured</li>
+<li><a href="https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> installed</li>
+</ul>
+<blockquote>
+<p>* Python 3.14 is available, but some dependencies are not yet compiled for that release. The lab has been successfully tested with Python 3.13.12.</p>
+</blockquote>
+<h2 id="create-a-microsoft-foundry-project">Create a Microsoft Foundry project</h2>
+<p>Microsoft Foundry uses projects to organize models, resources, data, and other assets used to develop an AI solution.</p>
+<ol>
+<li>
+<p>In a web browser, open the <a href="https://ai.azure.com/">Microsoft Foundry portal</a> at <code>https://ai.azure.com</code> and sign in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in, and if necessary use the Foundry logo at the top left to navigate to the home page.</p>
+</li>
+<li>
+<p>If it is not already enabled, in the tool bar the top of the page, enable the <strong>New Foundry</strong> option. Then, if prompted, create a new project with a unique name; expanding the <strong>Advanced options</strong> area to specify the following settings for your project:</p>
+<ul>
+<li><strong>Foundry resource</strong>: <em>Use the default name for your resource (usually {project_name}-resource)</em></li>
+<li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+<li><strong>Resource group</strong>: <em>Create or select a resource group</em></li>
+<li><strong>Region</strong>: Select any available region</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: Use a recommended Microsoft Foundry region. Model availability may vary by region.</p>
+</blockquote>
+</li>
+<li>
+<p>Select <strong>Create</strong>. Wait for your project to be created.</p>
+</li>
+<li>
+<p>On the home page for your project, note that the API key, project endpoint, and OpenAI endpoint are displayed here.</p>
+<blockquote>
+<p><strong>TIP</strong>: You're going to need the project endpoint later!</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="get-the-application-files-from-github">Get the application files from GitHub</h2>
+<p>The initial application files you'll need to develop the review analysis application are provided in a GitHub repo.</p>
+<ol>
+<li>
+<p>Open Visual Studio Code.</p>
+</li>
+<li>
+<p>Open the command palette (<em>Ctrl+Shift+P</em>) and use the <code>Git:clone</code> command to clone the <code>https://github.com/microsoftlearning/mslearn-ai-language</code> repo to a local folder (it doesn't matter which one). Then open it.</p>
+<p>You may be prompted to confirm you trust the authors.</p>
+</li>
+<li>
+<p>After the repo has been cloned, in the Explorer pane, navigate to the folder containing the application code files at <strong>/Labfiles/01-analyze-text/Python/text-analysis</strong>. The application files include:</p>
+<ul>
+<li><strong>reviews</strong> (a subfolder containing the review documents)</li>
+<li><strong>.env</strong> (the application configuration file)</li>
+<li><strong>requirements.txt</strong> (the Python package dependencies that need to be installed)</li>
+<li><strong>text-analysis.py</strong> (the code file for the application)</li>
+</ul>
+</li>
+</ol>
+<h2 id="configure-your-application">Configure your application</h2>
+<ol>
+<li>
+<p>In Visual Studio Code, view the <strong>Extensions</strong> pane; and if it is not already installed, install the <strong>Python</strong> extension.</p>
+</li>
+<li>
+<p>In the <strong>Command Palette</strong>, use the command <code>python:select interpreter</code>. Then select an existing environment if you have one, or create a new <strong>Venv</strong> environment based on your Python 3.13.x installation.</p>
+<blockquote>
+<p><strong>Tip</strong>: If you are prompted to install dependencies, you can install the ones in the <em>requirements.txt</em> file in the <em>/Labfiles/01-analyze-text/Python/text-analysis</em> folder; but it's OK if you don't - we'll install them later!</p>
+</blockquote>
+<blockquote>
+<p><strong>Tip</strong>: If you prefer to use the terminal, you can create your <strong>Venv</strong> environment with <code>python -m venv labenv</code>, then activate it with <code>\labenv\Scripts\activate</code>.</p>
+</blockquote>
+</li>
+<li>
+<p>In the <strong>Explorer</strong> pane, right-click the <strong>text-analysis</strong> folder containing the application files, and select <strong>Open in integrated terminal</strong> (or open a terminal in the <strong>Terminal</strong> menu and navigate to the <em>/Labfiles/01-analyze-text/Python/text-analysis</em> folder.)</p>
+<blockquote>
+<p><strong>Note</strong>: Opening the terminal in Visual Studio Code will automatically activate the Python environment. You may need to enable running scripts on your system.</p>
+</blockquote>
+</li>
+<li>
+<p>Ensure that the terminal is open in the <strong>text-analysis</strong> folder with the prefix <strong>(.venv)</strong> to indicate that the Python environment you created is active.</p>
+</li>
+<li>
+<p>Install the Azure Language Text Analytics SDK and other required packages by running the following command:</p>
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag">pip</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">-r</span> <span class="hljs-selector-tag">requirements</span><span class="hljs-selector-class">.txt</span>
+</code></pre></li>
+<li>
+<p>In the <strong>Explorer</strong> pane, in the <strong>text-analysis</strong> folder, select the <strong>.env</strong> file to open it. Then update the configuration values to include the <strong>endpoint</strong> (up to the <em>.com</em> domain) for your Foundry project (copy these from the Foundry portal).</p>
+<blockquote>
+<p><strong>Important</strong>: Modify the pasted endpoint to remove the "/api/projects/{project_name}" suffix - the endpoint should be <em>https://{your-foundry-resource-name}.services.ai.azure.com</em>.</p>
+</blockquote>
+<p>Save the modified configuration file.</p>
+</li>
+</ol>
+<h2 id="add-code-to-connect-to-your-azure-ai-language-resource">Add code to connect to your Azure AI Language resource</h2>
+<ol>
+<li>
+<p>In the <strong>Explorer</strong> pane, in the <strong>text-analysis</strong> folder,  open the <strong>text-analysis.py</strong> file.</p>
+</li>
+<li>
+<p>Review the existing code. You will add code to work with the Azure Language Text Analytics SDK.</p>
+<blockquote>
+<p><strong>Tip</strong>: As you add code to the code file, be sure to maintain the correct indentation.</p>
+</blockquote>
+</li>
+<li>
+<p>At the top of the code file, under the existing namespace references, find the comment <strong>Import namespaces</strong> and add the following code to import the namespaces you will need to use the Text Analytics SDK:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre class="highlight mt-0" id="codeBlock1"><code class="hljs coffeescript"><span class="c1"><span class="hljs-comment"># import namespaces</span>
+</span><span class="kn"><span class="hljs-keyword">from</span></span> <span class="nn">azure.identity</span> <span class="kn"><span class="hljs-keyword">import</span></span> <span class="n">DefaultAzureCredential</span>
+<span class="kn"><span class="hljs-keyword">from</span></span> <span class="nn">azure.ai.textanalytics</span> <span class="kn"><span class="hljs-keyword">import</span></span> <span class="n">TextAnalyticsClient</span>
+</code></pre></div></div>
+</li>
+<li>
+<p>In the <strong>main</strong> function, note that code to load the endpoint from the configuration file has already been provided. Then find the comment <strong>Create client using endpoint</strong>, and add the following code to create a client for the Text Analysis API:</p>
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-Python hljs"><span class="hljs-comment"># Create client using endpoint</span>
+credential = DefaultAzureCredential()
+ai_client = TextAnalyticsClient(endpoint=foundry_endpoint, credential=credential)
+</code></pre></li>
+<li>
+<p>Save the changes to the code file. Then, in the terminal pane, use the following command to sign into Azure.</p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre class="highlight mt-0" id="codeBlock3"><code class="hljs nginx"><span class="n"><span class="hljs-attribute">az</span></span><span class="w"> </span><span class="nx">login</span><span class="w">
+</span></code></pre></div></div>
+<blockquote>
+<p><strong>Note</strong>: In most scenarios, just using <em>az login</em> will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the <em>--tenant</em> parameter. See <a href="https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively">Sign into Azure interactively using the Azure CLI</a> for details.</p>
+</blockquote>
+</li>
+<li>
+<p>When prompted, follow the instructions to sign into Azure. Then complete the sign in process in the command line, viewing (and confirming if necessary) the details of the subscription containing your Foundry resource.</p>
+</li>
+<li>
+<p>After you have signed in, enter the following command to run the application:</p>
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">text-analysis</span><span class="hljs-selector-class">.py</span>
+</code></pre></li>
+<li>
+<p>Observe the output as the code should run without error, displaying the contents of each review text file in the <strong>reviews</strong> folder. The application successfully creates a client for the Text Analytics API but doesn't make use of it. We'll fix that in the next section.</p>
+</li>
+</ol>
+<h2 id="add-code-to-detect-language">Add code to detect language</h2>
+<p>Now that you have created a client for the API, let's use it to detect the language in which each review is written.</p>
+<ol>
+<li>
+<p>In the code editor, find the comment <strong>Get language</strong>. Then add the code necessary to detect the language in each review document:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre class="highlight mt-0" id="codeBlock5"><code class="hljs makefile"><span class="c1"><span class="hljs-comment"># Get language</span>
+</span><span class="n">detectedLanguage</span> <span class="o">=</span> <span class="n">ai_client</span><span class="p">.</span><span class="n">detect_language</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k"><span class="hljs-section">print</span></span><span class="p"><span class="hljs-section">(</span></span><span class="s"><span class="hljs-section">'</span></span><span class="se"><span class="hljs-section">\n</span></span><span class="s"><span class="hljs-section">Language: {}'</span></span><span class="p"><span class="hljs-section">.</span></span><span class="nb"><span class="hljs-section">format</span></span><span class="p"><span class="hljs-section">(</span></span><span class="n"><span class="hljs-section">detectedLanguage</span></span><span class="p"><span class="hljs-section">.</span></span><span class="n"><span class="hljs-section">primary_language</span></span><span class="p"><span class="hljs-section">.</span></span><span class="n"><span class="hljs-section">name</span></span><span class="p"><span class="hljs-section">))</span></span>
+</code></pre></div></div>
+<blockquote>
+<p><strong>Note</strong>: <em>In this example, each review is analyzed individually, resulting in a separate call to the service for each file. An alternative approach is to create a collection of documents and pass them to the service in a single call. In both approaches, the response from the service consists of a collection of documents; which is why in the Python code above, the index of the first (and only) document in the response ([0]) is specified.</em></p>
+</blockquote>
+</li>
+<li>
+<p>Save your changes. Then re-run the program.</p>
+</li>
+<li>
+<p>Observe the output, noting that this time the language for each review is identified.</p>
+</li>
+</ol>
+<h2 id="add-code-to-extract-entities">Add code to extract entities</h2>
+<p>Often, documents or other bodies of text mention people, places, time periods, or other entities. The text Analytics API can detect multiple categories (and subcategories) of entity in your text.</p>
+<ol>
+<li>
+<p>In the code editor, find the comment <strong>Get entities</strong>. Then, add the code necessary to identify entities that are mentioned in each review:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre class="highlight mt-0" id="codeBlock6"><code class="hljs bash"><span class="c1"><span class="hljs-comment"># Get entities</span>
+</span><span class="n">entities</span> <span class="o">=</span> <span class="n">ai_client</span><span class="p">.</span><span class="n">recognize_entities</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">])[</span><span class="mi">0</span><span class="p">].</span><span class="n">entities</span>
+<span class="k"><span class="hljs-keyword">if</span></span> <span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k"><span class="hljs-built_in">print</span></span><span class="p">(</span><span class="s"><span class="hljs-string">"</span></span><span class="se"><span class="hljs-string">\n</span></span><span class="s"><span class="hljs-string">Entities"</span></span><span class="p">)</span>
+    <span class="k"><span class="hljs-keyword">for</span></span> <span class="n">entity</span> <span class="ow"><span class="hljs-keyword">in</span></span> <span class="n">entities</span><span class="p">:</span>
+        <span class="k"><span class="hljs-built_in">print</span></span><span class="p">(</span><span class="s"><span class="hljs-string">'</span></span><span class="se"><span class="hljs-string">\t</span></span><span class="s"><span class="hljs-string">{} ({})'</span></span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">entity</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">category</span><span class="p">))</span>
+</code></pre></div></div>
+</li>
+<li>
+<p>Save your changes and re-run the program.</p>
+</li>
+<li>
+<p>Observe the output, noting the entities that have been detected in the text.</p>
+</li>
+</ol>
+<h2 id="add-code-to-redact-pii">Add code to redact PII</h2>
+<p>Often, privacy policies and legislation can require that personally identifiable information (PII). such as names, addresses, phone numbers, and other private details be redacted from documents.</p>
+<ol>
+<li>
+<p>In the code editor, find the comment <strong>Get PII</strong>. Then, add the code necessary to identify PII entities that are mentioned in each review:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre class="highlight mt-0" id="codeBlock7"><code class="hljs bash"><span class="c1"><span class="hljs-comment"># Get PII</span>
+</span><span class="n">pii_result</span> <span class="o">=</span> <span class="n">ai_client</span><span class="p">.</span><span class="n">recognize_pii_entities</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pii_entities</span> <span class="o">=</span> <span class="n">pii_result</span><span class="p">.</span><span class="n">entities</span>
+<span class="k"><span class="hljs-keyword">if</span></span> <span class="nb">len</span><span class="p">(</span><span class="n">pii_entities</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k"><span class="hljs-built_in">print</span></span><span class="p">(</span><span class="s"><span class="hljs-string">"</span></span><span class="se"><span class="hljs-string">\n</span></span><span class="s"><span class="hljs-string">PII Entities"</span></span><span class="p">)</span>
+    <span class="k"><span class="hljs-keyword">for</span></span> <span class="n">pii_entity</span> <span class="ow"><span class="hljs-keyword">in</span></span> <span class="n">pii_entities</span><span class="p">:</span>
+        <span class="k"><span class="hljs-built_in">print</span></span><span class="p">(</span><span class="s"><span class="hljs-string">'</span></span><span class="se"><span class="hljs-string">\t</span></span><span class="s"><span class="hljs-string">{} ({})'</span></span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">pii_entity</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">pii_entity</span><span class="p">.</span><span class="n">category</span><span class="p">))</span> 
+    <span class="k"><span class="hljs-built_in">print</span></span><span class="p">(</span><span class="s"><span class="hljs-string">"Redacted Text:</span></span><span class="se"><span class="hljs-string">\n</span></span><span class="s"><span class="hljs-string"> {}"</span></span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">pii_result</span><span class="p">.</span><span class="n">redacted_text</span><span class="p">))</span>
+</code></pre></div></div>
+</li>
+<li>
+<p>Save your changes and re-run the program.</p>
+</li>
+<li>
+<p>Observe the output, noting the PII entities that are identified, and reviewing the redacted version of each document that is produced.</p>
+</li>
+</ol>
+<h2 id="clean-up">Clean up</h2>
+<p>If you've finished exploring Azure Language in Foundry Tools, you should delete the resources you have created in this exercise to avoid incurring unnecessary Azure costs.</p>
+<ol>
+<li>Open the <a href="https://portal.azure.com/">Azure portal</a> and view the contents of the resource group where you deployed the resources used in this exercise.</li>
+<li>On the toolbar, select <strong>Delete resource group</strong>.</li>
+<li>Enter the resource group name and confirm that you want to delete it.</li>
+</ol>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-language" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./NLP_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./NLP_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./NLP_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./NLP_files/clipboard.min.js.download"></script>
+    <script src="./NLP_files/highlight.min.js.download"></script>
+    <script src="./NLP_files/script.js.download"></script>
+
+
+
+</body></html>

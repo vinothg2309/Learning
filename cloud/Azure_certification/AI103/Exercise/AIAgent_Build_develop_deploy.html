@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Build AI agents with portal and VS Code | 
+            
+            Develop AI Agents in Azure
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./AIAgent_Build_develop_deploy_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AIAgent_Build_develop_deploy_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AIAgent_Build_develop_deploy_files/vs.min.css">
+        <script src="./AIAgent_Build_develop_deploy_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./AIAgent_Build_develop_deploy_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop AI Agents in Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-agents" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-agents">
+                Develop AI Agents in Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-agents" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#create-a-microsoft-foundry-project">Create a Microsoft Foundry Project</a></li><li class="nav-item"><a class="nav-link active" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#configure-your-agent-with-instructions-and-grounding-data">Configure your agent with instructions and grounding data</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#test-your-agent">Test your agent</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#interact-with-your-agent-using-vs-code">Interact with your agent using VS Code</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#create-a-client-application-to-interact-with-your-agent">Create a client application to interact with your agent</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#test-the-client-application">Test the client application</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/01-build-agent-portal-and-vscode.html#cleanup">Cleanup</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="build-ai-agents-with-portal-and-vs-code">Build AI agents with portal and VS Code</h1>
+
+<p>In this exercise, you’ll build a complete AI agent solution using both the Microsoft Foundry portal and the Foundry Toolkit VS Code extension. You’ll start by creating a basic agent in the portal with grounding data and built-in tools, then interact with it programmatically using VS Code to use advanced capabilities like code interpreter for data analysis.</p>
+
+<p>This exercise takes approximately <strong>45</strong> minutes.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors.</p>
+</blockquote>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before starting this exercise, ensure you have:</p>
+
+<ul>
+  <li>An <a href="https://azure.microsoft.com/free/">Azure subscription</a> with sufficient permissions and quota to provision Azure AI resources</li>
+  <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed on your local machine</li>
+  <li><a href="https://www.python.org/downloads/">Python 3.13</a> or later installed</li>
+  <li><a href="https://git-scm.com/downloads">Git</a> installed on your local machine</li>
+  <li>Basic familiarity with Azure AI services and Python programming</li>
+</ul>
+
+<blockquote>
+  <p>* Python 3.13 is available, but some dependencies are not yet compiled for that release. The lab has been successfully tested with Python 3.13.12.</p>
+</blockquote>
+
+<h2 id="create-a-microsoft-foundry-project">Create a Microsoft Foundry Project</h2>
+
+<p>Microsoft Foundry uses projects to organize models, resources, data, and other assets used to develop an AI solution.</p>
+
+<ol>
+  <li>
+    <p>In a web browser, open the <a href="https://ai.azure.com/">Foundry portal</a> at <code>https://ai.azure.com</code> and sign in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in, and if necessary use the <strong>Foundry</strong> logo at the top left to navigate to the home page.</p>
+
+    <blockquote>
+      <p><strong>Important</strong>: For this lab, you’re using the <strong>New</strong> Foundry experience.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the top banner, select <strong>Start building</strong> to try the new Microsoft Foundry Experience.</p>
+  </li>
+  <li>
+    <p>When prompted, create a <strong>new</strong> project, and enter a valid name for your project (e.g., <code>it-support-agent-project</code>).</p>
+  </li>
+  <li>Expand <strong>Advanced options</strong> and specify the following settings:
+    <ul>
+      <li><strong>Microsoft Foundry resource</strong>: <em>A valid name for your Foundry resource</em></li>
+      <li><strong>Region</strong>: <em>Select one available near you</em>**</li>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+      <li><strong>Resource group</strong>: <em>Select your resource group, or create a new one</em></li>
+    </ul>
+
+    <blockquote>
+      <p>* Some Azure AI resources are constrained by regional model quotas. In the event of a quota limit being exceeded later in the exercise, there’s a possibility you may need to create another resource in a different region.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Select <strong>Create</strong> and wait for your project to be created.</p>
+  </li>
+  <li>
+    <p>When your project is created, a welcome dialog may appear. Select <strong>Next</strong> to read through the welcome message, and then select <strong>Create agent</strong>.</p>
+
+    <p>You can also select <strong>Start building</strong> on the home page, and select <strong>Create agents</strong> from the drop-down menu.</p>
+  </li>
+  <li>Set the <strong>Agent name</strong> to <code>it-support-agent</code> and create the agent.</li>
+</ol>
+
+<p>The playground will open for your newly created agent. You’ll see that an available deployed model is already selected for you.</p>
+
+<h2 id="configure-your-agent-with-instructions-and-grounding-data">Configure your agent with instructions and grounding data</h2>
+
+<p>Now that you have an agent created, let’s configure it with instructions and add grounding data.</p>
+
+<ol>
+  <li>
+    <p>In the agent playground, set the <strong>Instructions</strong> to:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="language-prompt">You are an IT Support Agent for Contoso Corporation.
+You help employees with technical issues and IT policy questions.
+
+Guidelines:
+- Always be professional and helpful
+- Use the IT policy documentation to answer questions accurately
+- If you don't know the answer, admit it and suggest contacting IT support directly
+- When creating tickets, collect all necessary information before proceeding
+</code></pre>
+  </li>
+  <li>
+    <p>Download the IT policy document from the lab repository. Open a new browser tab and navigate to:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="hljs ruby"><span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/raw.githubusercontent.com/</span>MicrosoftLearning/mslearn-ai-agents/main/Labfiles/<span class="hljs-number">01</span>-build-agent-portal-<span class="hljs-keyword">and</span>-vscode/IT_Policy.txt
+</code></pre>
+
+    <p>Save the file to your local machine.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This document contains sample IT policies for password resets, software installation requests, and hardware troubleshooting.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Return to the agent playground. In the <strong>Tools</strong> section, select <strong>Add</strong>, and then add both <strong>File search</strong> and <strong>&lt;/&gt; Code interpreter</strong>.</p>
+  </li>
+  <li>
+    <p>To the right of <strong>Add</strong>, select <strong>Upload files</strong>. Under <strong>Attach files</strong>, browse to and upload the <code>IT_Policy.txt</code> file you just downloaded, and then select <strong>Attach</strong>.</p>
+  </li>
+  <li>
+    <p>Wait for the file to be indexed. You’ll see a confirmation when it’s ready.</p>
+  </li>
+  <li>
+    <p>Now let’s add some performance data for the code interpreter to analyze. Download the system performance data file from:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="hljs ruby"><span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/raw.githubusercontent.com/</span>MicrosoftLearning/mslearn-ai-agents/main/Labfiles/<span class="hljs-number">01</span>-build-agent-portal-<span class="hljs-keyword">and</span>-vscode/system_performance.csv
+</code></pre>
+
+    <p>Save this file to your local machine.</p>
+  </li>
+  <li>
+    <p>To the right of <strong>&lt;/&gt; Code interpreter</strong>, select <strong>+ Files</strong>, and then upload the <code>system_performance.csv</code> file you just downloaded.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This CSV file contains simulated system metrics (CPU, memory, disk usage) over time that the agent can analyze.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Save the agent.</p>
+  </li>
+</ol>
+
+<h2 id="test-your-agent">Test your agent</h2>
+
+<p>Let’s test the agent to see how it responds using the grounding data.</p>
+
+<ol>
+  <li>
+    <p>In the chat interface on the right side of the playground, enter the following prompt:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="hljs cpp">What's the policy <span class="hljs-keyword">for</span> password resets?
+</code></pre>
+  </li>
+  <li>
+    <p>Review the response. The agent should reference the IT policy document and provide accurate information about password reset procedures.</p>
+  </li>
+  <li>
+    <p>Try another prompt:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="hljs coffeescript">How <span class="hljs-keyword">do</span> I request <span class="hljs-keyword">new</span> software?
+</code></pre>
+  </li>
+  <li>
+    <p>Again, review the response and observe how the agent uses the grounding data.</p>
+  </li>
+  <li>
+    <p>Now test the code interpreter with a data analysis request:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="hljs sql">Can you <span class="hljs-keyword">analyze</span> the <span class="hljs-keyword">system</span> <span class="hljs-keyword">performance</span> <span class="hljs-keyword">data</span> <span class="hljs-keyword">and</span> tell me <span class="hljs-keyword">if</span> there <span class="hljs-keyword">are</span> <span class="hljs-keyword">any</span> concerning trends?
+</code></pre>
+  </li>
+  <li>
+    <p>The agent should use the code interpreter to analyze the CSV file and provide insights about system performance.</p>
+  </li>
+  <li>
+    <p>Try asking for a visualization:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="hljs sql"><span class="hljs-keyword">Create</span> a chart showing CPU <span class="hljs-keyword">usage</span> <span class="hljs-keyword">over</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">from</span> the <span class="hljs-keyword">performance</span> <span class="hljs-keyword">data</span>
+</code></pre>
+  </li>
+  <li>
+    <p>The agent will use code interpreter to generate visualizations and analysis.</p>
+  </li>
+</ol>
+
+<p>Great! You’ve created an agent with grounding data, file search, and code interpreter capabilities. In the next section, you’ll interact with this agent programmatically using VS Code.</p>
+
+<h2 id="interact-with-your-agent-using-vs-code">Interact with your agent using VS Code</h2>
+
+<p>As a developer, you may spend some time working in the Foundry portal; but you’re also likely to spend a lot of time in Visual Studio Code. The Foundry Toolkit for VS Code extension provides a convenient way to work with Foundry project resources without leaving the development environment.</p>
+
+<h3 id="install-and-configure-the-vs-code-extension">Install and configure the VS Code extension</h3>
+
+<p>If you already have installed the Foundry Toolkit extension, you can skip this section.</p>
+
+<ol>
+  <li>
+    <p>Open Visual Studio Code.</p>
+  </li>
+  <li>
+    <p>Select <strong>Extensions</strong> from the left pane (or press <strong>Ctrl+Shift+X</strong>).</p>
+  </li>
+  <li>
+    <p>Search the extensions marketplace for the <code>Foundry Toolkit for VS Code</code> extension from Microsoft and select <strong>Install</strong>.</p>
+
+    <p>Installing the Foundry Toolkit Extension will add the Foundry Toolkit extension to VS Code.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: The extension is currently listed as <strong>Foundry Toolkit</strong>, but some VS Code labels, commands, or older screenshots may still refer to <strong>AI Toolkit</strong>. In this lab, treat those names as referring to the same extension experience.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>After installing the extension, select the Foundry Toolkit icon in the sidebar.</p>
+
+    <p>You should be prompted to sign in to your Azure account if you haven’t already.</p>
+  </li>
+</ol>
+
+<h3 id="test-your-agent-in-vs-code">Test your agent in VS Code</h3>
+
+<p>Before writing any code, you can interact with your agent directly in the extension interface.</p>
+
+<ol>
+  <li>
+    <p>Under <strong>Microsoft Foundry Resources</strong>, choose <strong>Set Default Project</strong></p>
+
+    <p>If a default project is already active, the project name will appear in the resources list. You can select a different project by selecting the same <strong>Select project</strong> icon.</p>
+  </li>
+  <li>
+    <p>Expand the project section. Under <strong>Prompt Agents</strong>, you should see the <code>it-support-agent</code> you created in the portal. Select the agent name to open the Agent Builder interface.</p>
+
+    <p>The agent playground will appear in the Agent Builder interface, allowing you to interact with the agent and configure its settings without leaving VS Code.</p>
+  </li>
+  <li>
+    <p>In the playground chat pane, type a question such as:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="hljs coffeescript">What <span class="hljs-keyword">is</span> the policy <span class="hljs-keyword">for</span> reporting a lost <span class="hljs-keyword">or</span> stolen device?
+</code></pre>
+  </li>
+  <li>
+    <p>Review the agent’s response. It should use the grounding data you uploaded earlier to provide relevant IT policy information.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: You can use this built-in playground to quickly test your agent’s instructions and knowledge without writing any code.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="create-a-client-application-to-interact-with-your-agent">Create a client application to interact with your agent</h2>
+
+<p>Now let’s create a client application that interacts with your agent programmatically.</p>
+
+<ol>
+  <li>
+    <p>In VS Code, open the Command Palette (<strong>Ctrl+Shift+P</strong> or <strong>View &gt; Command Palette</strong>).</p>
+  </li>
+  <li>
+    <p>Type <strong>Git: Clone</strong> and select it from the list.</p>
+  </li>
+  <li>
+    <p>Enter the repository URL:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock8" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock8" class="mt-0"><code class="hljs cpp">https:<span class="hljs-comment">//github.com/MicrosoftLearning/mslearn-ai-agents.git</span>
+</code></pre>
+  </li>
+  <li>
+    <p>Choose a location on your local machine to clone the repository.</p>
+  </li>
+  <li>
+    <p>When prompted, select <strong>Open</strong> to open the cloned repository in VS Code.</p>
+  </li>
+  <li>
+    <p>Once the repository opens, select <strong>File &gt; Open Folder</strong> and navigate to <code>mslearn-ai-agents/Labfiles/01-build-agent-portal-and-vscode/Python</code>, then choose <strong>Select Folder</strong>.</p>
+  </li>
+  <li>
+    <p>In the Explorer pane, open the <code>agent_with_functions.py</code> file. If the file is empty, replace its contents with the following code.</p>
+  </li>
+  <li>
+    <p>Use the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock9" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock9" class="mt-0"><code class="language-python hljs"><span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">from</span> azure.ai.projects <span class="hljs-keyword">import</span> AIProjectClient
+<span class="hljs-keyword">from</span> azure.identity <span class="hljs-keyword">import</span> DefaultAzureCredential
+<span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv
+
+
+OUTPUT_DIR = Path(<span class="hljs-string">"agent_outputs"</span>)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_output_path</span><span class="hljs-params">(filename)</span>:</span>
+    <span class="hljs-string">"""Create a unique path for generated files."""</span>
+    OUTPUT_DIR.mkdir(exist_ok=<span class="hljs-keyword">True</span>)
+    file_name = Path(filename).name
+    stem = Path(file_name).stem <span class="hljs-keyword">or</span> <span class="hljs-string">"output"</span>
+    suffix = Path(file_name).suffix
+    output_path = OUTPUT_DIR / file_name
+
+    counter = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> output_path.exists():
+        output_path = OUTPUT_DIR / <span class="hljs-string">f"<span class="hljs-subst">{stem}</span>_<span class="hljs-subst">{counter}</span><span class="hljs-subst">{suffix}</span>"</span>
+        counter += <span class="hljs-number">1</span>
+
+    <span class="hljs-keyword">return</span> output_path
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_bytes</span><span class="hljs-params">(file_bytes, filename)</span>:</span>
+    <span class="hljs-string">"""Save binary content to a local file."""</span>
+    output_path = get_output_path(filename)
+    <span class="hljs-keyword">with</span> open(output_path, <span class="hljs-string">"wb"</span>) <span class="hljs-keyword">as</span> file_handle:
+        file_handle.write(file_bytes)
+    <span class="hljs-keyword">return</span> output_path
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_image</span><span class="hljs-params">(image_data, filename)</span>:</span>
+    <span class="hljs-string">"""Save base64 image data to a file."""</span>
+    <span class="hljs-keyword">return</span> save_bytes(base64.b64decode(image_data), filename)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">download_container_file</span><span class="hljs-params">(openai_client, annotation, downloaded_files)</span>:</span>
+    <span class="hljs-string">"""Download a cited container file once and return its local path."""</span>
+    cache_key = (annotation.container_id, annotation.file_id)
+    <span class="hljs-keyword">if</span> cache_key <span class="hljs-keyword">in</span> downloaded_files:
+        <span class="hljs-keyword">return</span> downloaded_files[cache_key]
+
+    file_content = openai_client.containers.files.content.retrieve(
+        file_id=annotation.file_id,
+        container_id=annotation.container_id,
+    )
+    output_path = save_bytes(
+        file_content.read(),
+        annotation.filename <span class="hljs-keyword">or</span> <span class="hljs-string">f"<span class="hljs-subst">{annotation.file_id}</span>.bin"</span>,
+    )
+    downloaded_files[cache_key] = output_path
+    <span class="hljs-keyword">return</span> output_path
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">format_output_text</span><span class="hljs-params">(content_item, openai_client, downloaded_files)</span>:</span>
+    <span class="hljs-string">"""Replace sandbox file citations with local file paths."""</span>
+    text = content_item.text <span class="hljs-keyword">or</span> <span class="hljs-string">""</span>
+    replacements = []
+    referenced_files = set()
+
+    <span class="hljs-keyword">for</span> annotation <span class="hljs-keyword">in</span> content_item.annotations <span class="hljs-keyword">or</span> []:
+        <span class="hljs-keyword">if</span> getattr(annotation, <span class="hljs-string">"type"</span>, <span class="hljs-string">""</span>) != <span class="hljs-string">"container_file_citation"</span>:
+            <span class="hljs-keyword">continue</span>
+
+        output_path = download_container_file(openai_client, annotation, downloaded_files)
+        replacement_text = <span class="hljs-string">f"<span class="hljs-subst">{annotation.filename}</span> (saved to <span class="hljs-subst">{output_path}</span>)"</span>
+        referenced_files.add(output_path)
+
+        start_index = getattr(annotation, <span class="hljs-string">"start_index"</span>, <span class="hljs-keyword">None</span>)
+        end_index = getattr(annotation, <span class="hljs-string">"end_index"</span>, <span class="hljs-keyword">None</span>)
+        <span class="hljs-keyword">if</span> start_index <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span> <span class="hljs-keyword">and</span> end_index <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:
+            replacements.append((start_index, end_index, replacement_text))
+            <span class="hljs-keyword">continue</span>
+
+        annotated_text = getattr(annotation, <span class="hljs-string">"text"</span>, <span class="hljs-string">""</span>)
+        <span class="hljs-keyword">if</span> annotated_text:
+            text = text.replace(annotated_text, replacement_text)
+
+    <span class="hljs-keyword">for</span> start_index, end_index, replacement_text <span class="hljs-keyword">in</span> sorted(replacements, reverse=<span class="hljs-keyword">True</span>):
+        text = <span class="hljs-string">f"<span class="hljs-subst">{text[:start_index]}</span><span class="hljs-subst">{replacement_text}</span><span class="hljs-subst">{text[end_index:]}</span>"</span>
+
+    <span class="hljs-keyword">return</span> text, referenced_files
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-comment"># Initialize the project client</span>
+    load_dotenv()
+    project_endpoint = os.environ.get(<span class="hljs-string">"PROJECT_ENDPOINT"</span>)
+    agent_name = os.environ.get(<span class="hljs-string">"AGENT_NAME"</span>, <span class="hljs-string">"it-support-agent"</span>)
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> project_endpoint:
+        print(<span class="hljs-string">"Error: PROJECT_ENDPOINT environment variable not set"</span>)
+        print(<span class="hljs-string">"Please set it in your .env file or environment"</span>)
+        <span class="hljs-keyword">return</span>
+
+    print(<span class="hljs-string">"Connecting to Microsoft Foundry project..."</span>)
+    credential = DefaultAzureCredential()
+    project_client = AIProjectClient(
+        credential=credential,
+        endpoint=project_endpoint
+    )
+
+    <span class="hljs-comment"># Get the OpenAI client for Responses API</span>
+    openai_client = project_client.get_openai_client()
+
+    <span class="hljs-comment"># Get the agent created in the portal</span>
+    print(<span class="hljs-string">f"Loading agent: <span class="hljs-subst">{agent_name}</span>"</span>)
+    agent = project_client.agents.get(agent_name=agent_name)
+    print(<span class="hljs-string">f"Connected to agent: <span class="hljs-subst">{agent.name}</span> (id: <span class="hljs-subst">{agent.id}</span>)"</span>)
+
+    <span class="hljs-comment"># Create a conversation</span>
+    conversation = openai_client.conversations.create(items=[])
+    print(<span class="hljs-string">f"Conversation created (id: <span class="hljs-subst">{conversation.id}</span>)"</span>)
+
+    <span class="hljs-comment"># Chat loop</span>
+    print(<span class="hljs-string">"\n"</span> + <span class="hljs-string">"="</span>*<span class="hljs-number">60</span>)
+    print(<span class="hljs-string">"IT Support Agent Ready!"</span>)
+    print(<span class="hljs-string">"Ask questions, request data analysis, or get help."</span>)
+    print(<span class="hljs-string">"Type 'exit' to quit."</span>)
+    print(<span class="hljs-string">"="</span>*<span class="hljs-number">60</span> + <span class="hljs-string">"\n"</span>)
+
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        user_input = input(<span class="hljs-string">"You: "</span>).strip()
+
+        <span class="hljs-keyword">if</span> user_input.lower() <span class="hljs-keyword">in</span> [<span class="hljs-string">'exit'</span>, <span class="hljs-string">'quit'</span>, <span class="hljs-string">'bye'</span>]:
+            print(<span class="hljs-string">"Goodbye!"</span>)
+            <span class="hljs-keyword">break</span>
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user_input:
+            <span class="hljs-keyword">continue</span>
+
+        <span class="hljs-comment"># Add user message to conversation</span>
+        openai_client.conversations.items.create(
+            conversation_id=conversation.id,
+            items=[{<span class="hljs-string">"type"</span>: <span class="hljs-string">"message"</span>, <span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: user_input}]
+        )
+
+        <span class="hljs-comment"># Get response from agent</span>
+        print(<span class="hljs-string">"\n[Agent is thinking...]"</span>)
+        response = openai_client.responses.create(
+            conversation=conversation.id,
+            extra_body={<span class="hljs-string">"agent_reference"</span>: {<span class="hljs-string">"name"</span>: agent.name, <span class="hljs-string">"type"</span>: <span class="hljs-string">"agent_reference"</span>}},
+            input=<span class="hljs-string">""</span>
+        )
+
+        <span class="hljs-comment"># Display response and save any generated files locally</span>
+        handled_output = <span class="hljs-keyword">False</span>
+        downloaded_files = {}
+        referenced_files = set()
+        image_count = <span class="hljs-number">0</span>
+
+        <span class="hljs-keyword">if</span> hasattr(response, <span class="hljs-string">"output"</span>) <span class="hljs-keyword">and</span> response.output:
+            <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> response.output:
+                item_type = getattr(item, <span class="hljs-string">"type"</span>, <span class="hljs-string">""</span>)
+
+                <span class="hljs-keyword">if</span> item_type == <span class="hljs-string">"message"</span> <span class="hljs-keyword">and</span> getattr(item, <span class="hljs-string">"content"</span>, <span class="hljs-keyword">None</span>):
+                    <span class="hljs-keyword">for</span> content_item <span class="hljs-keyword">in</span> item.content:
+                        <span class="hljs-keyword">if</span> getattr(content_item, <span class="hljs-string">"type"</span>, <span class="hljs-string">""</span>) != <span class="hljs-string">"output_text"</span>:
+                            <span class="hljs-keyword">continue</span>
+
+                        formatted_text, message_files = format_output_text(
+                            content_item,
+                            openai_client,
+                            downloaded_files,
+                        )
+                        referenced_files.update(message_files)
+
+                        <span class="hljs-keyword">if</span> formatted_text:
+                            print(<span class="hljs-string">f"\nAgent: <span class="hljs-subst">{formatted_text}</span>\n"</span>)
+                            handled_output = <span class="hljs-keyword">True</span>
+
+                <span class="hljs-keyword">elif</span> hasattr(item, <span class="hljs-string">"text"</span>) <span class="hljs-keyword">and</span> item.text:
+                    print(<span class="hljs-string">f"\nAgent: <span class="hljs-subst">{item.text}</span>\n"</span>)
+                    handled_output = <span class="hljs-keyword">True</span>
+
+                <span class="hljs-keyword">elif</span> item_type == <span class="hljs-string">"image"</span>:
+                    image_count += <span class="hljs-number">1</span>
+                    filename = <span class="hljs-string">f"chart_<span class="hljs-subst">{image_count}</span>.png"</span>
+
+                    <span class="hljs-keyword">if</span> hasattr(item, <span class="hljs-string">"image"</span>) <span class="hljs-keyword">and</span> hasattr(item.image, <span class="hljs-string">"data"</span>):
+                        file_path = save_image(item.image.data, filename)
+                        print(<span class="hljs-string">f"\n[Agent generated a chart - saved to: <span class="hljs-subst">{file_path}</span>]"</span>)
+                    <span class="hljs-keyword">else</span>:
+                        print(<span class="hljs-string">"\n[Agent generated an image]"</span>)
+                    handled_output = <span class="hljs-keyword">True</span>
+
+            <span class="hljs-keyword">for</span> file_path <span class="hljs-keyword">in</span> downloaded_files.values():
+                <span class="hljs-keyword">if</span> file_path <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> referenced_files:
+                    print(<span class="hljs-string">f"\n[Agent generated a file - saved to: <span class="hljs-subst">{file_path}</span>]"</span>)
+                    handled_output = <span class="hljs-keyword">True</span>
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> handled_output <span class="hljs-keyword">and</span> hasattr(response, <span class="hljs-string">"output_text"</span>) <span class="hljs-keyword">and</span> response.output_text:
+            print(<span class="hljs-string">f"\nAgent: <span class="hljs-subst">{response.output_text}</span>\n"</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    main()
+</code></pre>
+  </li>
+  <li>
+    <p>Save the <code>agent_with_functions.py</code> file (<strong>Ctrl+S</strong> or <strong>File &gt; Save</strong>).</p>
+  </li>
+</ol>
+
+<h3 id="configure-environment-and-run-the-application">Configure environment and run the application</h3>
+
+<ol>
+  <li>
+    <p>In the Explorer pane, you’ll see <code>.env.example</code> and <code>requirements.txt</code> files already present in the folder.</p>
+  </li>
+  <li>
+    <p>Duplicate the <code>.env.example</code> file, and rename it to <code>.env</code>.</p>
+  </li>
+  <li>
+    <p>In the <code>.env</code> file, replace <code>your_project_endpoint_here</code> with your actual project endpoint:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock10" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock10" class="mt-0"><code class="hljs ini"><span class="hljs-attr">PROJECT_ENDPOINT</span>=&lt;your_project_endpoint&gt;
+<span class="hljs-attr">AGENT_NAME</span>=it-support-agent
+</code></pre>
+
+    <p><strong>To get your project endpoint:</strong> In VS Code, open the <strong>Foundry Toolkit</strong> extension, right-click on your active project, and select <strong>Copy Endpoint</strong>. If <strong>Copy Endpoint</strong> isn’t available in your installed version of Foundry Toolkit, open the Microsoft Foundry portal, go to your project, and copy the project endpoint from the project overview page instead.</p>
+  </li>
+  <li>
+    <p>Save the <code>.env</code> file (<strong>Ctrl+S</strong> or <strong>File &gt; Save</strong>).</p>
+  </li>
+  <li>
+    <p>Open a terminal in VS Code (<strong>Terminal &gt; New Terminal</strong>) and navigate to the working directory.</p>
+  </li>
+  <li>
+    <p>Install the required packages and login:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock11" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock11" class="mt-0"><code class="language-bash hljs">python -m venv labenv
+.\labenv\Scripts\Activate.ps1
+pip install -r requirements.txt
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock12" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock12" class="mt-0"><code class="language-bash hljs">az login
+</code></pre>
+  </li>
+  <li>
+    <p>Run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock13" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock13" class="mt-0"><code class="language-bash hljs">python agent_with_functions.py
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="test-the-client-application">Test the client application</h2>
+
+<p>When the agent starts, try these prompts to test different capabilities:</p>
+
+<ol>
+  <li>
+    <p>Test policy search with file search:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock14" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock14" class="mt-0"><code class="hljs cpp">What's the policy <span class="hljs-keyword">for</span> password resets?
+</code></pre>
+  </li>
+  <li>
+    <p>Request data analysis with code interpreter:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock15" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock15" class="mt-0"><code class="hljs sql"><span class="hljs-keyword">Analyze</span> the <span class="hljs-keyword">system</span> <span class="hljs-keyword">performance</span> <span class="hljs-keyword">data</span> <span class="hljs-keyword">and</span> identify <span class="hljs-keyword">any</span> periods <span class="hljs-keyword">where</span> CPU <span class="hljs-keyword">usage</span> exceeded <span class="hljs-number">80</span>%
+</code></pre>
+  </li>
+  <li>
+    <p>Request a visualization:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock16" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock16" class="mt-0"><code class="hljs sql"><span class="hljs-keyword">Create</span> a line chart showing <span class="hljs-keyword">memory</span> <span class="hljs-keyword">usage</span> trends <span class="hljs-keyword">over</span> <span class="hljs-keyword">time</span>
+</code></pre>
+
+    <p>The application saves generated charts and cited files to the <code>agent_outputs</code> folder and prints the local file path in the terminal.</p>
+  </li>
+  <li>
+    <p>Ask for statistical analysis:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock17" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock17" class="mt-0"><code class="hljs coffeescript">What are the average, minimum, <span class="hljs-keyword">and</span> maximum values <span class="hljs-keyword">for</span> disk usage <span class="hljs-keyword">in</span> the performance data?
+</code></pre>
+  </li>
+  <li>
+    <p>Combined analysis:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock18" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock18" class="mt-0"><code class="hljs coffeescript">Find any correlation between high CPU usage <span class="hljs-keyword">and</span> memory usage <span class="hljs-keyword">in</span> the performance data
+</code></pre>
+  </li>
+</ol>
+
+<p>Observe how the agent uses both file search (for policy questions) and code interpreter (for data analysis) to fulfill your requests. The code interpreter will analyze the CSV data, perform calculations, and can even generate visualizations. Type <code>exit</code> when done testing.</p>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<p>To avoid unnecessary Azure charges, delete the resources you created:</p>
+
+<ol>
+  <li>In the Foundry portal, navigate to your project</li>
+  <li>Select <strong>Settings</strong> &gt; <strong>Delete project</strong></li>
+  <li>Alternatively, delete the entire resource group from the Azure portal</li>
+</ol>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-agents" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./AIAgent_Build_develop_deploy_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./AIAgent_Build_develop_deploy_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./AIAgent_Build_develop_deploy_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./AIAgent_Build_develop_deploy_files/clipboard.min.js.download"></script>
+    <script src="./AIAgent_Build_develop_deploy_files/highlight.min.js.download"></script>
+    <script src="./AIAgent_Build_develop_deploy_files/script.js.download"></script>
+
+
+
+</body></html>

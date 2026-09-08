@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item *)",
+      "PowerShell($path = \"D:\\\\Vinoth\\\\Learnings\\\\AI_GIT\\\\Learning\\\\AGENTS\\\\LANGCHAIN_GRAPH_SMITH\\\\Presight\"; if \\(-not \\(Test-Path $path\\)\\) { New-Item -ItemType Directory -Path $path -Force } else { \"Directory already exists\" })"
+    ]
+  }
+}

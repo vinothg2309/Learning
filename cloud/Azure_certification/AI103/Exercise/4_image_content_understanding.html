@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Analyze images with Azure Content Understanding | 
+            
+            Develop computer vision solutions in Azure
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./4_image_content_understanding_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./4_image_content_understanding_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./4_image_content_understanding_files/vs.min.css">
+        <script src="./4_image_content_understanding_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./4_image_content_understanding_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop computer vision solutions in Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-vision" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-vision">
+                Develop computer vision solutions in Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#create-a-microsoft-foundry-project">Create a Microsoft Foundry project</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#create-an-azure-storage-account">Create an Azure storage account</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#create-an-image-analyzer-in-azure-content-understanding">Create an image analyzer in Azure Content Understanding</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#create-an-image-analyzer-application">Create an image analyzer application</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#summary">Summary</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/04-content-understanding.html#clean-up">Clean up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="analyze-images-with-azure-content-understanding">Analyze images with Azure Content Understanding</h1>
+
+<p>Azure Content Understanding in Foundry Tools is a capability available in Microsoft AI Foundry that uses generative AI to analyze and interpret different types of unstructured content, including documents, images, audio, and video. By applying AI models to this content, the service can generate structured outputs that follow a user-defined schema. These structured outputs make it easier to integrate extracted information into automation, analytics, and search workflows.</p>
+
+<p>One common challenge organizations face is managing large collections of visual content. Images often contain valuable information, but that information can be difficult to search or organize without descriptive metadata. Azure Content Understanding can analyze images and generate structured descriptions that help classify and index visual content, making it easier to locate relevant images and integrate them into search systems.</p>
+
+<p>In this exercise, you’ll explore how to create and use an image analyzer in the Content Understanding Studio web interface. You’ll run the analyzer on sample images and review the generated descriptions that can be used as metadata for indexing and search. By the end of this lab, you’ll understand how AI-generated image descriptions can help make visual content more searchable and useful in data-driven applications.</p>
+
+<p>This exercise will take approximately <strong>30</strong> minutes.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors. Video generation can take 1 to 5 minutes to complete depending on your settings.</p>
+</blockquote>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>To complete this exercise, you need:</p>
+
+<ul>
+  <li>An <a href="https://azure.microsoft.com/free/">Azure subscription</a> with permissions to create AI resources.</li>
+  <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed on your local machine.</li>
+  <li><a href="https://www.python.org/downloads/">Python 3.13</a> or later installed on your local machine.</li>
+  <li><a href="https://learn.microsoft.com/cli/azure/install-azure-cli">Azure CLI</a> installed on your local machine.</li>
+</ul>
+
+<h2 id="create-a-microsoft-foundry-project">Create a Microsoft Foundry project</h2>
+
+<p>Microsoft Foundry uses projects to organize models, resources, data, and other assets used to develop an AI solution.</p>
+
+<ol>
+  <li>
+    <p>In a web browser, open the <a href="https://ai.azure.com/">Microsoft Foundry portal</a> at <code>https://ai.azure.com</code> to start building; signing in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in.</p>
+  </li>
+  <li>If it is not already enabled, in the tool bar the top of the page, enable the <strong>New Foundry</strong> option. Then, if prompted, create a new project with a unique name; expanding the <strong>Advanced options</strong> area to specify the following settings for your project:
+    <ul>
+      <li><strong>Foundry resource</strong>: <em>Use the default name for your resource (usually {project_name}-resource)</em></li>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+      <li><strong>Resource group</strong>: <em>Create or select a resource group</em></li>
+      <li><strong>Region</strong>: Select any available region</li>
+    </ul>
+  </li>
+  <li>
+    <p>Wait for your project to be created. Then on the home page for your project, view the project details.</p>
+
+    <p>Creating a Foundry project also creates a Foundry resource group in Azure that is linked to your project. This resource group will connect to the Azure Content Understanding service and any other AI services you choose to deploy for use in your Foundry project.</p>
+  </li>
+</ol>
+
+<h2 id="create-an-azure-storage-account">Create an Azure storage account</h2>
+
+<p>You’ll need an Azure storage account for the content assets you’re going to analyze using Azure Content Understanding.</p>
+
+<ol>
+  <li>
+    <p>In a new browser tab, open the <a href="https://portal.azure.com/">Azure portal</a> at <code>https://portal.azure.com</code> and browse to the resource group where you created your Foundry project resource.</p>
+
+    <p>The resource group should contain your Foundry resource and the project you created.</p>
+  </li>
+  <li>Create a new <strong>Storage account</strong> resource in the resource group, with the following settings:
+    <ul>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+      <li><strong>Resource group</strong>: <em>The resource group containing your Foundry resource</em></li>
+      <li><strong>Storage account name</strong>: <em>A unique name for your storage account</em></li>
+      <li><strong>Region</strong>: <em>The same region as your Foundry resource</em></li>
+      <li><strong>Preferred storage type</strong>: Azure Blob Storage or Azure Data Lake Storage Gen 2</li>
+      <li><strong>Performance</strong>: Standard</li>
+      <li><strong>Redundancy</strong>: Locally-redundant storage (LRS)</li>
+    </ul>
+  </li>
+  <li>Wait for your storage account to be created.</li>
+</ol>
+
+<h2 id="create-an-image-analyzer-in-azure-content-understanding">Create an image analyzer in Azure Content Understanding</h2>
+
+<p>Now that you have a Foundry project, you can deploy the AI models needed for content understanding.</p>
+
+<ol>
+  <li>In a new browser tab, navigate to <a href="https://contentunderstanding.ai.azure.com/home">Content Understanding Studio</a> at <code>https://contentunderstanding.ai.azure.com/home</code> and sign in using your Azure credentials if prompted.</li>
+  <li>
+    <p>At the top right, select the <strong>Settings</strong> icon to view your account settings for Azure Content Understanding.</p>
+  </li>
+  <li>
+    <p>On the <strong>Setup Azure resource</strong> page, select the <strong>Add resource</strong> button.</p>
+  </li>
+  <li>
+    <p>Select your subscription and the Foundry resources that match your Foundry project name.</p>
+  </li>
+  <li>
+    <p>Check the box for <strong>Enable auto-deployment for required models if no default deployment available</strong>.</p>
+  </li>
+  <li>
+    <p>Select <strong>Next</strong>, then select <strong>Save</strong> to deploy the required models.</p>
+
+    <p>The deployment process can take several minutes. Once the models are deployed, the resource will appear under <strong>Connected Azure AI Foundry Resources</strong>. Note the name of the resource.</p>
+  </li>
+  <li>On the menu bar, select <strong>Build</strong>. Then use the <strong>Create</strong> button to create a new Content Understanding project with the following settings.
+    <ul>
+      <li><strong>Project name</strong>: <em>A unique name for your image analysis project</em></li>
+      <li><strong>Description</strong>: Image analysis project</li>
+      <li><strong>Type of project</strong>: Extract content and field with custom schema</li>
+      <li><strong>Advanced settings</strong>: Ensure your Foundry resource and storage account are selected, a new container will be created, and a chat completion model such as gpt-5.2 is selected.</li>
+    </ul>
+  </li>
+  <li>
+    <p>When the project has been created, in a new browser tab, download the <a href="https://microsoftlearning.github.io/mslearn-ai-vision/Labfiles/content-understanding/lion.jpg">lion.jpg</a> image from <code>https://microsoftlearning.github.io/mslearn-ai-vision/Labfiles/content-understanding/lion.jpg</code> and save it in a local folder.</p>
+
+    <p>Then return to the Content Understanding project, and upload the <strong>lion.jpg</strong> file to the project.</p>
+  </li>
+</ol>
+
+<p>1.When prompted to choose a template, select <strong>Image Analysis</strong> and ensure the schema is set to <strong>Start from Scratch</strong>. Then save the project.</p>
+
+<ol>
+  <li>
+    <p>After the image has been uploaded, in the <strong>Schema</strong> pane, use the <strong>Add new field</strong> to add the following fields to the schema:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Field Name</th>
+          <th>Field Descriptopn</th>
+          <th>Value type</th>
+          <th>Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Description</code></td>
+          <td><code>Image description</code></td>
+          <td>String</td>
+          <td>Generate</td>
+        </tr>
+        <tr>
+          <td><code>Tags</code></td>
+          <td><code>Image tags</code></td>
+          <td>List of Strings</td>
+          <td>Generate</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Save the changes to the schema.</li>
+  <li>Select <strong>Run analysis</strong> to run the analyzer on the image, and review the fields that are generated; which should include an accurate description and a collection of relevant tags for the image.</li>
+  <li>
+    <p>When you’re satisfied that the analyzer has returned accurate values for the fields, use the <strong>Build analyzer</strong> button to publish an analyzer with a unique name and suitable description.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: You’ll need the name later to identify your analyzer in application code.</p>
+    </blockquote>
+  </li>
+  <li>When your analyzer has been built, jump to the analyzer list and verify it’s listed there.</li>
+  <li>Select your analyzer in the list to open it, and then view the <strong>Code Example</strong> tab to see the code necessary to use your analyzer.</li>
+  <li>
+    <p>Review the Python code example, noting in the <strong>main</strong> function the <strong>endpoint</strong> for your Content Understanding resource; which should look similar to this:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="hljs cpp">https:<span class="hljs-comment">//{your_foundry_resource}.services.ai.azure.com/</span>
+</code></pre>
+  </li>
+  <li>Under the code example, note that your <strong>resource key</strong> is available. You <em>can</em> use this in a client application to authenticate a connection to the endpoint; but in this exercise we’re going to use Microsoft Entra ID authentication.</li>
+</ol>
+
+<h2 id="create-an-image-analyzer-application">Create an image analyzer application</h2>
+
+<p>Now that you’ve created an analyzer, let’s build a Python application that uses it to analyzes images.</p>
+
+<h3 id="get-application-files-from-github">Get application files from GitHub</h3>
+
+<p>The initial application files you’ll need to develop the image analysis application are provided in a GitHub repo.</p>
+
+<ol>
+  <li>Open Visual Studio Code.</li>
+  <li>
+    <p>Open the command palette (<em>Ctrl+Shift+P</em>) and use the <code>Git:clone</code> command to clone the <code>https://github.com/microsoftlearning/mslearn-ai-vision</code> repo to a local folder (it doesn’t matter which one). Then open it.</p>
+
+    <p>You may be prompted to confirm you trust the authors.</p>
+  </li>
+  <li>In Visual Studio Code, view the <strong>Extensions</strong> pane; and if it is not already installed, install the <strong>Python</strong> extension.</li>
+  <li>
+    <p>In the <strong>Command Palette</strong>, use the command <code>python:select interpreter</code>. Then select an existing environment if you have one, or create a new <strong>Venv</strong> environment based on your Python 3.1x installation.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: If you are prompted to install dependencies, you can install the ones in the <em>requirements.txt</em> file in the <em>/labfiles/content-understanding/python</em> folder; but it’s OK if you don’t - we’ll install them later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="prepare-the-application-configuration">Prepare the application configuration</h3>
+
+<ol>
+  <li>
+    <p>After the repo has been cloned, open the folder in VS Code (<strong>File &gt; Open Folder</strong>), and navigate to the <code>/labfiles/content-understanding/python</code> folder.</p>
+  </li>
+  <li>
+    <p>In the VS Code Explorer pane, review the files in the folder:</p>
+
+    <ul>
+      <li><code>.env</code> - A configuration file for application settings.</li>
+      <li><code>analyze-image.py</code> - The Python code file for the image analyzer application.</li>
+      <li><code>requirements.txt</code> - A file listing the package dependencies.</li>
+      <li><code>images</code> - A folder containing images for analysis.</li>
+    </ul>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, in the <strong>python</strong> folder, select the <strong>.env</strong> file to open it. Then update it with the  <strong>endpoint</strong> value for your resource endpoint (copied from the code example in Content Understanding Studio) and the name of your analyzer.</p>
+
+    <blockquote>
+      <p><strong>Important</strong>:Be sure to add the <code>https://{YOUR-RESOURCE-NAME}.services.ai.azure.com</code> Foundry resource endpoint, <u>not</u> the project endpoint or Azure OpenAI endpoint!</p>
+    </blockquote>
+
+    <p>Save the modified configuration file.</p>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, right-click the <strong>python</strong> folder containing the application files, and select <strong>Open in integrated terminal</strong> (or open a terminal in the <strong>Terminal</strong> menu and navigate to the <em>/labfiles/content-understanding/python</em> folder.)</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Opening the terminal in Visual Studio Code will automatically activate the Python environment. You may need to enable running scripts on your system.</p>
+    </blockquote>
+  </li>
+  <li>Ensure that the terminal is open in the <strong>/labfiles/content-understanding/python</strong>* folder with the prefix <strong>(.venv)</strong> to indicate that the Python environment you created is active.</li>
+  <li>
+    <p>Install the required Python packages by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="hljs css"> <span class="hljs-selector-tag">pip</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">-r</span> <span class="hljs-selector-tag">requirements</span><span class="hljs-selector-class">.txt</span>
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="write-code-to-analyze-images-and-generate-descriptions">Write code to analyze images and generate descriptions</h3>
+
+<blockquote>
+  <p><strong>Tip</strong>: As you add code, be sure to maintain the correct indentation.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In VS Code, open the <code>analyze-image.py</code> file.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add references</strong> and add the following code for the necessary imports:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add references</span>
+<span class="hljs-keyword">from</span> azure.ai.contentunderstanding <span class="hljs-keyword">import</span> ContentUnderstandingClient
+<span class="hljs-keyword">from</span> azure.ai.contentunderstanding.models <span class="hljs-keyword">import</span> AnalysisInput, AnalysisResult
+<span class="hljs-keyword">from</span> azure.core.exceptions <span class="hljs-keyword">import</span> AzureError
+<span class="hljs-keyword">from</span> azure.identity <span class="hljs-keyword">import</span> DefaultAzureCredential
+</code></pre>
+  </li>
+  <li>In the <strong>main</strong> function, note that code to get the configuration values from your environment file has been provided.</li>
+  <li>
+    <p>Find the comment <strong>Set up Content Understanding client</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Set up Content Understanding client</span>
+credential = DefaultAzureCredential()
+client = ContentUnderstandingClient(
+     endpoint=endpoint,
+     credential=credential,
+     api_version=api_version)
+</code></pre>
+  </li>
+  <li>Note that code for the user to input a file number or quit the program has been provided.</li>
+  <li>
+    <p>Find the comment <strong>Analyze the file</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Analyze the file</span>
+<span class="hljs-keyword">try</span>:
+     poller = client.begin_analyze(
+         analyzer_id=analyzer_id,
+         inputs=[AnalysisInput(data=file_bytes)],
+     )
+     result: AnalysisResult = poller.result()
+<span class="hljs-keyword">except</span> AzureError <span class="hljs-keyword">as</span> err:
+     print(<span class="hljs-string">f"[Azure Error]: <span class="hljs-subst">{err.message}</span>"</span>)
+     sys.exit(<span class="hljs-number">1</span>)
+<span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> ex:
+     print(<span class="hljs-string">f"[Unexpected Error]: <span class="hljs-subst">{ex}</span>"</span>)
+     sys.exit(<span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">for</span> field <span class="hljs-keyword">in</span> result.contents[<span class="hljs-number">0</span>].fields:
+     <span class="hljs-keyword">if</span> field == <span class="hljs-string">"Description"</span>:
+         print(<span class="hljs-string">f"<span class="hljs-subst">{field}</span>:\n<span class="hljs-subst">{result.contents[<span class="hljs-number">0</span>].fields[field].value_string}</span>\n"</span>)
+     <span class="hljs-keyword">elif</span> field == <span class="hljs-string">"Tags"</span>:
+         print(<span class="hljs-string">f"<span class="hljs-subst">{field}</span>:"</span>)
+         <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> result.contents[<span class="hljs-number">0</span>].fields[field].value_array:
+             print(<span class="hljs-string">"  -"</span>, tag.value_string)
+</code></pre>
+
+    <p>This code submits the selected file data to your analyuzer, polls for the results, and then displays the <em>Description</em> and <em>Tags</em> values that are returned.</p>
+  </li>
+  <li>Save the file (<strong>Ctrl+S</strong>).</li>
+</ol>
+
+<h3 id="test-the-app">Test the app</h3>
+
+<ol>
+  <li>
+    <p>In the terminal pane, use the following command to sign into Azure.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="language-powershell"> az login
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: In most scenarios, just using <em>az login</em> will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the <em>–tenant</em> parameter. See <a href="https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively">Sign into Azure interactively using the Azure CLI</a> for details.</p>
+    </blockquote>
+  </li>
+  <li>When prompted, follow the instructions to sign into Azure. Then complete the sign in process in the command line, viewing (and confirming if necessary) the details of the subscription containing your Foundry resource.</li>
+  <li>
+    <p>After you have signed in, enter the following command to run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="hljs css"> <span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">analyze-image</span><span class="hljs-selector-class">.py</span>
+</code></pre>
+  </li>
+  <li>
+    <p>When prompted, enter a number that corresponds to one of these images:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th><a href="./4_image_content_understanding_files/image1.jpg" target="_blank"><img src="./4_image_content_understanding_files/image1.jpg" alt="A giraffe."></a></th>
+          <th><a href="./4_image_content_understanding_files/image2.jpg" target="_blank"><img src="./4_image_content_understanding_files/image2.jpg" alt="An elephant."></a></th>
+          <th><a href="./4_image_content_understanding_files/image3.jpg" target="_blank"><img src="./4_image_content_understanding_files/image3.jpg" alt="A lion."></a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Observe the output, which should include a description of the selected image and a collection of appropriate tags.</li>
+  <li>When you’re finished, enter any value other than 1, 2, or 3 to exit.</li>
+</ol>
+
+<h2 id="summary">Summary</h2>
+
+<p>In this exercise, you created a Foundry resource and deployed the necessary models for content understanding. You explored the pre-built image analyzer in the Content Understanding Studio, and then built a Python application that sends images to the analyzer and retrieves generated descriptions. Great work!</p>
+
+<h2 id="clean-up">Clean up</h2>
+
+<p>When you finish exploring content understanding in Foundry, you should delete the resources you’ve created to avoid unnecessary Azure costs.</p>
+
+<ul>
+  <li>Navigate to the <a href="https://portal.azure.com/">Azure portal</a> at <code>https://portal.azure.com</code>.</li>
+  <li>In the Azure portal, on the <strong>Home</strong> page, select <strong>Resource groups</strong>.</li>
+  <li>Select the resource group that you created for this exercise.</li>
+  <li>At the top of the <strong>Overview</strong> page for your resource group, select <strong>Delete resource group</strong>.</li>
+  <li>Enter the resource group name to confirm you want to delete it, and select <strong>Delete</strong>.</li>
+</ul>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./4_image_content_understanding_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./4_image_content_understanding_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./4_image_content_understanding_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./4_image_content_understanding_files/clipboard.min.js.download"></script>
+    <script src="./4_image_content_understanding_files/highlight.min.js.download"></script>
+    <script src="./4_image_content_understanding_files/script.js.download"></script>
+
+
+
+</body></html>

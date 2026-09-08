@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Professional ML Engineer Mock Exam - 120 Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .domain-selector {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .domain-selector label {
+            color: white;
+            font-weight: 600;
+        }
+
+        .domain-selector select {
+            padding: 10px 15px;
+            border-radius: 4px;
+            border: none;
+            background: white;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .instructions {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .progress-info {
+            flex: 1;
+        }
+
+        .progress-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-block {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-block:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .question-header {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .scenario-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            display: inline-block;
+        }
+
+        .domain-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .question-body {
+            padding: 20px;
+        }
+
+        .scenario-text {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .option:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: #667eea;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .option input[type="radio"]:checked + label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .option.selected {
+            background: #e8edf7;
+            border-color: #667eea;
+        }
+
+        .collapsible-section {
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #333;
+            transition: background 0.3s ease;
+            user-select: none;
+            font-size: 0.95em;
+        }
+
+        .collapsible-header:hover {
+            background: #efefef;
+        }
+
+        .collapsible-header.active {
+            background: #e8edf7;
+            color: #667eea;
+        }
+
+        .toggle-icon {
+            font-size: 1em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0;
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-content.active {
+            max-height: 2000px;
+            padding: 15px;
+        }
+
+        .explanation-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .explanation-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .explanation-correct {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .explanation-incorrect {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .domain-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .domain-selector select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 GCP Professional ML Engineer Mock Exam</h1>
+            <p>All 120 Questions Across 6 Domains</p>
+            <div class="domain-selector">
+                <label for="domainFilter">Filter by Domain:</label>
+                <select id="domainFilter" onchange="filterDomain(this.value)">
+                    <option value="">All Questions (120)</option>
+                    <option value="1">Domain 1: BigQuery ML (Q1–Q20)</option>
+                    <option value="2">Domain 2: Vertex AI Pipelines & KFP (Q21–Q40)</option>
+                    <option value="3">Domain 3: Data Engineering/Dataflow/Beam (Q41–Q60)</option>
+                    <option value="4">Domain 4: Vertex AI Model Training & Deployment (Q61–Q80)</option>
+                    <option value="5">Domain 5: Analytics & BigQuery SQL (Q81–Q100)</option>
+                    <option value="6">Domain 6: MLOps & Governance (Q101–Q120)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress-info">
+                    <div class="progress-label">Overall Progress</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div id="progressText" style="margin-left: 20px; font-weight: 600; color: #667eea;">0/120</div>
+            </div>
+
+            <div class="instructions">
+                <strong>📝 Instructions:</strong>
+                <ul>
+                    <li>Select the correct answer for each question</li>
+                    <li>Your answers are saved automatically to your browser</li>
+                    <li>Click "Explanation" to review the detailed answer</li>
+                    <li>Use the domain filter to focus on specific topics</li>
+                    <li>All 120 questions cover the complete PMLE exam blueprint</li>
+                </ul>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+        </div>
+
+        <div class="footer">
+            <p>💡 Comprehensive preparation for GCP Professional Machine Learning Engineer Certification</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Domain 1: BigQuery ML (Q1–Q20)
+            {domain: 1, num: 1, title: "BQML Model Selection & Feature Engineering Strategy", scenario: "Your organization has a dataset with 5M customer records containing 80 features (45 numerical, 35 categorical). You need to predict customer lifetime value (CLV) to optimize marketing spend. Initial EDA reveals: highly imbalanced categorical features, 15% missing values scattered across features, and strong multicollinearity in numerical features. The dataset is split 70/20/10 (train/validation/test). You must choose between LINEAR_REG for interpretability and BOOSTED_TREE for accuracy. What's your approach?", options: ["A. Start with LINEAR_REG after feature selection (VIF <5 to handle multicollinearity), handle missing values via imputation, and encode categorical features using target encoding. If MAE exceeds threshold or R² is poor on validation set, escalate to BOOSTED_TREE with regularization (L1/L2) to prevent overfitting. Document baseline performance metrics (MAE, RMSE, R²) before model comparison.", "B. Use BOOSTED_TREE immediately because it outperforms LINEAR_REG on all complex datasets with many features", "C. Preprocess all features using one-hot encoding without dimensionality reduction; use LINEAR_REG for simplicity", "D. Skip feature engineering; train both models on raw data and select based on accuracy alone"], correct: 0, explanation: "Strategic approach: establish baseline with LINEAR_REG (interpretability, faster training), handle data quality issues (missing values, multicollinearity), validate on proper train/val/test split. Escalate to BOOSTED_TREE only if baseline underperforms. Domain knowledge-driven feature selection > raw feature count."},
+            {domain: 1, num: 2, title: "BQML Feature Transformation & Scaling Pipeline", scenario: "Your dataset contains features with vastly different scales: age (18-85 years), annual income ($20K-$2M), monthly spending ($0-$50K), credit utilization ratio (0-1.0), and credit score (300-850). You're building a LINEAR_REG model for credit approval prediction. You notice: (1) model coefficients show income dominates decision logic, (2) age has near-zero coefficient, (3) validation loss is high. What's the root cause and remediation?", options: ["A. Root cause: unscaled features cause high-range features (income) to dominate gradient descent, saturating model weights. Apply ML.STANDARD_SCALER (transform all numerical features to mean=0, std=1). For categorical features (if any), use ML.ONE_HOT_ENCODER separately. Scale after train/val/test split to prevent data leakage. After scaling, coefficients become comparable (same units), and validation loss should improve as gradient descent operates on normalized scale.", "B. Income is naturally more important; no scaling needed. Use raw features as-is", "C. Apply min-max scaling only to income feature; leave others unchanged", "D. Use ML.BUCKETIZE to convert all continuous features to buckets; skip scaling"], correct: 0, explanation: "Scaling is critical for LINEAR_REG gradient descent. Unscaled high-range features dominate loss surface. STANDARD_SCALER normalizes all features uniformly. Feature importance reflects learned relationships, not raw scale. Model coefficients post-scaling are interpretable on equal footing."},
+            {domain: 1, num: 3, title: "BQML Class Imbalance & Threshold Optimization", scenario: "You train LOGISTIC_REG on churn prediction (binary classification). Dataset: 2M records (98% no-churn, 2% churn). After training, ML.EVALUATE reports: accuracy=98.2%, precision=0.75, recall=0.15, F1=0.25. Your business goal: identify 90% of churners (high recall) to trigger retention campaigns. Threshold is default (0.5). Analysis shows: predicting 'no churn' for all records yields 98% accuracy (trivial baseline). What's your strategy?", options: ["A. Problem: class imbalance causes model to optimize for majority class. Remediation: (1) Set class_weight='BALANCED' during training (CREATE MODEL...WITH class_weight='BALANCED'). This penalizes false negatives on minority class more heavily. (2) Lower prediction threshold below 0.5 (e.g., to 0.3) to increase recall at cost of precision. (3) Recompute metrics: at threshold=0.3, recall should approach 90%, precision drops but acceptable. (4) Monitor: precision-recall curve to find sweet spot. (5) Optional: oversample churn class or use stratified cross-validation.", "B. Class imbalance is not a problem; the model is correct (98% accuracy is excellent)", "C. Ignore recall; optimize only for accuracy", "D. Collect more data until classes are balanced (impractical)"], correct: 0, explanation: "Class imbalance requires deliberate handling. Accuracy is misleading metric. class_weight='BALANCED' adjusts loss to penalize minority misclassifications. Threshold tuning (receiver-operator curve) enables recall-precision trade-off aligned with business goals."},
+            {domain: 1, num: 4, title: "BQML Model Evaluation & Generalization Diagnostics", scenario: "Model training curve shows: training loss=0.05 (excellent), validation loss=0.25 (poor). Precision=0.92, recall=0.88 on training set; precision=0.68, recall=0.55 on validation set. Model was trained with 10M records, validated on 2M records (80/20 split). Team member suggests: 'Add more features to improve validation performance.' Is this correct?", options: ["A. No; this is overfitting (train-val gap indicates model memorized training patterns). More features worsen overfitting. Remediation: (1) Reduce model complexity (fewer features via LASSO/L1 regularization), (2) apply early stopping (stop training when val_loss increases), (3) use regularization parameter (l1_reg, l2_reg in CREATE MODEL), (4) collect more training data if possible, or (5) use stratified cross-validation. Debug root cause: check feature correlations, ensure no data leakage (future information in features), verify train/val split is random.", "B. Yes; add more features to improve validation recall", "C. Validation loss is always higher; no action needed", "D. Train longer to reduce both train and validation loss"], correct: 0, explanation: "Train-val gap signals overfitting, not underfitting. More features exacerbate. Use regularization, feature selection, and early stopping."},
+            {domain: 1, num: 5, title: "BQML Feature Interactions & Nonlinear Relationships", scenario: "Customer purchase dataset: age_group (young/middle/senior), product_category (electronics/clothing/home), purchase_amount (continuous). EDA reveals: seniors strongly prefer home products (80% home purchases vs 20% for young). You suspect age_group × product_category interaction. How do you model this?", options: ["A. Use ML.FEATURE_CROSS to create interaction term: SELECT *, ML.FEATURE_CROSS(STRUCT(age_group, product_category)) AS age_category_cross FROM table. This generates new feature combining both (e.g., 'senior_home'). Add cross feature to LINEAR_REG model. BOOSTED_TREE discovers interactions automatically, but LINEAR_REG requires explicit crosses. Validate: interaction term coefficient should be significant and interpretable (senior_home has high purchase amount).", "B. Train separate models for each age group", "C. Use LINEAR_REG without crosses; it captures interactions automatically", "D. Ignore interactions; add more independent features"], correct: 0, explanation: "LINEAR_REG models linear relationships; interactions must be explicit. FEATURE_CROSS creates nonlinear terms. BOOSTED_TREE discovers interactions via tree splits. Feature engineering > raw features for LINEAR_REG."},
+            {domain: 1, num: 6, title: "BQML Time Series Forecasting with Trend & Seasonality", scenario: "Weekly sales data: 104 weeks (2 years). Visual inspection shows: trend (sales growing ~5% per month), seasonality (peaks during Q4, valleys in summer). You train ARIMA model (default parameters). Forecast for week 105 is point estimate without confidence interval. What's missing?", options: ["A. Proper ARIMA configuration: (1) Check ACF/PACF plots to identify p,d,q parameters (default may be suboptimal). (2) Include trend=True and seasonality=True (set seasonal_periods=52 for weekly data with annual cycle). (3) Specify (p,d,q,s) explicitly if default fails. (4) Generate prediction intervals (not just point estimate) using quantile method (e.g., confidence_level=0.95). (5) Monitor: compare forecast to actuals each week; retrain if forecast error exceeds SLA. For 2-year history, trend and seasonality are critical.", "B. ARIMA always uses default parameters correctly", "C. Use LINEAR_REG instead; ignore trends", "D. Seasonality doesn't apply to weekly data"], correct: 0, explanation: "Time series require ACF/PACF analysis for proper ARIMA parameters. Trend and seasonality are essential. Prediction intervals quantify forecast uncertainty."},
+            {domain: 1, num: 7, title: "BQML Explainability & Feature Attribution", scenario: "Loan approval model denies customer X despite high income. You run ML.EXPLAIN_PREDICT(model, input_X). Output shows: debt_ratio=0.78 (high importance), monthly_income=0.15, employment_length=0.07. Customer disputes: 'My income is high; why does debt_ratio matter?' What do you explain?", options: ["A. Feature importance (0.78) indicates debt_ratio contributed ~78% to prediction decision for this customer. Interpretation: regardless of income, high debt_ratio (e.g., 0.8) signals repayment risk (debt-to-income ratio matters more than income alone). Explain counterfactual: 'If your debt_ratio was 0.4 instead of 0.8, likely approved.' Show model logic: it weighs total debt burden, not just income. Provide to customer + regulator for transparency. Note: importance ≠ causality; shows feature contribution, not true causal effect.", "B. debt_ratio is always the cause of denial", "C. Feature importance has no meaning", "D. All features contribute equally"], correct: 0, explanation: "EXPLAIN_PREDICT shows feature contribution to individual prediction. Per-instance explanation enables transparency. Counterfactuals help customers understand decision drivers."},
+            {domain: 1, num: 8, title: "BQML Hyperparameter Tuning & Convergence", scenario: "LINEAR_REG training with learning_rate=0.1: validation loss after 100 epochs is 0.35. After 200 epochs still 0.35 (plateau, not decreasing). Learning curve shows oscillation (loss bounces between 0.34-0.36). Your colleague suggests: 'Learning rate is too high; increase to 0.5.' Is this correct?", options: ["A. Colleague is wrong; learning_rate too HIGH causes oscillation/divergence. Decrease to 0.01, retrain, monitor loss curve. If converges smoothly, that's optimal. If too slow to converge, try 0.05. Use grid search: test learning_rates [0.001, 0.01, 0.05, 0.1] with early stopping (stop when val_loss plateaus for 10 epochs). Plot learning curves: loss should decrease monotonically (or near-monotonically) with epochs.", "B. Increase learning_rate to 0.5", "C. Learning rate doesn't affect training", "D. Accept 0.35 loss as good enough"], correct: 0, explanation: "High learning rate: oscillation (overshoots optima). Low learning rate: slow convergence. Grid search finds sweet spot. Early stopping prevents overfitting."},
+            {domain: 1, num: 9, title: "BQML Regression Error Metrics & Interpretation", scenario: "LINEAR_REG predicts house prices. ML.EVALUATE outputs: mean_absolute_error (MAE)=€45K, root_mean_squared_error (RMSE)=€60K, r2_score=0.78. Test set mean price=€350K. Is this model good? How do you interpret error magnitude?", options: ["A. Interpret in context: (1) MAE=€45K is 12.8% of mean price (error per prediction). (2) RMSE=€60K > MAE indicates some large outlier errors (penalized by squaring). (3) R²=0.78 means model explains 78% of variance (decent). Benchmark: compare MAE to baseline (always predicting mean price). If baseline MAE=€175K (standard deviation), your model MAE=€45K is 74% better. Good if: MAE <15% of mean, RMSE <20%, R²>0.75 for regression. Consider domain: in real estate, ±€45K on €350K may be acceptable or unacceptable depending on business need.", "B. MAE=45K is always good", "C. RMSE=60K is always bad", "D. R²=0.78 means 78% error rate"], correct: 0, explanation: "Regression error evaluation requires domain context. MAE, RMSE, R² must be benchmarked against baselines and business requirements. RMSE penalizes outliers more than MAE."},
+            {domain: 1, num: 10, title: "BQML Overfitting Detection & Remediation", scenario: "Model trained: training loss=0.02 (excellent), test loss=0.18 (poor). Training set: 50K records; test set: 5K records. Dataset has 200 features. After training, 15% of features have zero or near-zero coefficients (trained to near-zero). Colleague suggests: 'Test set is too small; just ignore test loss.' What's happening?", options: ["A. Clear overfitting: (1) large train-test loss gap (gap >0.10 indicates severe overfitting), (2) model fit 50K training records too tightly. Remediation: (1) Feature selection: LASSO regularization (L1_reg parameter) to eliminate low-signal features automatically, (2) Regularization: increase L2_reg (ridge) to penalize large weights, (3) Early stopping: stop when test_loss increases, (4) More data: if possible, expand training set (data beats regularization), (5) Cross-validation: use k-fold CV instead of single train/test split. Debug: check for data leakage (future information in features), verify train/test are independent.", "B. Test set is too small; ignore gap", "C. Overfitting is impossible in BQML", "D. Train longer to reduce test loss"], correct: 0, explanation: "Large train-test gap = overfitting. Regularization, feature selection, early stopping, and more data are remedies. Proper train/val/test split is foundation."},
+
+            // Domain 2: Vertex AI Pipelines & KFP (Q21–Q40)
+            {domain: 2, num: 21, title: "Vertex AI Pipelines: DAG Design & Conditional Execution", scenario: "ML pipeline stages: (1) data ingestion (fetches raw data), (2) preprocessing (cleans, transforms), (3) train model A & train model B in parallel, (4) evaluate both, (5) select better model, (6) deploy if eval_metric > 0.85 else retrain with augmented data. Current: all serial, takes 4 hours. How to structure in KFP?", options: ["A. Define components: @dsl.component for each stage. Build DAG: (1) ingest → preprocess (serial), (2) preprocess → [train_A, train_B] (parallel, fan-out), (3) evaluate_A and evaluate_B run after respective trains (parallel), (4) use dsl.Condition to branch: if eval_metric_A > 0.85: deploy_A, else retrain_A, (5) same for model B. Structure as: with dsl.Condition(evaluation_A.outputs['metric'] > 0.85): deploy_task. Parallel training reduces 4h → ~2h. Use @dsl.component(..., packages_to_install=['package_name']) for dependencies. Compile pipeline to YAML and execute on Vertex AI.", "B. Write one monolithic script", "C. All components must run sequentially", "D. No parallel execution in KFP"], correct: 0, explanation: "KFP DAGs enable parallelism and conditional branching. Define components, connect via I/O, compile to YAML. Parallel training + conditional deployment = faster, dynamic workflows."},
+            {domain: 2, num: 22, title: "KFP Component I/O: Artifact Passing & Serialization", scenario: "Component A trains model (trained_model.pkl, 500MB). Component B loads model for evaluation (needs same artifact). Component C performs prediction (uses model.pkl). How do you pass large artifacts between components reliably?", options: ["A. Define I/O: Component A has output Output[Model] model_artifact, Component B has input Input[Model] model_artifact, Component C similar. KFP automatically handles artifact serialization: saves model to Cloud Storage (GCS), passes URI between components, deserializes on load. Use @dsl.component decorator with type hints. In component code: from kfp.v2.dsl import Output; write model to output: output_artifact.path. No manual file handling. KFP manages versioning, lineage, artifact tracking.", "B. Use global variables to pass artifacts", "C. Save to local filesystem and pass paths", "D. Artifacts can't be shared between components"], correct: 0, explanation: "KFP manages artifact I/O transparently. Output[T], Input[T] types enable automatic serialization to GCS. Scalable, versioned, tracked."},
+            {domain: 2, num: 23, title: "KFP Conditional Branching & Pipeline Dynamics", scenario: "Evaluate component outputs: accuracy=0.92, data_drift_score=0.3. Rules: if accuracy>0.90 AND drift_score<0.5: deploy; else if accuracy<0.85: retrain with auto-augmented data; else: hold for review. How to implement?", options: ["A. Use dsl.Condition for complex logic: with dsl.Condition(dsl.AND(evaluate.outputs['accuracy']>0.90, evaluate.outputs['drift_score']<0.5)): deploy_task.set_cpu_limit('1'). For second condition: with dsl.Condition(evaluate.outputs['accuracy']<0.85): retrain_task. Else branch: with dsl.Condition(dsl.NOT(...)): hold_task. KFP evaluates conditions at runtime; only executed branches consume compute. Conditions can reference component outputs (metrics, flags)", "B. No conditional logic possible", "C. Always deploy", "D. Use if-else in Python script outside DAG"], correct: 0, explanation: "KFP Condition enables dynamic pipelines. Boolean logic (AND, OR, NOT) on component outputs drives execution. Runtime evaluation prevents unnecessary compute."},
+            {domain: 2, num: 24, title: "KFP Caching: Optimization for Iterative Development", scenario: "Pipeline runs daily: step 1 reads data from BigQuery (same table), step 2 preprocesses (same logic), step 3 trains (different params each day). Currently: 1+2 takes 45 min, 3 takes 75 min. Total: 120 min. After 30 days, cumulative: 3600 min wasted on steps 1+2. How to optimize?", options: ["A. Enable caching on steps 1-2: set enable_caching=True on their @dsl.component definitions. KFP computes hash of: (1) component code, (2) input parameters, (3) input artifacts. If hash matches prior execution, reuses cached output (skips re-execution). On day 2-30, steps 1-2 retrieve cache (instantaneous). Only step 3 reruns (new params). Total time: 75 min/day. Savings: 45*29 = 1305 min/month. Cache invalidated if code or inputs change.", "B. No caching available", "C. Disable steps 1-2", "D. Run steps 1-2 only on day 1"], correct: 0, explanation: "KFP caching memoizes component outputs. Hash of code+inputs determines cache hit. Huge savings for iterative development. Cache invalidation automatic on code/input changes."},
+            {domain: 2, num: 25, title: "KFP Fan-out & Parallelism: Scaling Model Training", scenario: "Need to train 5 model architectures independently (ResNet, EfficientNet, MobileNet, ViT, DenseNet). Each takes 30 min (GPU). Sequential: 5×30 + 5 min ensemble = 155 min. How to parallelize?", options: ["A. Use fan-out pattern: @dsl.component def train_architecture(arch_name) trains single model. In DAG, loop over architectures and create parallel tasks: [train_task(arch) for arch in architectures]. KFP schedules all 5 tasks concurrently (if cluster has enough GPU quota). Ensemble task waits for all 5 to complete (barrier). Time: max(30*1) + 5 = 35 min (5.4x speedup). Requires 5 GPU quota. Monitor: if quota insufficient, tasks queue and run sequentially (graceful degradation).", "B. Serial only", "C. Can't parallelize independent tasks", "D. Manual task submission"], correct: 0, explanation: "KFP parallelizes independent tasks. Multiple workers run concurrently. Ensemble after all complete. Barrier implicit (join at ensemble step)."},
+            {domain: 2, num: 26, title: "KFP Artifact Types & ML Metadata Tracking", scenario: "Pipeline outputs: trained model (Model), metrics.json (Metrics), evaluation plots (Artifact), training data schema (Schema). How do you track lineage (which data trained which model)?", options: ["A. Use typed artifacts: Output[Model], Output[Metrics], Output[Artifact], Output[Schema]. KFP registers in Vertex ML Metadata: each artifact stores type, storage URI, metadata (e.g., model accuracy, training date). Lineage automatically tracked: (training_data) → [preprocessing] → [training] → (trained_model). Query lineage: which datasets trained model v3? ML Metadata provides provenance graph. Enables debugging (model X uses data Y, which was updated on date Z).", "B. No artifact tracking", "C. All artifacts same type", "D. Manual metadata management"], correct: 0, explanation: "Artifact typing enables automatic lineage. ML Metadata tracks provenance. Essential for governance and debugging."},
+            {domain: 2, num: 27, title: "KFP Pipeline Parameterization & Self-Service Execution", scenario: "Pipeline trains model with: learning_rate=0.01, batch_size=32, epochs=50, dropout=0.5. Currently hardcoded. Need: run daily with different hyperparams for experimentation (different rates, batch sizes). How to enable without code changes?", options: ["A. Parameterize pipeline: @dsl.pipeline(name='train_model', default_params={'learning_rate': 0.01, 'batch_size': 32, 'epochs': 50, 'dropout': 0.5}) def pipeline(lr: float, bs: int, ep: int, dp: float). Compile to YAML: dsl.Compiler().compile(pipeline, 'pipeline.yaml'). Execute with param overrides: gcloud ai pipelines run --pipeline-root gs://bucket --pipeline-spec-path pipeline.yaml --parameters={\"learning_rate\":0.001,\"batch_size\":64}. Enables non-engineers to run experiments via UI/API. Same DAG, different runs.", "B. Edit pipeline code each run", "C. No parameterization", "D. Always use default params"], correct: 0, explanation: "Pipeline parameters externalize config. YAML compilation + UI/API enables self-service. Same DAG, different hyperparams each run."},
+            {domain: 2, num: 28, title: "KFP Error Handling & Transient Failure Resilience", scenario: "Component fetches data from external Pub/Sub (3% transient failure rate due to network glitches). Pipeline fails if fetch fails. How to handle?", options: ["A. Add retry logic: @dsl.component(..., retry=3) on fetch component. KFP retries up to 3 times on failure with exponential backoff (wait 1s, 2s, 4s before retries). If all 3 retries fail, pipeline fails (don't retry logic errors indefinitely). For specific failure modes (transient network), catch exception, log, retry. For permanent errors (invalid topic), fail immediately. Configure: set retry_policy in component. Test: simulate failures, verify retries work.", "B. No retries", "C. Fail immediately", "D. Infinite retries"], correct: 0, explanation: "Retries handle transient failures. Exponential backoff prevents thundering herd. Don't retry logic errors (infinite loop). Distinguish transient vs permanent failures."},
+            {domain: 2, num: 29, title: "KFP Scheduling & Continuous Training Automation", scenario: "Model performance degrades monthly: new data drifts, patterns change. Data scientist must retrain manually every month. How to automate?", options: ["A. Automated retraining pipeline: (1) Define KFP pipeline for training + validation + deployment. (2) Deploy to Vertex AI Pipelines. (3) Create Cloud Scheduler trigger: cron schedule every 30 days. (4) On schedule, Cloud Scheduler calls Vertex API to run pipeline. (5) Pipeline monitors drift: if data distribution shifts >threshold, trigger retraining automatically (early trigger, not just schedule). (6) Logs training history in Vertex ML Metadata. (7) Alerts: if retraining fails, notify team. Enables hands-off operation with guardrails.", "B. Manual monthly retraining", "C. No scheduling", "D. Train once, never update"], correct: 0, explanation: "Vertex Pipelines + Cloud Scheduler enables continuous training. Drift detection triggers early retraining. Automated, auditable, hands-off."},
+            {domain: 2, num: 30, title: "KFP Data Validation & Quality Gates", scenario: "Daily data ingestion: 100K records. Previously, NULL age values (unexpected) crashed downstream model training. How to prevent?", options: ["A. Add TFDV (TensorFlow Data Validation) component before training: compute data statistics (count NULLs, distributions, cardinality), generate schema (expected feature types, ranges). Validate incoming data against schema: if NULLs > threshold (e.g., 5%), fail with alert. TFDV detects schema changes, anomalies (new categorical values), distribution drift. Abort pipeline before bad data reaches model. Use: tfdv.GenerateStatistics → tfdv.InferSchema → tfdv.ValidateInstancesAgainstSchema. Prevents silent failures (bad data passing through).", "B. No validation", "C. Manual inspection", "D. Ignore NULLs"], correct: 0, explanation: "TFDV gates enforce data quality. Automated schema validation prevents bad data from corrupting models. Early failure > silent failure."},
+            {domain: 1, num: 4, title: "BQML Model Evaluation: ML.EVALUATE", scenario: "You train a model and run ML.EVALUATE. Output shows: precision=0.8, recall=0.6, f1_score=0.686. A colleague says 'precision is high, so the model is good.' Is this correct?", options: ["A. No; high precision alone doesn't guarantee good model. If recall is low (0.6), you're missing 40% of true positives. F1 (harmonic mean) better balances precision-recall trade-off", "B. Yes; precision is the most important metric", "C. Ignore recall; focus only on precision", "D. Metrics don't matter in BQML"], correct: 0, explanation: "Precision measures correctness of positive predictions; recall measures coverage of actual positives. Both matter. F1 is a balanced metric."},
+            {domain: 1, num: 5, title: "BQML Feature Engineering: ML.FEATURE_CROSS", scenario: "You have features: age_bucket (young/middle/senior), product_category (A/B/C). You suspect interaction: seniors buy category C more. How do you model this?", options: ["A. Use ML.FEATURE_CROSS to create interaction terms (e.g., 'senior_C'). Add crossed features to model; captures non-linear relationships", "B. Use separate models for each age group", "C. Ignore interactions; not worth the complexity", "D. Use LINEAR_REG; it automatically captures interactions"], correct: 0, explanation: "FEATURE_CROSS creates new features from combinations of existing ones. Captures interactions. LINEAR_REG doesn't automatically find interactions; BOOSTED_TREE does."},
+            {domain: 1, num: 6, title: "BQML Time Series Forecasting: ARIMA", scenario: "You want to forecast weekly sales. Data: 104 weeks of history. You train ARIMA model. Should you include trend and seasonality?", options: ["A. Yes; if data shows trend (sales growing) or seasonality (peaks in Dec), include them. ARIMA with trend + seasonality captures these patterns. Check ACF/PACF plots", "B. Never use seasonality", "C. Use LINEAR_REG for time series", "D. Ignore data patterns; use defaults"], correct: 0, explanation: "Time series often have trend (long-term direction) and seasonality (repeating patterns). ARIMA models both. Inspect data first to decide."},
+            {domain: 1, num: 7, title: "BQML Model Explanation: ML.EXPLAIN_PREDICT", scenario: "Your model predicts loan approval. A customer asks: 'Why was I rejected?' You run ML.EXPLAIN_PREDICT. Output shows: feature importance for debt_ratio=0.8, income=0.1. What does this mean?", options: ["A. debt_ratio was most important in the prediction decision (80% contribution). For this customer, high debt_ratio likely triggered rejection. Income had minimal impact", "B. debt_ratio is always the cause of rejection", "C. Feature importance is meaningless", "D. All features contribute equally"], correct: 0, explanation: "EXPLAIN_PREDICT shows feature contribution to individual prediction. High importance ≠ causality, but indicates which features mattered for that prediction."},
+            {domain: 1, num: 8, title: "BQML Hyperparameter Tuning in SQL", scenario: "You train a LINEAR_REG model with learning_rate=0.1. Validation loss plateaus. Should you increase or decrease learning_rate?", options: ["A. Try lower learning_rate (0.01) first; high learning rate may cause oscillation. If validation loss is still high, increase. Use grid search: test multiple rates and pick best", "B. Always use learning_rate=0.1", "C. Learning rate doesn't matter", "D. Increase learning_rate indefinitely"], correct: 0, explanation: "Learning rate too high: oscillates, misses optimum. Too low: converges slowly. Use CV with multiple rates. BQML supports hyperparameter tuning via CREATE MODEL options."},
+            {domain: 1, num: 9, title: "BQML Regression Model Evaluation", scenario: "You train BQML LINEAR_REG to predict house price. ML.EVALUATE shows: mean_absolute_error=15K, root_mean_squared_error=20K. Is this good?", options: ["A. Depends on context. If typical house price is 300K, MAE=15K is 5% error (good). If typical price is 100K, 15% error (poor). Compare to baseline (always predicting mean price)", "B. 15K error is always good", "C. 20K error is always bad", "D. Regression errors are meaningless"], correct: 0, explanation: "Regression error evaluation requires domain context. RMSE penalizes large errors more than MAE. Compare to baseline and business requirements."},
+            {domain: 1, num: 10, title: "BQML Model Input Validation", scenario: "You train a BQML model on 100K rows. Test set: 10K rows. Training shows loss decreasing. But test accuracy drops by 5%. What's happening?", options: ["A. Overfitting: model memorized training data. Diagnose via: (1) compare train vs test loss (gap=overfitting), (2) reduce model complexity, (3) regularization (add L1/L2 penalty), (4) more data. In BQML, set input_label_cols, use balanced data", "B. Test set is too small", "C. Overfitting is impossible", "D. Ignore test performance"], correct: 0, explanation: "Train-test gap indicates overfitting. Remedies: simplify model, regularize, get more data, cross-validation. Always monitor both metrics."},
+
+            // Domain 2: Vertex AI Pipelines & KFP (Q21–Q40)
+            {domain: 2, num: 21, title: "Vertex AI Pipelines: DAG and Components", scenario: "You design a pipeline: (1) ingest data, (2) preprocess, (3) train model, (4) evaluate, (5) deploy if eval passes. How do you structure this in Kubeflow Pipelines (KFP)?", options: ["A. Define 5 components (functions wrapped with @dsl.component). Connect via inputs/outputs. Use dsl.Dag to define execution order. Add conditional gate after evaluate: if metrics_pass, deploy; else skip. Compile to YAML", "B. Write one monolithic script", "C. Components must run sequentially", "D. No structured pipeline format"], correct: 0, explanation: "KFP components are reusable functions. DAG defines dependencies. Conditionals enable branching (e.g., deploy only if threshold met)."},
+            {domain: 2, num: 22, title: "Component I/O and Artifact Passing", scenario: "Component A outputs a trained model (large file). Component B needs to use it for evaluation. How do you pass the model?", options: ["A. Define output parameter in A: model_artifact = Output[Model]. Component B: input model_artifact = Input[Model]. KFP automatically handles artifact storage (Cloud Storage) and passing. Use @dsl.component decorator", "B. Use global variables", "C. Artifacts can't be passed between components", "D. Manual file copying"], correct: 0, explanation: "KFP manages artifact I/O. Output[Model], Input[Model] handle storage transparently. Scalable and tracked."},
+            {domain: 2, num: 23, title: "Conditional Execution in Pipelines", scenario: "Evaluate component outputs metrics. If accuracy > 95%, deploy model; else retrain with more data. How do you express this in KFP?", options: ["A. Use dsl.Condition: @dsl.component def deploy(acc) and @dsl.component def retrain. In DAG: with dsl.Condition(evaluate.outputs['accuracy'] > 0.95): deploy_task. Else: retrain_task", "B. No conditional logic in KFP", "C. Always deploy", "D. Manual branching"], correct: 0, explanation: "KFP Condition allows branching based on component outputs. Enables dynamic workflows (deploy conditionally)."},
+            {domain: 2, num: 24, title: "Caching in Vertex AI Pipelines", scenario: "Your pipeline runs daily. Steps 1–3 use the same input data; only step 4 (model training) changes. Pipeline takes 2 hours. How do you speed it up?", options: ["A. Enable caching: set enable_caching=True on steps 1–3 that don't change. KFP skips re-execution if inputs are identical, reuses cached outputs. Saves 30–60 min. Only step 4 (training) re-runs", "B. No caching available", "C. Disable step 1–3", "D. Rerun everything"], correct: 0, explanation: "KFP caching memoizes component outputs. If inputs unchanged, reuse output. Dramatically speeds iterative development."},
+            {domain: 2, num: 25, title: "Parallel and Sequential Execution", scenario: "Pipeline trains 5 different model architectures independently (takes 30 min each). Then ensembles them (5 min). Currently serial: 5*30+5=155 min. How do you optimize?", options: ["A. Parallelize training: use @dsl.component def train_arch1, train_arch2, ... inside a loop or fan-out. KFP runs all 5 in parallel (on separate workers). Total: max(30) + 5 = 35 min. Requires sufficient compute quota", "B. Serial only", "C. Parallelization impossible", "D. Manual parallelization"], correct: 0, explanation: "KFP parallelizes independent tasks. Multiple workers = faster execution. Ensemble after all trains complete."},
+            {domain: 2, num: 26, title: "Artifact Types and Metadata", scenario: "Component outputs: trained_model (Model), metrics.json (Metrics), feature_schema (Schema). How do you track these in Vertex Pipelines?", options: ["A. Use Output[Model], Output[Metrics], Output[ClassificationMetrics]. KFP auto-tracks artifact type, stores in Artifact Registry, records metadata (model version, accuracy). Enables lineage (which data trained which model)", "B. No artifact tracking", "C. All outputs are same type", "D. Manual metadata"], correct: 0, explanation: "Artifact typing enables lineage, versioning, and governance. Vertex Pipelines automatically records provenance."},
+            {domain: 2, num: 27, title: "Pipeline Parameterization", scenario: "Pipeline trains model with hyperparams: learning_rate=0.01, batch_size=32, epochs=50. You run pipeline daily with different params. How do you avoid hardcoding?", options: ["A. Use pipeline parameters: @dsl.pipeline(name='train', default_params={'learning_rate': 0.01, ...}). Pass at execution: Compiler().compile(pipeline, 'pipeline.yaml'); Run with params override. Enables experimentation", "B. Edit code for each run", "C. No parameterization", "D. Always use defaults"], correct: 0, explanation: "Pipeline parameters allow external configuration. Same DAG, different runs with different params."},
+            {domain: 2, num: 28, title: "Error Handling and Retries", scenario: "Component fetches data from Pub/Sub. Network occasionally fails (3% failure rate). Should you retry?", options: ["A. Yes; use @dsl.component(..., retry=3) to retry failed component. Exponential backoff (wait 1s, 2s, 4s). If 3 retries fail, pipeline fails. Handles transient failures gracefully", "B. No retries", "C. Fail immediately", "D. Infinite retries"], correct: 0, explanation: "Retries handle transient failures. Exponential backoff avoids thundering herd. Use judiciously (don't retry logic errors)."},
+            {domain: 2, num: 29, title: "Pipeline Scheduling and Continuous Training", scenario: "Model degrades monthly (new data arrives, distribution shifts). You want to retrain automatically on schedule. How do you automate?", options: ["A. Define pipeline in KFP. Deploy to Vertex AI Pipelines. Create schedule trigger (Cloud Scheduler): run pipeline every 30 days. Monitor drift; if detected, trigger retraining immediately. Logs training history in Vertex ML Metadata", "B. Manual retraining", "C. No scheduling", "D. Train once, never retrain"], correct: 0, explanation: "Vertex Pipelines + Cloud Scheduler enables continuous training. Automatable and auditable."},
+            {domain: 2, num: 30, title: "Data Validation in Pipelines (TFDV Integration)", scenario: "Training data has: 10K new records daily. Previously, NULL age values caused model failures. How do you prevent regressions?", options: ["A. Add TFDV (TensorFlow Data Validation) component: compute statistics, generate schema, validate data quality. Reject data if nulls exceed threshold. Fail pipeline, alert team. Prevents bad data→bad model", "B. No validation", "C. Manual inspection", "D. Ignore nulls"], correct: 0, explanation: "Data validation (TFDV) catches quality issues early. Automated gate prevents downstream problems."},
+
+            // Domain 3: Data Engineering/Dataflow/Beam (Q41–Q60)
+            {domain: 3, num: 41, title: "Windowing Strategy: Tumbling vs Sliding vs Session Windows", scenario: "Real-time IoT sensor stream: temperature readings every 2 seconds. Requirement: compute hourly metrics (avg temp, min, max, anomaly count). Data completeness is critical (don't want partial results). Occasionally, sensor batches readings (delays 5-10 min). Which windowing strategy and configuration?", options: ["A. Use tumbling window (1 hour, fixed, non-overlapping). Configuration: Window.into(FixedWindows(Duration.standardHours(1))), allowed_lateness=Duration.standardMinutes(15), AfterWatermark().withLateFirings(). Rationale: tumbling prevents double-counting (no overlap). allowed_lateness=15min catches delayed sensor batches. AfterWatermark emits final result when window closes + all late data processed. For hourly metrics, lateness <15min is acceptable.", "B. Use sliding window (overlapping) to get metrics every 5 minutes", "C. Session window for IoT sensors", "D. No windowing; process events individually"], correct: 0, explanation: "Tumbling windows prevent overlap (no double-counting). allowed_lateness handles delays. AfterWatermark ensures completeness. Sliding duplicates work (inefficient for this use case). Session windows for user activity, not continuous sensors."},
+            {domain: 3, num: 42, title: "Watermarks, Late Data Handling, & Completeness SLA", scenario: "Event-time=100s, processing-time (wall-clock)=130s. Watermark currently at 95s (30s lag). Window [60–120s) emitted at watermark (100s). New event with event-time=105s arrives at wall-clock=135s (5s after window closed). Without allowed_lateness, window already emitted (results discarded). With allowed_lateness=10s, event reprocesses window. Impact: results change after emission (retraction). How to handle?", options: ["A. Set allowed_lateness=Duration.standardSeconds(10). Trade-offs: (1) Completeness: catches late events (105s < 115s deadline). Results more accurate. (2) Latency: window [60–120) held open until 120s+10s=130s watermark. (3) Retraction: if late event changes aggregation (e.g., count 10→11), consumers get corrected result (handle idempotently or store versioned outputs). For financial transactions: use small allowed_lateness (seconds). For analytics: larger (minutes). Monitor: % of events arriving late.", "B. Discard late data; accept incomplete results", "C. Watermarks don't constrain late data", "D. No SLA for completeness"], correct: 0, explanation: "Late data within allowed_lateness reprocesses window. Trade-off: completeness vs latency vs retraction handling. Configure by use case (financial vs analytics)."},
+            {domain: 3, num: 43, title: "Triggers: Early, Final, Late Firings for Dynamic Results", scenario: "Dashboard requires low-latency updates (show partial results every 5s), but also accuracy (final results after all data arrives). Window [0–60s). How to emit: early partial results, final complete result, and late corrections?", options: ["A. Use trigger composition: AfterWatermark().withEarlyFirings(AfterProcessingTime.pastFirstElementInPane(Duration.standardSeconds(5)))).withLateFirings(Repeatedly(AfterCount(1))). This emits: (1) early=every 5s while data arrives (partial, incomplete), (2) final=when watermark passes 60s (complete), (3) late=each late event fires window anew (up to allowed_lateness). Consumers see result evolution: 10 → 12 → 15 (partial), then 20 (final), then 21 (late). Dashboard updates all 3 stages.", "B. Never emit early (wait for final)", "C. Always emit early (ignore final)", "D. No trigger support in Dataflow"], correct: 0, explanation: "Trigger composition enables early+final+late stages. Consumers handle partial results, refinements, corrections. Dynamic streaming."},
+            {domain: 3, num: 44, title: "Side Inputs for Stream Enrichment: Reference Data Management", scenario: "Transaction stream: (user_id, amount, timestamp). Must enrich with: user_tier (gold/silver/bronze). Tier table in BigQuery, updated weekly. ~100K unique users. Join approaches: (1) stream-stream join (expensive, wait for tier events), (2) side input (fast, reference broadcast). Implement side input.", options: ["A. Load tier reference: (1) Query BigQuery: SELECT user_id, tier FROM user_tiers (100K rows, ~10MB). Broadcast to all workers as side input. (2) Main stream join: txn.apply(ParDo.of(new EnrichTransactionFn()).withSideInputs(tierSideInput)). (3) In ParDo: customer_tier = Iterables.getOnlyElement(c.sideInput(tierSideInput), 'unknown'). (4) Reload strategy: weekly trigger to refresh side input (re-query BigQuery, broadcast new version). (5) Fallback: if tier missing, default to 'unknown'. Efficient: broadcast once, zero stream waiting.", "B. Stream-stream join tier events", "C. No enrichment available", "D. Manual lookup per transaction"], correct: 0, explanation: "Side inputs broadcast static/reference data to all workers. No stream waiting, efficient for large reference tables. Refresh on schedule."},
+            {domain: 3, num: 45, title: "Dataflow Auto-Scaling & Pub/Sub Integration", scenario: "Pub/Sub topic: peak 500K events/sec, off-peak 10K events/sec. Dataflow pipeline: Read(Pub/Sub) → window(1s tumbling) → aggregate (SUM, COUNT, P99) → Write(BigQuery). Currently: 50 workers. During off-peak, workers idle (CPU <20%, memory <30%). During peak, backlog grows (lag behind Pub/Sub). How to optimize?", options: ["A. Enable autoscaling: (1) Set --autoscaling_algorithm=THROUGHPUT_BASED (scale by throughput) or BASIC (scale by CPU). (2) --min_num_workers=5, --max_num_workers=200. (3) Metric: Dataflow monitors Pub/Sub backlog (via Stackdriver). If backlog_age > threshold (e.g., 1min), scale up; if <threshold, scale down. (4) During peak: scale to 150-200 workers, process 500K/sec. During off-peak: scale to 5-10 workers. Cost optimization: pay only for used capacity. (5) Monitor: dashboards show worker count over time, cost savings.", "B. Fixed 50 workers always", "C. No autoscaling", "D. Manual scaling (daily change)"], correct: 0, explanation: "Autoscaling dynamically adjusts workers by workload. Pub/Sub backlog triggers scale-up. Off-peak scale-down reduces cost. Essential for variable load."},
+            {domain: 3, num: 46, title: "Stateful Processing in Dataflow: User Session Tracking", scenario: "User action stream: (user_id, action_type, timestamp). Track per-user: session count (incremented on login), total_spend (running sum across session), is_active (true if action <10 min ago). State must persist across windows, survive worker failure. Implement.", options: ["A. Use StatefulParDo: (1) Define StateSpecs: sessionCount = ValueState.of(incrementing counter), totalSpend = ValueState.of(sum), lastAction = ValueState.of(timestamp). (2) Process: @ProcessElement callback receives ParDoContext c, can get/set state: c.state().access(sessionCount).read(). (3) Update on action: read current values, update (session_count++, total_spend += action.amount, lastAction = now). (4) Fault tolerance: Dataflow backs state to persistent store (Bigtable); if worker fails, new worker restores state. (5) Per-key state: state isolated per user_id (no cross-user leakage). Caution: state size (bytes per key) affects performance.", "B. Global in-memory dict", "C. No state support", "D. Query previous events every time"], correct: 0, explanation: "StatefulParDo maintains per-key state across windows/workers. Backed by Dataflow state service (Bigtable). Fault-tolerant. Per-key isolation prevents data leakage."},
+            {domain: 3, num: 47, title: "Multiple I/O Sources & Sinks: Complex Pipeline Topology", scenario: "Pipeline: (1) Read from Cloud Storage (CSV, daily files), (2) Read from Pub/Sub (real-time events), (3) Read from BigQuery (reference table). Process & branch: (1) Valid events → BigQuery analytics table, (2) Errors → Cloud Storage (error log), (3) Anomalies → Pub/Sub dead-letter topic (alert). Implement topology.", options: ["A. Multiple Read/Write in single pipeline: (1) storageRead = pipeline.apply('ReadCSV', TextIO.read().from('gs://bucket/*.csv')); (2) pubsubRead = pipeline.apply('ReadPubSub', PubsubIO.readStrings().fromTopic('projects/.../topics/events')); (3) bqRead = pipeline.apply('ReadBQ', BigQueryIO.read().fromTable('project:dataset.ref')). (4) Branch: valid_pane.apply('WriteBQ', BigQueryIO.write().to('project:dataset.analytics')); errors_pane.apply('WriteError', TextIO.write().to('gs://bucket/errors/')); anomaly_pane.apply('WritePubSub', PubsubIO.writeStrings().toTopic('projects/.../topics/alerts')). (5) Fan-out: each branch runs independently (parallel writes).", "B. Single Read/Write", "C. Multiple sources impossible", "D. Sequential branching only"], correct: 0, explanation: "Multiple I/O in single pipeline. ParDo branches output to different sinks (fan-out). All branches run concurrently. Enables complex ETL."},
+            {domain: 3, num: 48, title: "Backpressure & Flow Control Under Bottleneck", scenario: "Pipeline: Pub/Sub (100K events/sec source) → Expensive ML inference (requires 1s per event, bottleneck) → BigQuery (fast write). After 30s, memory fills (100K events buffered), workers OOM crash. No backpressure. How to fix?", options: ["A. Enable backpressure (built-in Dataflow): (1) Source (Pub/Sub) throttles read rate to match sink speed (1 event/sec from source). (2) Backlog between source-bottleneck stays bounded (~1K events, not 100K). (3) Auto-scaling: detect bottleneck (ML inference CPU>90%), scale workers from 10→50. Processing rate increases (1→5 events/sec). (4) Alternative: batch inference (collect 100 events, run ML once, 1.01s total, 100x faster). (5) Monitor: Dataflow metrics (lag, CPU, throughput). If lag increasing, scale up.", "B. Increase memory per worker", "C. No backpressure control", "D. Accept OOM crashes"], correct: 0, explanation: "Backpressure auto-throttles source to match processing rate. Prevents OOM. Auto-scaling increases throughput. Batching also viable."},
+            {domain: 3, num: 49, title: "Dataflow Templates: Parameterization for Operationalization", scenario: "Pipeline: Pub/Sub(input_topic) → Filter(predicate) → BigQuery(output_table). Currently hardcoded for one specific topic/table. Ops team needs self-service: run daily with different topics (prod_topic, staging_topic), different output tables. No code changes. Enable.", options: ["A. Create Dataflow template: (1) Parameterize: input_topic, output_table, filter_type as runtime parameters. (2) Compile: PipelineOptionsFactory.register(CustomOptions.class); args: ['--input_topic=projects/.../topics/prod', '--output_table=project:dataset.results']. (3) Build template: mvn clean package; upload JAR + template metadata to Cloud Storage (gs://templates/pubsub_filter.json). (4) Execute: gcloud dataflow templates run job-name --template-location=gs://templates/pubsub_filter.json --parameters=input_topic=staging_topic. (5) Ops team runs via UI/API without coding. Same template, different params, different runs.", "B. Copy-paste code each run", "C. Hardcode values", "D. No templates"], correct: 0, explanation: "Dataflow templates parameterize pipelines. Cloud Storage storage. Self-service execution via API/UI. One template, many runs."},
+            {domain: 3, num: 50, title: "Exactly-Once Semantics & Deduplication in Streaming", scenario: "Financial transaction stream to BigQuery: 1M transactions/day. Network/system failures cause duplicate submissions (~0.1% duplicates). If duplicate transaction processed twice, double-charge customer. How to guarantee exactly-once?", options: ["A. Use exactly-once semantics: (1) Dataflow built-in: idempotent writes to BigQuery via insert ID (Dataflow assigns unique insert ID to each transaction). BigQuery deduplicates by insert ID (same ID arrives twice, 2nd insert ignored). (2) BigQuery streaming insert API: insertId field uniqueness guarantees dedup. (3) Application-level: ParDo with state tracking (seen_transaction_ids set), reject duplicates before write. (4) Cloud Datastore: store processed transaction IDs, query on receipt. (5) Exactly-once achieved: each transaction processed once end-to-end. Monitor: dedup_count metric (% duplicates filtered).", "B. No deduplication", "C. Duplicates acceptable", "D. Manual dedup"], correct: 0, explanation: "Exactly-once deduplication critical for financial/sensitive transactions. Dataflow + BigQuery insert ID handles automatically. Application-level state as backup."},
+
+            // Domain 4: Vertex AI Model Training & Deployment (Q61–Q80)
+            {domain: 4, num: 61, title: "Custom Training vs AutoML: Architecture & Complexity Trade-off", scenario: "Use case: train image classification model on 500K labeled images. Custom architecture needed: ResNet50 backbone + custom head. Training time <2 hours on GPU. AutoML available but limited to preset models. Decision?", options: ["A. Use Custom Training: (1) Write training script (train.py, TensorFlow/PyTorch), define architecture, load data from BigQuery/GCS. (2) Submit to Vertex AI: gcloud ai custom-jobs create --config train_config.yaml (specifies GPU type: A100, worker count, training package). (3) Vertex AI provisions GKE cluster, runs train.py on A100 (40GB VRAM sufficient for ResNet50+data). (4) Logs streamed to Cloud Logging. (5) AutoML limited (preset models) but faster setup. CustomTraining: full control, custom architecture, faster training (2h vs AutoML 8h). Choose Custom if custom architecture needed.", "B. Use AutoML for simplicity", "C. AutoML can't handle 500K images", "D. Only CPU training possible"], correct: 0, explanation: "Custom Training enables custom architectures, better performance. AutoML is simpler but limited. Choose by requirements (custom vs ease)."},
+            {domain: 4, num: 62, title: "Hyperparameter Tuning: Search Strategy & Convergence", scenario: "Training params: learning_rate ∈ [0.0001, 0.1] (log scale), batch_size ∈ [16, 128], optimizer ∈ [Adam, SGD]. Grid search (exhaustive): 7×7×2 = 98 trials, 30 min/trial = 49 hours. Random search vs Bayesian optimization?", options: ["A. Use Vertex AI Hyperparameter Tuning (Bayesian): (1) Specify parameter space + metric (validation_loss). (2) Bayesian optimization explores intelligently: early trials broad, later trials focus on promising regions. (3) Parallel trials: 10 workers, each running different params. (4) Convergence: 20-30 trials find near-optimal params vs grid search 98 trials. (5) Time: 30 min/trial × 30 trials / 10 workers = 90 min (vs 49h grid search). Cost: Bayesian 50x faster. Random search worse than both (explores blind). (6) Output: best_params + training history.", "B. Grid search all 98 combinations", "C. Random search (any 10 trials)", "D. Manual tuning"], correct: 0, explanation: "Bayesian HPT learns from prior trials, converges faster. Parallel trials reduce wall-clock time. Beats grid search and random search."},
+            {domain: 4, num: 63, title: "Pre-Deployment Model Validation: Comprehensive Testing", scenario: "Model trained with 96% accuracy on validation set. Before production, what validation checks? Deployment will serve 10M predictions/day, low tolerance for errors.", options: ["A. Comprehensive validation: (1) Held-out test set (unseen, 5K records): verify accuracy ≥90% (should match validation). Large train-val-test gap indicates overfitting; abort. (2) Fairness: compute accuracy per demographic (age, gender, geography). Max gap <3%. If biased, retrain with balanced data. (3) Edge cases: empty inputs, extreme values, NaNs. Expect graceful handling (error messages, not crashes). (4) Performance: batch 1K predictions, measure p99 latency (<200ms?), throughput (predictions/sec). (5) Adversarial: adversarial examples (tiny perturbations) fool model? Check robustness. (6) Rollback test: can revert to v1 in <5min if v2 fails? (7) Monitor setup: prediction logging to BigQuery, alerting on low accuracy. Deploy only if all pass.", "B. Deploy if validation accuracy high", "C. No pre-deployment tests", "D. Test on training data only"], correct: 0, explanation: "Pre-deployment validation prevents failures. Test set, fairness, edge cases, performance, adversarial, rollback, monitoring. Comprehensive coverage."},
+            {domain: 4, num: 64, title: "Traffic Splitting & Canary Deployment Strategy", scenario: "Model v2 shows better accuracy (96% vs v1 94%) in offline tests. But real-world impact unknown (ranking, user engagement may differ). Gradually roll out v2 to 10M users via traffic split.", options: ["A. Canary deployment via traffic split: (1) Day 1: 5% users → v2, 95% → v1. Monitor: v2 latency, error rate, business metric (e.g., click-through rate). Expected: latency similar, CTR similar or better. (2) If good, increase: day 3: 25% → v2. Day 5: 50%. Day 7: 100%. (3) A/B test: collect metrics daily. Use t-test: is v2 CTR significantly different (better or worse) than v1? p-value <0.05 = significant. (4) Rollback easy: if v2 causes errors/latency, reduce traffic back to 5%. (5) Monitoring: Vertex Prediction metrics (QPS, latency_p50/p99, error_rate). Datadog dashboard. (6) Total migration: 1-2 weeks, low risk.", "B. Switch 100% v2 immediately", "C. No traffic splitting", "D. Keep v1 forever"], correct: 0, explanation: "Canary deployment limits blast radius. Gradual traffic increase + monitoring enables safe rollout. A/B testing validates business impact."},
+            {domain: 4, num: 65, title: "Serving Modes: Online vs Batch vs Streaming", scenario: "System needs predictions: (1) real-time web request (user uploads image, predict in <500ms), (2) daily batch score 50M user profiles (run overnight), (3) continuous stream process. Single endpoint or multiple?", options: ["A. Use 3 endpoints: (1) Online (Vertex Prediction endpoint): real-time, <500ms latency. Cost: $0.07 per 1K predictions (pay-per-use) + compute instance cost. (2) Batch (Vertex Batch Prediction): 50M profiles overnight, cost-effective ~$0.001 per 1K (1000x cheaper/prediction). (3) Streaming (Dataflow): integrate model into pipeline, batch predictions (100 at once), write to BigQuery. Each serving mode fits use case. Same model artifact, different deployment. Trade-off: online (expensive, fast), batch (cheap, slow), streaming (balanced).", "B. Single online endpoint for all", "C. Single batch endpoint for all", "D. Three separate model versions"], correct: 0, explanation: "Serving modes have different latency-cost profiles. Online for real-time, batch for bulk processing, streaming for continuous. One model, multiple deployments."},
+            {domain: 4, num: 66, title: "Data Drift Detection & Retraining Strategy", scenario: "Production model: predicts loan approval. Baseline (training) accuracy: 94%. After 3 months live: accuracy (measured on logged predictions + ground truth) drops to 89%. Validation accuracy unchanged (still 94%, tested on old data). Root cause?", options: ["A. Data drift: input distribution changed. Possible causes: (1) new customer demographics (younger, different income), (2) economic conditions changed (approval rates shifted), (3) external events (recession, policy change). Detect via: (1) statistical tests (KS test comparing new vs training distribution) on key features, (2) SHAP value drift (explanations changed), (3) monitoring accuracy metric itself. Remediation: (1) retrain on recent 3-month data (captures new distribution), (2) set up continuous retraining (monthly pipeline), (3) alert if accuracy drops >2% quarter-over-quarter. Retraining updates model for new distribution. Accuracy likely recovers.", "B. Model is broken", "C. Validation unchanged = production unchanged", "D. Ignore accuracy drop"], correct: 0, explanation: "Data drift = input distribution shift, causing performance drop. Continuous monitoring + retraining maintain performance. Test accuracy unchanged because test data is old."},
+            {domain: 4, num: 67, title: "Prediction Logging & Feedback Loop for Continuous Learning", scenario: "Model makes 1M predictions/day: customer_id, features, predicted_label (high_value/low_value), confidence. Ground truth labels arrive 30 days later (actual customer spending). Set up feedback loop to improve model.", options: ["A. Prediction logging: (1) Vertex Prediction logs all predictions to BigQuery table (features, predicted_label, confidence, timestamp). (2) Ground truth pipeline: after 30 days, join with actual spending data. Query: SELECT prediction_table.customer_id, prediction_table.predicted_label, actual_spending.label FROM prediction_table LEFT JOIN actual_spending. (3) Compute accuracy on logged predictions (measured 30 days delayed). If accuracy <90%, trigger retraining. (4) Use logged data (features + label) as new training data (unbiased sample of production). Retrain monthly with fresh labels. (5) Monitor: lag (time from prediction to label), data quality, accuracy trend.", "B. No logging", "C. Manual tracking", "D. Feedback impossible"], correct: 0, explanation: "Prediction logging creates feedback data. Join predictions with ground truth. Retrain with fresh labels. Enables continuous improvement cycle."},
+            {domain: 4, num: 68, title: "Model Explainability: Per-Instance Attribution & Actionability", scenario: "Loan denial: customer disputes. Model predicted denial (95% confidence). Feature importance: debt_ratio=0.8, income=0.1, employment_years=0.05. Explain & suggest action.", options: ["A. Per-instance explanation: (1) SHAP or integrated gradients: debt_ratio increased prediction to 0.95 (80% attribution), income decreased to 0.15 (10% attribution). (2) Counterfactual: 'If debt_ratio was 0.3 instead of 0.8, predicted as approve (0.75 confidence).' (3) Show customer: primary driver is debt_ratio (high debt burden). (4) Action: suggest debt reduction (pay off $X), then reapply. (5) Fairness check: is this customer group systematically denied? Audit for discrimination. (6) Explanations + counterfactuals are actionable (customer knows what to do).", "B. 'Model said no' (opaque)", "C. Feature importance has no meaning", "D. All features equally important"], correct: 0, explanation: "Per-instance SHAP explanations are actionable. Counterfactuals suggest improvements. Transparency + fairness audit required."},
+            {domain: 4, num: 69, title: "Custom Containers: Bringing Any Framework to Vertex AI", scenario: "Team uses JAX (not standard TensorFlow). Model trained in JAX, weights in .jax format. Deploy to Vertex Prediction.", options: ["A. Custom container approach: (1) Create predictor.py: load .jax weights, define predict(request) → output. (2) Dockerfile: FROM python:3.9-slim, RUN pip install jax, COPY model.jax, COPY predictor.py, ENTRYPOINT [\"python\", \"predictor.py\"]. (3) Build & push: docker build -t gcr.io/project/jax-model . && docker push. (4) Create endpoint: gcloud ai endpoints create --display-name=jax-endpoint --container-image-uri=gcr.io/project/jax-model (specifies container). (5) Vertex AI runs container on GPU, handles autoscaling. (6) Predict: curl -X POST http://endpoint/predict -d '{input_data}' → model output. Framework-agnostic.", "B. Deploy .jax directly", "C. Only TensorFlow/PyTorch supported", "D. Containers not needed"], correct: 0, explanation: "Custom containers enable any framework. Dockerfile + Artifact Registry. Vertex AI orchestration framework-agnostic."},
+            {domain: 4, num: 70, title: "Latency Profiling & Optimization: Identifying Bottlenecks", scenario: "Endpoint latency: p50=200ms, p99=800ms (slow). Profiling: model inference 40ms, feature fetching 300ms, post-processing 20ms, network I/O 40ms. Optimize.", options: ["A. Bottleneck is feature fetching (300ms, 75% of latency). Optimization: (1) Cache features in-memory (Redis): pre-populate customer features, lookup <1ms. Reduces latency to ~150ms. (2) Batch inference: collect 100 requests, predict together (amortize model init). Throughput increases. (3) Feature pre-computation: pre-compute features offline (daily), store in cache. (4) Move feature store closer (CDN, in-region). (5) Test: measure p50/p99 post-optimization. Target <200ms p99. Monitor: Datadog latency percentiles. (6) Cost vs UX trade-off: caching increases infrastructure cost but improves user experience.", "B. Model inference too slow", "C. Network I/O bottleneck", "D. No optimization possible"], correct: 0, explanation: "Profile to identify true bottleneck. Feature fetching often dominates. Caching, batching, pre-computation are levers. Monitor post-optimization."},
+
+            // Domain 5: Analytics & BigQuery SQL (Q81–Q100)
+            {domain: 5, num: 81, title: "BigQuery Partitioning: Design Strategy for Massive Tables", scenario: "Table: events_log (1B rows, 5TB, daily data for 5 years). Queries: 95% filter by date (WHERE date >= '2024-01-01'), 5% filter by user_id. Partition by date vs user_id vs ingestion_time?", options: ["A. Partition by date (PARTITION BY DATE(event_timestamp) or PARTITION BY TIMESTAMP_TRUNC(event_timestamp, DAY)). Rationale: (1) Aligns with 95% of query filters (automatic partition pruning). Query '2024-01-01+' scans ~100GB (1 day), not 5TB. (2) Data lifecycle: delete old partitions (retention policy). (3) Cost: BigQuery charges per data scanned; partitioning reduces ~50x. (4) For user_id queries: add clustering (secondary). Total: partition by date, cluster by user_id. (5) Ingestion_time partitioning less useful (data arrives daily, aligned with event_date anyway).", "B. Partition by user_id", "C. Partition by ingestion_time", "D. No partitioning"], correct: 0, explanation: "Partition strategy should align with query patterns. Date partitioning for time-series data reduces scans dramatically. Combine with clustering for secondary filters."},
+            {domain: 5, num: 82, title: "Clustering: Multi-dimensional Pruning & Block Elimination", scenario: "Table: orders (100M rows, 50GB). Frequent query: SELECT * FROM orders WHERE country='US' AND product_category='Electronics' AND created_date >= '2024-01'. Without clustering: full table scan (50GB). With clustering?", options: ["A. Cluster by [country, product_category, created_date]. BigQuery reorders rows: rows with same country/category/date stored together (same storage blocks). Query: filters to country='US' AND category='Electronics' → scans only relevant blocks (~1-2GB, 95% eliminated). Cost: 50GB → 1GB. Automatically maintained (no rebuild). Note: partition by DATE (for created_date), then cluster by [country, category]. Partition handles time filtering fast; clustering handles the 2D filter. Combined: partition pruning + block elimination.", "B. No clustering benefit", "C. Cluster by high-cardinality columns (e.g., order_id)", "D. Clustering is slower"], correct: 0, explanation: "Clustering collocates similar rows on storage blocks. Query filters eliminate whole blocks. Multi-column clustering for complex filters. Combine with partitioning."},
+            {domain: 5, num: 83, title: "Window Functions: Advanced Analytics & Ranking", scenario: "Sales data: [date, customer_id, amount]. Complex query: (1) running total per customer over time, (2) rank customers by total spend, (3) identify top 3 customers each month, (4) month-over-month growth rate. Implement efficiently.", options: ["A. Window functions: (1) Running total: SUM(amount) OVER (PARTITION BY customer_id ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW). (2) Rank: ROW_NUMBER() OVER (ORDER BY total_spend DESC) or RANK() for ties. (3) Monthly top 3: PARTITION BY MONTH, RANK(), then FILTER WHERE rank <= 3. (4) Growth: LAG(total, 1) OVER (PARTITION BY customer_id ORDER BY MONTH) to get prior month, compute (current - prior) / prior. Single query, single scan (efficient). Alternative: nested subqueries (3x slower). Window functions preferred.", "B. Multiple queries (one per calculation)", "C. No efficient way", "D. Window functions can't do this"], correct: 0, explanation: "Window functions enable complex analytics efficiently. OVER clause specifies partition/order. LAG, LEAD, ROW_NUMBER, RANK enable sophisticated calculations."},
+            {domain: 5, num: 84, title: "JOIN Optimization: Broadcast vs Sort-Merge & Statistics", scenario: "Query: SELECT * FROM orders (500M rows, 50GB) JOIN customers (5M rows, 500MB) ON orders.customer_id = customers.customer_id. Expected execution plan?", options: ["A. BigQuery query optimizer automatically chooses: (1) Table size analysis: customers 500MB << orders 50GB. (2) Decision: broadcast join (send customers to all workers, join in-memory). (3) Execution: each worker receives customers (broadcast), scans local orders partition, joins. (4) Cost: customers broadcast once (~500MB), orders scanned once (50GB). Total: 50GB+ broadcast cost, faster (avoids sort both tables). (5) Explicit hint (rarely needed): /* @broadcast(customers) */ SELECT * FROM orders JOIN customers. For your case, automatic choice is broadcast.", "B. Always sort-merge", "C. Manual choice required", "D. Same performance either way"], correct: 0, explanation: "Join optimizer considers table sizes. Small table broadcasted, large table scanned. Statistics guide optimizer. Broadcast faster for imbalanced joins."},
+            {domain: 5, num: 85, title: "CTEs & Query Optimization: Readability + Performance", scenario: "Query: customers with avg_spend >= 1000, ranked by spend, return top 100 with customer name, avg spend, rank. Without CTE (nested subquery). With CTE (readable). Compare.", options: ["A. WITH approach (recommended): WITH customer_spend AS (SELECT customer_id, customer_name, AVG(order_amount) AS avg_spend FROM orders GROUP BY customer_id, customer_name HAVING AVG(order_amount) >= 1000), ranked AS (SELECT *, ROW_NUMBER() OVER (ORDER BY avg_spend DESC) AS rank FROM customer_spend) SELECT * FROM ranked WHERE rank <= 100. Benefits: (1) Readable (each stage named). (2) Efficient: BigQuery may materialize intermediate result (faster than re-computing nested subquery). (3) Debuggable (test each CTE independently). (4) Nested subquery alternative: SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY avg_spend DESC) FROM (SELECT ... HAVING ...) ) WHERE rank <= 100 (less readable, potentially slower).", "B. Nested subqueries always", "C. CTEs always slower", "D. No difference"], correct: 0, explanation: "CTEs improve readability and often enable optimization (materialization). Preferred over nested subqueries. Can debug each stage."},
+            {domain: 5, num: 86, title: "UNION All vs UNION: Correctness & Performance Trade-off", scenario: "Two regional sales tables: us_sales (300M rows), eu_sales (100M rows). Likely small overlap (cross-listed customers). Combine and report total revenue by region. UNION vs UNION ALL?", options: ["A. Use UNION ALL (faster, correct): (1) UNION ALL concatenates without deduplication (us_sales + eu_sales = 400M rows total). (2) GROUP BY region, SUM(revenue) on combined result. (3) Cost: 400M rows scanned, grouped. (4) UNION (deduplication) slower: BigQuery must deduplicate all 400M rows (hash set), then group. ~2-3x slower. (5) Correctness: if overlap minimal (unlikely customers listed in both), UNION ALL output same as UNION but faster. (6) Assumption: verify no duplicate transactions (same order_id in both tables). If duplicates possible, need explicit deduplication (GROUP BY order_id for unique transactions).", "B. Use UNION (always dedup)", "C. No difference", "D. UNION impossible"], correct: 0, explanation: "UNION ALL faster (no deduplication). UNION slower (deduplicates). Choose based on whether duplicates expected. Verify assumptions."},
+            {domain: 5, num: 87, title: "GROUP BY with NULLs: Handling Missing Values", scenario: "Sales table: [region, product, amount]. Region has 8% NULLs (unknown origin). Query: SELECT region, SUM(amount) FROM sales GROUP BY region. Expected output?", options: ["A. GROUP BY treats NULL as valid group (distinct value). Output includes row: region=NULL, sum=total of NULL-region sales (8% of revenue). If want to exclude: WHERE region IS NOT NULL GROUP BY region (filters before grouping, excludes NULL rows). If want to aggregate NULLs into category: COALESCE(region, 'Unknown') GROUP BY COALESCE(region, 'Unknown') (combines NULL into single group). Testing: verify row count and NULL handling in output. Documentation: document NULL treatment.", "B. NULLs excluded automatically", "C. NULLs can't be grouped", "D. Error on NULL"], correct: 0, explanation: "GROUP BY includes NULL as distinct group. Explicit filtering or COALESCE for control. Always specify NULL handling for clarity."},
+            {domain: 5, num: 88, title: "UNNEST: Flattening Nested/Repeated Fields for Analysis", scenario: "Table: customer_orders (customer_id, customer_name, orders: [order_id, date, items: [item_id, qty, price]]). Query: total revenue per item_id (across all customers, all orders)?", options: ["A. UNNEST chain: WITH flattened AS (SELECT customer_id, customer_name, order_item.item_id, order_item.qty, order_item.price, order_item.qty * order_item.price AS item_revenue FROM customer_orders, UNNEST(customer_orders.orders) AS order_entry, UNNEST(order_entry.items) AS order_item) SELECT item_id, SUM(item_revenue) AS total_revenue FROM flattened GROUP BY item_id. Explanation: (1) UNNEST(orders) denests orders array (each order becomes separate row). (2) UNNEST(order_entry.items) denests items within each order. (3) Calculate revenue per item. (4) GROUP BY item_id aggregates. Single query, handles complex nesting.", "B. No UNNEST", "C. Can't query nested", "D. Manual denormalization"], correct: 0, explanation: "UNNEST flattens nested arrays. Chain multiple UNNEST for deep nesting. Enables aggregation on nested data."},
+            {domain: 5, num: 89, title: "Approximate Functions: Speed-Accuracy Trade-off", scenario: "Table: web_events (1T bytes, 100B rows). Query: approximate count of distinct user_ids (exploratory analysis, 1% error acceptable). EXACT COUNT(DISTINCT) takes 10+ minutes. Speed up.", options: ["A. Use APPROX_COUNT_DISTINCT(user_id): returns approximate result in <1 second (vs 10 min exact). Typical error: 0.5-2% (within 1% SLA). Cost: <1GB scanned (hyperloglog sketch), vs 100GB for exact. Other approximations: APPROX_QUANTILES (percentiles, sketches), APPROX_PERCENTILE_CONT. Trade-off: accuracy ↔ speed. Acceptable for: exploratory queries, dashboards, metrics where exact not critical. Not acceptable: financial totals (need exact), compliance (need audit trail). Warning: don't use approximate in final reports without noting.", "B. EXACT COUNT only", "C. No approximation available", "D. Accept 10 min wait"], correct: 0, explanation: "Approximate functions trade accuracy for speed. Sketches enable fast aggregations on massive data. Document trade-offs in reporting."},
+            {domain: 5, num: 90, title: "Materialized Views: Caching Expensive Aggregations", scenario: "Dashboard query (SELECT month, region, SUM(revenue), AVG(order_value) FROM orders GROUP BY month, region) runs every hour, scans 1TB, takes 4 min. Dashboard users see 4-min delay. Optimize for responsiveness.", options: ["A. Create materialized view: (1) CREATE MATERIALIZED VIEW dashboard_metrics AS (SELECT DATE_TRUNC(order_date, MONTH) AS month, region, SUM(revenue) AS total_revenue, AVG(order_value) AS avg_order FROM orders GROUP BY DATE_TRUNC(order_date, MONTH), region). (2) BigQuery pre-computes result, stores incrementally. (3) Query MV: SELECT * FROM dashboard_metrics. Cost: 0 bytes scanned (cached), instant (<1s). (4) Refresh: CALL BQ.REFRESH_MATERIALIZED_VIEW('dashboard_metrics') on schedule (hourly, via Cloud Scheduler). (5) Alternative: cache result in Redis (manual invalidation). MV is simpler, automatic refresh.", "B. No caching", "C. Repeat query hourly", "D. Accept 4-min delay"], correct: 0, explanation: "Materialized views cache expensive aggregations. Instant queries on cached data. Auto-refresh on schedule. Ideal for dashboards and reports."},
+
+            // Domain 6: MLOps & Governance (Q101–Q120)
+            {domain: 6, num: 101, title: "Model Monitoring: Metrics, Alerts & Dashboards", scenario: "Production model: 100K predictions/day. After 3 weeks, accuracy drops silently 4% (from 94% to 90%, business impact). Designed monitoring?", options: ["A. Comprehensive monitoring: (1) Daily metric tracking: accuracy, precision, recall, latency p50/p99. (2) Trend analysis: 7-day rolling average, 30-day historical. Alert if accuracy drops >2% week-over-week. (3) Dashboard: Looker/Data Studio showing prediction volume, accuracy, latency, error rates. (4) Ground truth feedback: model predictions logged to BigQuery; join with actual labels (30-day lag). Compute accuracy on production predictions. (5) Alert channels: Slack/PagerDuty if metric breaches (auto-triggers investigation). (6) Incident playbook: if accuracy <90%, page on-call engineer, run diagnostics (data drift? model staleness?). Proactive monitoring catches regressions early.", "B. No monitoring", "C. Monthly manual review", "D. Ignore degradation"], correct: 0, explanation: "Proactive monitoring catches regressions. Metrics + trends + alerts + feedback loops enable quick response. Production blindness = business impact."},
+            {domain: 6, num: 102, title: "Data Drift vs Concept Drift: Root Cause Analysis", scenario: "Churn prediction model: baseline accuracy 85%. After 2 months: accuracy 78%. EDA: (1) customer age distribution shifted (more young users), (2) churn reasons changed (economic downturn → more price-sensitive, less quality issues). Diagnose: data drift, concept drift, or both?", options: ["A. Both (1) Data drift: input distribution shifted. Young users (new demographic) have different features than baseline. Detect: KS test on age distribution, chi-square on categorical features. (2) Concept drift: churn reasons changed. Feature importance shifted (price_sensitivity now > product_quality). Remedy differs: (1) Data drift → retrain on new distribution, model learns new patterns. (2) Concept drift → redesign features (add economic indicators?), recalibrate model, or hybrid retraining. Investigate separately. Monitoring: track both input distribution AND feature importance. Retraining strategy: combine fresh data + feature redesign.", "B. Only data drift", "C. Only concept drift", "D. Neither"], correct: 0, explanation: "Data drift (input change) and concept drift (label change) require different remedies. Diagnose separately and respond accordingly."},
+            {domain: 6, num: 103, title: "Multi-Trigger Retraining Automation", scenario: "Retraining needs: (1) monthly schedule (reliable cycle), (2) if accuracy drops >3% (urgent), (3) if new data volume >100K records/day (freshness), (4) manual trigger (experimentation). Automate all in single pipeline.", options: ["A. Multi-trigger orchestration: (1) Cloud Scheduler: cron monthly (trigger Pub/Sub event → Vertex Pipeline). (2) Accuracy monitor (BigQuery query daily): if accuracy < threshold, publish Pub/Sub event (drift_detected) → trigger pipeline. (3) Data volume check (Pub/Sub metrics): if backlog_age increases, publish volume_alert → trigger. (4) Manual API endpoint: gcloud ai pipelines run --parameters={...}. (5) Central pipeline: all triggers converge to single training job. Guard: check if recent retraining already in progress (avoid cascading). Log reason for each retrain. Cost optimization: batch retraining with other scheduled jobs.", "B. Single monthly schedule", "C. No automation", "D. Manual retraining always"], correct: 0, explanation: "Multi-trigger retraining responds to multiple conditions (schedule, performance, volume, manual). Centralized orchestration prevents chaos."},
+            {domain: 6, num: 104, title: "A/B Testing: Experimental Design & Statistical Significance", scenario: "Model v2 claims better ranking (v1 ranks items, v2 re-ranks). Offline metrics: NDCG ↑5%. But real user impact unknown (CTR, dwell time may differ). Design A/B test for 1M daily users.", options: ["A. Experimental design: (1) Randomization: assign users to cohorts (50% v1, 50% v2) via consistent hashing (user_id % 2). (2) Duration: 2 weeks (captures weekly patterns, enough data for significance). (3) Metrics: primary (CTR, revenue per user), secondary (dwell time, bounce rate). (4) Analysis: t-test for CTR. If v2_ctr is significantly >v1_ctr (p<0.05, confidence 95%), v2 wins. (5) Sample size: 1M users × 2 weeks = 14M datapoints, sufficient for 2% diff detection. (6) Guardrails: if latency increases >10%, abort (technical regression). (7) Tools: Vertex AI experiments or Firebase A/B testing. (8) Rollout: if v2 wins, gradually shift traffic (canary) to 100% over week.", "B. Deploy v2 immediately", "C. No A/B testing", "D. Guess based on offline metrics"], correct: 0, explanation: "A/B testing validates business impact with statistical rigor. Offline metrics ≠ user behavior. Proper randomization, sizing, analysis essential."},
+            {domain: 6, num: 105, title: "Feature Store: Governance, Ownership & Consistency", scenario: "Features (customer_age, credit_score, income, lifetime_value) scattered across teams (HR, risk, finance, analytics). Inconsistent definitions, update schedules, versioning. Centralize.", options: ["A. Feature Store governance (Vertex AI Features): (1) Register all features: owner (team), SLA (update frequency, latency), schema, PII flag. (2) Versioning: feature v1, v2, v3 (breaking changes → new version). (3) Point-in-time: retrieve features as of training date (reproducibility). (4) Access control: owner can modify, others read. PII features → restricted access (audit logs). (5) Freshness: monitor staleness (feature last updated N min ago?). Alert if exceeded SLA. (6) Single source of truth: all models use same feature definitions. (7) Lineage: which models use which features? (8) Testing: validate feature quality before production.", "B. No feature store", "C. Each team owns independently", "D. Duplicate features everywhere"], correct: 0, explanation: "Feature Store centralizes governance. Consistency, versioning, lineage, access control. Single source of truth for features."},
+            {domain: 6, num: 106, title: "Model Explainability: Regulatory Compliance & Transparency", scenario: "Loan approval model denies applicant X. GDPR right to explanation + FCRA (Fair Credit Reporting Act) requires specific disclosure. What to provide?", options: ["A. Regulatory compliance: (1) SHAP values: feature contributions (debt_ratio=0.7, income=0.2 → negative decision). (2) Counterfactual: 'If income was $60K (vs $40K), model predicts approve.' (3) Fairness audit: does model discriminate by protected attributes (race, gender)? Provide demographic disparity metrics. (4) Model card: training data, evaluation, fairness limitations. (5) Appeal process: customer can request manual review. (6) Documentation: saved for audit trail. (7) Fairness remedies: if model biased, mitigation steps (more training data, balanced sampling, constraints). Explainability is legal requirement, not optional.", "B. 'Model said no' (vague)", "C. No explanation (trade secret)", "D. Explain offline, not to customer"], correct: 0, explanation: "Regulatory compliance requires explainability. SHAP + counterfactual + fairness audit + model card. Transparency builds trust and prevents legal issues."},
+            {domain: 6, num: 107, title: "Pre-Deployment Model Validation: Comprehensive Checklist", scenario: "Model trained: 96% accuracy on validation. Before production (supports 10M users, low error tolerance), what validation gates pass/fail deployment?", options: ["A. Validation checklist: (1) Performance gate: test accuracy ≥90% (gap vs validation ≤2%, no overfitting). Reject if lower. (2) Fairness gate: demographic parity (accuracy gap <3% across age/gender/region). Audit for disparate impact. (3) Edge case gate: adversarial inputs (malicious data), boundary values (negative amounts), NaNs. Reject if crashes. (4) Latency gate: p99 latency <200ms (SLA). (5) Throughput gate: can serve 10K QPS? (6) Rollback test: can revert to v1 in <5 min? (7) Monitoring gate: prediction logging enabled? Drift alerts configured? (8) Security gate: no PII leakage, model stealing risks assessed. (9) Sign-off: all gates pass → issue certification (ML engineer, product, legal). Deploy only if all pass.", "B. Deploy if accuracy high", "C. No validation gates", "D. Deploy without checks"], correct: 0, explanation: "Pre-deployment validation is critical. Comprehensive checklist covers performance, fairness, edge cases, operational readiness. Sign-off prevents incidents."},
+            {domain: 6, num: 108, title: "ML Metadata & Audit Trail: Reproducibility & Compliance", scenario: "Auditor: 'Which data trained model v5.2? Who approved? When? What was performance?' Reproduce training?", options: ["A. ML Metadata audit trail (Vertex): (1) Execution ID: e.g., 'training_run_20240115_v5_2'. (2) Input artifacts: dataset version (e.g., dataset_v3, rows 1M-2M, date range 2023-01-01 to 2023-12-31). (3) Code version: Git commit hash (reproducible). (4) Training job config: hyperparams, compute (GPU type, count). (5) Output artifact: model v5.2, accuracy 94.2%. (6) Approver: ML engineer sign-off timestamp, reason. (7) Reproducibility: re-run with same inputs (Git commit, dataset) → same model (if seeds fixed). (8) Audit chain: all metadata immutable, timestamped. (9) Compliance: satisfies SOX, HIPAA, GDPR audit requirements.", "B. No audit trail", "C. Lost history", "D. Manual notes (unreliable)"], correct: 0, explanation: "ML Metadata provides immutable audit trail. Reproducibility and compliance essential. Automated logging via Vertex."},
+            {domain: 6, num: 109, title: "Model Versioning & Traffic Management: Safe Deployments", scenario: "Deployed versions: v1 (live, 100%), v2 (staging, 0%), v3 (training). Customer bug report on v1. Incident response?", options: ["A. Model versioning workflow: (1) Investigate v1 (root cause: overfitting? data quality?). (2) If urgent, rollback to v0 (pre-v1 version, kept for emergencies). Procedure: redirect 100% traffic v0, monitor stability. (3) Fix v1 issue: retrain with corrected data/code. (4) Validation: test v1_fixed thoroughly. (5) Staging: deploy v1_fixed to staging (5% traffic). Monitor. (6) Canary: promote v1_fixed to 25% production. (7) Production: if no regressions, expand to 100%. (8) Cleanup: archive v1 (keep in registry for history), delete v0. (9) Postmortem: prevent recurrence. All versions tracked in Model Registry with deployment history.", "B. No versioning", "C. Only 1 version", "D. Delete old versions"], correct: 0, explanation: "Model versioning enables safe operations. Traffic splitting for gradual rollout. Keep history for rollback. Systematic incident response."},
+            {domain: 6, num: 110, title: "Cost Attribution & FinOps: ML Infrastructure Economics", scenario: "ML platform costs: $50K/month (training, serving, storage). Finance: 'Which models are expensive? Chargeback model?' Optimize costs.", options: ["A. Cost optimization: (1) Label resources: every training job, endpoint, BigQuery dataset tagged (model=churn, team=analytics, env=prod). (2) Cost analysis: BigQuery query on Cloud Billing data. GROUP BY model, team. Identify top-5 expensive models. (3) Chargeback: charge teams $X per prediction, $Y per training hour. Incentivizes efficiency. (4) Optimization levers: (i) batch prediction instead of online (100x cheaper), (ii) model compression (quantization → smaller, faster), (iii) reserved slots (30% discount). (iv) Delete unused models. (5) Forecasting: predict next month costs based on trends. (6) Budgets: set per-team caps. Overage triggers review. (7) Governance: expensive models require approval.", "B. No cost tracking", "C. Shared cost (no incentive)", "D. No chargeback"], correct: 0, explanation: "Cost attribution drives accountability. Labels, analysis, chargeback models incentivize efficiency. FinOps essentials for scale."},
+            {domain: 6, num: 111, title: "Model Observability: Beyond Metrics to Behavior", scenario: "Model F1=0.85 (looks good). But customers complain: 'Predictions feel random; same input → different predictions.' Metrics miss this. Diagnose.", options: ["A. Observability beyond metrics: (1) Prediction logging: capture predictions, features, confidence. Replay customer queries. (2) Consistency check: same input → same prediction? If not, model has non-determinism (randomness in preprocessing? feature engineering?). (3) SHAP explanations: are feature contributions reasonable? Or spurious correlations? (4) Behavioral testing: edge cases (null inputs, extreme values, duplicates). Does model handle gracefully? (5) Human review: sample 100 predictions, expert judges correctness. Metric alone insufficient. (6) Adversarial robustness: perturb input slightly → does output change drastically? (7) Root cause: find non-determinism (e.g., random seed not fixed), fix, redeploy.", "B. Trust metrics alone", "C. No observability needed", "D. Ignore customer feedback"], correct: 0, explanation: "Observability reveals systematic issues metrics miss. Behavioral testing, explainability, human review essential. Metrics are lagging indicators."},
+            {domain: 6, num: 112, title: "Data Privacy: Right to Deletion & GDPR Compliance", scenario: "Customer GDPR request: 'Delete my data.' Model trained on this customer's data. How to comply?", options: ["A. Privacy compliance workflow: (1) Identify all data: training data (BigQuery table), predictions logged (BigQuery), model weights (if customer-specific info encoded). (2) Delete training data: TRUNCATE or DELETE WHERE customer_id=X from BigQuery. (3) Retrain model: if customer was significant in training, model may degrade. Retrain without this customer. (4) Delete logs: Cloud Logging, audit trail of predictions. (5) Forget mechanism: if feature store caches customer features, purge. (6) Verify: audit trail confirms deletion. (7) Communicate: notify customer deletion complete. (8) Legal: document compliance for regulators. Challenge: retraining costly but required for fairness.", "B. No deletion (retain forever)", "C. Ignore GDPR", "D. Delete model entirely"], correct: 0, explanation: "GDPR right to deletion is binding. ML systems must support data removal. Retraining required if customer significant."},
+            {domain: 6, num: 113, title: "Explainability for Stakeholders: Tailored Narratives", scenario: "Model explanation needed for: (1) ML engineer (debug), (2) business manager (impact), (3) regulator (fairness), (4) customer (transparency). One explanation fits all?", options: ["A. Stakeholder-specific explanations: (1) ML Engineer: SHAP force plots (feature contributions), model weights, training curve, hyperparams. Technical deep-dive. (2) Business manager: counterfactual ('if feature X changes, revenue impact Y%'), business metric impact (CTR +3%). (3) Regulator: demographic parity metrics (disparate impact analysis), protected attribute handling, mitigation efforts. Compliance framing. (4) Customer: simple narrative ('your credit score was main factor'), actionable advice ('improve by paying off debt'). Non-technical. (5) Presentation: each stakeholder gets tailored doc/dashboard. Same model, different lenses.", "B. Single generic explanation", "C. No explanation", "D. Ignore stakeholders"], correct: 0, explanation: "Explainability must match audience expertise and needs. Technical for engineers, business for managers, compliance for regulators, narrative for customers."},
+            {domain: 6, num: 114, title: "PII Protection in Feature Store: Access Control & Encryption", scenario: "Features in Feature Store: customer_age (PII), income (PII), credit_score (PII), product_category (non-PII). Teams: analytics (needs non-PII), risk (needs all), data (maintains all). Govern access.", options: ["A. Access control & encryption: (1) Feature tagging: mark as PII or non-PII. (2) IAM policies: analytics can read only non-PII. Risk can read all (after approval). Data is admin. (3) Audit logs: log who accessed what feature, when, from where. (4) Encryption: PII features encrypted at rest (Cloud KMS). In-transit encryption (TLS). (5) Anonymization: analytics can request anonymized features (aggregates, not individual rows). (6) Retention: delete PII after 90 days (if not used). (7) Compliance: CCPA/GDPR compatible. (8) Monitoring: alert if unauthorized access attempts.", "B. No access control", "C. Everyone sees PII", "D. Delete PII features"], correct: 0, explanation: "PII protection is critical. Role-based access, encryption, audit logs, anonymization. Feature Store governs compliance."},
+            {domain: 6, num: 115, title: "Model Governance Framework: Scaling ML Responsibly", scenario: "Organization: 50 deployed models across 20 teams. Some models: stale (no retraining 6 months), unexplained (no docs), unmonitored (no alerts). Chaos. Build governance.", options: ["A. Governance framework: (1) Model Registry: central catalog (all 50 models, versioned, metadata). (2) Ownership: each model has owner (team, contact, SLA). (3) Lifecycle: dev → staging → production → deprecated. Clear status for each. (4) Approval workflow: model must pass validation gate before production (checklist sign-off). (5) Monitoring: all models in prod have monitoring (accuracy, latency, drift). Alert if SLA breached. (6) Documentation: model card (training data, performance, fairness, limitations). Mandatory. (7) Escalation: if model underperforms, escalate to owner. 1-week to remediate. (8) Audit: all changes logged. Compliance ready. (9) Tools: Vertex Model Registry + custom dashboard.", "B. No governance", "C. Decentralized chaos", "D. Governance is overhead"], correct: 0, explanation: "Model governance enables scale. Registry, ownership, workflows, monitoring, docs. Prevents technical debt and incidents."},
+            {domain: 6, num: 116, title: "MLOps Maturity: Roadmap from Manual to Intelligent", scenario: "Current ML practice: data scientists train models locally, deploy manually to servers, no monitoring. Maturity level? 5-year roadmap?", options: ["A. Maturity levels: (1) Level 1 (Current): ad-hoc, manual training, manual deployment, no monitoring. (2) Level 2 (Year 1): automated training (Vertex Pipelines), versioning (Model Registry), CI/CD for code. (3) Level 3 (Year 2): automated deployment (canary, traffic split), monitoring dashboards (accuracy, drift), alerting. (4) Level 4 (Year 3): automated retraining (scheduled + triggered), A/B testing, governance framework. (5) Level 5 (Year 5): self-healing models (detect drift → retrain automatically), ML-driven decisions (model selects hyperparams, features)). Roadmap: Level 1→2→3→4→5 progressively. Each level adds capability, reduces manual work, improves reliability.", "B. Already Level 5", "C. Maturity unnecessary", "D. No levels exist"], correct: 0, explanation: "MLOps maturity model guides progression. Manual → automated → monitored → governed → intelligent. 5-year journey realistic."},
+            {domain: 6, num: 117, title: "Cross-Functional ML Team: Collaboration & Alignment", scenario: "Production model underperforms (85% accuracy, target 90%). Data scientist: 'Need more data.' Business: 'Data collection too expensive.' Data engineer: 'Data quality issues, not quantity.' Resolve.", options: ["A. Collaborative root cause analysis: (1) Align on goal: define 'underperform' (business impact vs metric). (2) Diagnose jointly: (i) Data engineer: audit data quality (NULLs, duplicates, staleness). (ii) Scientist: run diagnostics (overfitting? underfitting? feature importance). (iii) Business: measure impact (revenue loss, customer complaints). (3) Hypothesize: quality issue identified (40% NULLs) vs more data needed? (4) Prioritize: fix quality first (cheap), measure impact. If insufficient, then collect more data. (5) Execute: cross-functional tasks (engineer fixes pipeline, scientist retrains, business monitors ROI). (6) Iterate: weekly syncs, dashboard shared. Document decisions for future.", "B. Scientist decides alone", "C. Ignore problem", "D. No collaboration"], correct: 0, explanation: "Cross-functional teams prevent siloed decisions. Shared diagnostics, priority-driven execution. Alignment on root cause essential."},
+            {domain: 6, num: 118, title: "Knowledge Transfer: Documentation & Team Resilience", scenario: "Model subject-matter expert leaves. Successor must maintain complex credit risk model. What must be documented?", options: ["A. Comprehensive documentation: (1) Model card: training data (source, date range, size), features (definitions, ownership), performance (accuracy, fairness), limitations. (2) Pipeline code: GitHub repo, well-commented. Training steps, reproducibility. (3) Operations guide: how to retrain (schedule, data, compute), deploy, monitor. Alert thresholds. (4) Incident playbook: if accuracy drops <90%, steps to investigate (check data drift, retrain, rollback). (5) Feature definitions: which features owned by whom (contact info). Dependencies. (6) Data schema: tables, columns, update frequency. (7) Architecture diagram: data flow, model I/O, integrations. (8) Contact info: previous owner (for questions), stakeholders. (9) Wiki/Confluence: centralize all above. Successor can onboard independently.", "B. Code only", "C. No documentation", "D. Oral knowledge"], correct: 0, explanation: "Documentation enables knowledge transfer and team resilience. Comprehensive, centralized, maintained. Prevents bus factor risk."},
+            {domain: 6, num: 119, title: "Model Deprecation: Lifecycle Management & Technical Debt", scenario: "Model v1 (2 years old) replaced by v2 (better accuracy). When to retire v1? Transition strategy?", options: ["A. Deprecation lifecycle: (1) Announcement: notify users v1 support ends in 90 days. (2) Incentivize migration: v2 offers performance benefits (show metrics). (3) Transition: active support (help migrate), monitoring (v2 stability), documentation (v1→v2 migration guide). (4) Phased sunset: week 1-4: v1 accept new requests, v2 recommended. Week 5-8: v1 read-only (no retraining), v2 primary. Week 9-12: v1 offline, v2 only. (5) Archive: keep v1 in Model Registry (history), no serving. (6) Delete: after 1 year (if compliance satisfied). (7) Postmortem: lessons learned for v2 maintenance.", "B. Immediately delete v1", "C. Keep v1 forever", "D. No deprecation strategy"], correct: 0, explanation: "Deprecation manages technical debt. Phased transition minimizes disruption. Archive history for compliance."},
+            {domain: 6, num: 120, title: "Ethical AI & Fairness: Preventing Discrimination", scenario: "Hiring recommendation model: accuracy 94% (white candidates), 75% (Black candidates). Hidden bias discovered pre-deployment. Proceed?", options: ["A. Do not deploy; remediate first. (1) Root cause: training data biased (majority white candidates)? Feature selection (proxy discrimination: certain schools or zip codes correlate with race)? (2) Remedies: (i) collect more diverse data (hire to reach demographic parity). (ii) Remove biased features (zip code → school is proxy discrimination). (iii) Fairness constraints (train with demographic parity loss: equal accuracy across groups). (iv) Human-in-the-loop: model recommends, recruiter decides (human checks for bias). (v) Post-deployment audit: monitor for disparate impact (hiring rates by demographic). (3) Re-evaluate: fairness gap <5% + business metric maintained. (4) Deploy with monitoring & human oversight. (5) Regular audits: quarterly fairness checks. Ethics first, accuracy second.", "B. Deploy as-is (ignore bias)", "C. Accuracy is only metric", "D. Ignore fairness concerns"], correct: 0, explanation: "Ethical AI requires fairness validation. Bias discovered = do not deploy. Remediate: data diversity, feature selection, fairness constraints, human oversight."}
+        ];
+
+        function renderQuestions(filter = "") {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            const filtered = filter ? questions.filter(q => q.domain == filter) : questions;
+
+            filtered.forEach(q => {
+                const block = document.createElement('div');
+                block.className = 'question-block';
+                block.setAttribute('data-question', q.num);
+                block.setAttribute('data-domain', q.domain);
+
+                const domainNames = ['', 'BigQuery ML', 'Vertex AI Pipelines', 'Dataflow/Beam', 'Model Training', 'BigQuery SQL', 'MLOps'];
+
+                let optionsHTML = '';
+                q.options.forEach((opt, idx) => {
+                    optionsHTML += `
+                        <div class="option" onclick="selectOption(this, ${q.num})">
+                            <input type="radio" name="q${q.num}" value="${idx}" id="q${q.num}_${idx}">
+                            <label for="q${q.num}_${idx}">${opt}</label>
+                        </div>
+                    `;
+                });
+
+                block.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">${q.num}</span>
+                        <span class="scenario-title">${q.title}</span>
+                        <span class="domain-badge">${domainNames[q.domain]}</span>
+                    </div>
+                    <div class="question-body">
+                        <div class="scenario-text">${q.scenario}</div>
+                        <div class="options">${optionsHTML}</div>
+                        <div class="collapsible-section">
+                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                <span>📖 Explanation</span>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="collapsible-content">
+                                <div class="explanation-item"><span class="explanation-correct">✓ Correct Answer:</span> ${q.explanation}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(block);
+            });
+
+            loadAnswers();
+            updateProgress();
+        }
+
+        function selectOption(element, qNum) {
+            const radio = element.querySelector('input');
+            const parent = radio.closest('.question-block');
+
+            parent.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            radio.checked = true;
+
+            saveAnswers();
+            updateProgress();
+
+            const explanationSection = parent.querySelector('.collapsible-section');
+            if (explanationSection) {
+                const header = explanationSection.querySelector('.collapsible-header');
+                if (!header.classList.contains('active')) {
+                    expandCollapsible(header);
+                }
+            }
+        }
+
+        function toggleCollapsible(header) {
+            if (header.classList.contains('active')) {
+                collapseCollapsible(header);
+            } else {
+                expandCollapsible(header);
+            }
+        }
+
+        function expandCollapsible(header) {
+            header.classList.add('active');
+            header.querySelector('.toggle-icon').classList.add('active');
+            header.nextElementSibling.classList.add('active');
+        }
+
+        function collapseCollapsible(header) {
+            header.classList.remove('active');
+            header.querySelector('.toggle-icon').classList.remove('active');
+            header.nextElementSibling.classList.remove('active');
+        }
+
+        function updateProgress() {
+            const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${answered}/${total}`;
+        }
+
+        function filterDomain(domain) {
+            renderQuestions(domain);
+            window.scrollTo(0, 0);
+        }
+
+        function saveAnswers() {
+            const answers = {};
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                answers[radio.name] = radio.value;
+            });
+            localStorage.setItem('pmleExamAnswers', JSON.stringify(answers));
+        }
+
+        function loadAnswers() {
+            const saved = localStorage.getItem('pmleExamAnswers');
+            if (saved) {
+                const answers = JSON.parse(saved);
+                Object.keys(answers).forEach(name => {
+                    const radio = document.querySelector(`input[name="${name}"][value="${answers[name]}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.option').classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuestions();
+        });
+
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'radio') {
+                saveAnswers();
+            }
+        });
+    </script>
+</body>
+</html>

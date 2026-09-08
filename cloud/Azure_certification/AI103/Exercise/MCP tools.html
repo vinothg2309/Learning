@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+        Extend agents with Model Context Protocol (MCP) tools |
+        
+        Develop AI Agents in Azure
+    </title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="./MCP tools_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./MCP tools_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./MCP tools_files/vs.min.css">
+    <script src="./MCP tools_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./MCP tools_files/style.css">
+</head>
+<body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop AI Agents in Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-agents" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-agents">
+                Develop AI Agents in Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-agents" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#create-a-foundry-project-with-the-foundry-toolkit-for-vs-code-extension">Create a Foundry project with the Foundry Toolkit for VS Code extension</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#deploy-a-model">Deploy a model</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#clone-the-starter-code-repository">Clone the starter code repository</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#connect-an-azure-ai-agent-to-a-remote-mcp-server">Connect an Azure AI Agent to a remote MCP server</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#test-the-connection-to-the-remote-mcp-server">Test the connection to the remote MCP server</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#create-an-mcp-server-with-custom-tools">Create an MCP server with custom tools</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#implement-an-mcp-client-to-connect-to-the-custom-mcp-server">Implement an MCP client to connect to the custom MCP server</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#connect-the-mcp-tools-to-your-agent">Connect the MCP tools to your agent</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#test-the-custom-mcp-tools-with-your-agent">Test the custom MCP tools with your agent</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-agents/Instructions/Exercises/03-mcp-integration.html#clean-up">Clean up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="extend-agents-with-model-context-protocol-mcp-tools">Extend agents with Model Context Protocol (MCP) tools</h1>
+
+<p>In this exercise, you’ll use the Foundry Toolkit for VS Code extension to create an agent that can use Model Context Protocol (MCP) server tools to access external data sources and APIs. The agent will be able to retrieve up-to-date information and interact with custom services through MCP tools.</p>
+
+<p>This exercise should take approximately <strong>60</strong> minutes to complete.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors.</p>
+</blockquote>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before starting this exercise, ensure you have:</p>
+
+<ul>
+  <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed on your local machine</li>
+  <li>An active <a href="https://azure.microsoft.com/free/">Azure subscription</a></li>
+  <li><a href="https://www.python.org/downloads/">Python 3.13</a> installed</li>
+  <li><a href="https://git-scm.com/downloads">Git</a> installed on your local machine</li>
+</ul>
+
+<blockquote>
+  <p>* Python 3.14 isn’t supported yet: some dependencies have no 3.14 build. This lab was tested with Python 3.12.</p>
+</blockquote>
+
+<h2 id="create-a-foundry-project-with-the-foundry-toolkit-for-vs-code-extension">Create a Foundry project with the Foundry Toolkit for VS Code extension</h2>
+
+<p>As a developer, you may spend some time working in the Foundry portal; but you’re also likely to spend a lot of time in Visual Studio Code. The Foundry Toolkit for VS Code extension provides a convenient way to work with Foundry project resources without leaving the development environment.</p>
+
+<ol>
+  <li>
+    <p>Open Visual Studio Code.</p>
+  </li>
+  <li>
+    <p>Select <strong>Extensions</strong> from the left pane (or press <strong>Ctrl+Shift+X</strong>).</p>
+  </li>
+  <li>
+    <p>Search the extensions marketplace for the <code>Foundry Toolkit</code> extension from Microsoft and select <strong>Install</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: The extension is currently listed as <strong>Foundry Toolkit</strong>, but some VS Code labels, commands, or older screenshots may still refer to <strong>AI Toolkit</strong>. In this lab, treat those names as referring to the same extension experience.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>After installing the extension, select its icon in the sidebar to open the Foundry Toolkit view.</p>
+
+    <p>You should be prompted to sign in to your Azure account if you haven’t already.</p>
+  </li>
+  <li>
+    <p>Select <strong>Create Project</strong> under <strong>Microsoft Foundry Resources</strong>.</p>
+
+    <p>If a default project is already active, the project name will appear under <strong>My Resources</strong>. You can create a new project by right-clicking on the active project and selecting <strong>Switch Default Project in Azure Resources</strong>.</p>
+  </li>
+  <li>
+    <p>Select your Azure subscription and resource group, then enter a name for your Foundry project to create a new project for this exercise.</p>
+
+    <p>When the deployment is complete, you should see the project appear in the Foundry Toolkit pane as the default project.</p>
+  </li>
+</ol>
+
+<h2 id="deploy-a-model">Deploy a model</h2>
+
+<p>At the core of any generative AI project, there’s at least one generative AI model. In this task, you’ll deploy a model from the Model Catalog to use with your agent.</p>
+
+<ol>
+  <li>
+    <p>When the “Project deployed successfully” popup appears, select the <strong>Deploy a new model</strong> button. This opens the Model Catalog.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: You can also access the Model Catalog by selecting the <strong>+</strong> icon next to <strong>Models</strong> in the Resources section, or by pressing <strong>F1</strong> and running the command <strong>Foundry Toolkit: Show model catalog</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the Model Catalog, locate the <strong>gpt-5</strong> model (you can use the search bar to find it quickly).</p>
+  </li>
+  <li>
+    <p>Select <strong>Deploy</strong> next to the gpt-5 model.</p>
+  </li>
+  <li>Configure the deployment settings:
+    <ul>
+      <li><strong>Deployment name</strong>: Enter a name like “gpt-5”</li>
+      <li><strong>Deployment type</strong>: Select <strong>Global Standard</strong> (or <strong>Standard</strong> if Global Standard is not available)</li>
+      <li><strong>Model version</strong>: Leave as default</li>
+      <li><strong>Tokens per minute</strong>: Raise the Tokens per Minute limit to 150000 or higher.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Select <strong>Deploy to Microsoft Foundry</strong> in the bottom-left corner.</p>
+  </li>
+  <li>
+    <p>Wait for the deployment to complete. Your deployed model will appear under the <strong>Models</strong> section in the Resources view.</p>
+  </li>
+  <li>
+    <p>Right-click the name of the project deployment and select <strong>Copy Project Endpoint</strong>. You’ll need this URL to connect your agent to the Foundry project in the next steps.</p>
+
+    <p><a href="./MCP tools_files/vs-code-endpoint.png" target="_blank"><img src="./MCP tools_files/vs-code-endpoint.png" alt="Screenshot of copying the project endpoint in the Foundry Toolkit VS Code extension."></a></p>
+  </li>
+</ol>
+
+<h2 id="clone-the-starter-code-repository">Clone the starter code repository</h2>
+
+<p>For this exercise, you’ll use starter code that will help you connect to your Foundry project and create an agent that uses MCP server tools.</p>
+
+<ol>
+  <li>
+    <p>In VS Code, open the Command Palette (<strong>Ctrl+Shift+P</strong> or <strong>View &gt; Command Palette</strong>).</p>
+  </li>
+  <li>
+    <p>Type <strong>Git: Clone</strong> and select it from the list.</p>
+  </li>
+  <li>
+    <p>Enter the repository URL:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="hljs cpp">https:<span class="hljs-comment">//github.com/MicrosoftLearning/mslearn-ai-agents.git</span>
+</code></pre>
+  </li>
+  <li>
+    <p>Choose a location on your local machine to clone the repository.</p>
+  </li>
+  <li>
+    <p>When prompted, select <strong>Open</strong> to open the cloned repository in VS Code.</p>
+  </li>
+  <li>
+    <p>Once the repository opens, select <strong>File &gt; Open Folder</strong> and navigate to <code>mslearn-ai-agents/Labfiles/03-mcp-integration</code>, then choose <strong>Select Folder</strong>.</p>
+  </li>
+  <li>
+    <p>In the Explorer pane, expand the <strong>Python</strong> folder to view the code files for this exercise.</p>
+  </li>
+  <li>
+    <p>Right-click on the <strong>requirements.txt</strong> file and select <strong>Open in Integrated Terminal</strong>.</p>
+  </li>
+  <li>
+    <p>In the terminal, enter the following command to install the required Python packages in a virtual environment:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">-m</span> <span class="hljs-selector-tag">venv</span> <span class="hljs-selector-tag">labenv</span>
+.\<span class="hljs-selector-tag">labenv</span>\<span class="hljs-selector-tag">Scripts</span>\<span class="hljs-selector-tag">Activate</span><span class="hljs-selector-class">.ps1</span>
+<span class="hljs-selector-tag">pip</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">-r</span> <span class="hljs-selector-tag">requirements</span><span class="hljs-selector-class">.txt</span>
+</code></pre>
+  </li>
+  <li>
+    <p>Open the <strong>.env</strong> file, replace the <strong>your_project_endpoint</strong> placeholder with the endpoint for your project (copied from the project deployment resource in the Foundry Toolkit extension) and ensure that the MODEL_DEPLOYMENT_NAME variable is set to your model deployment name. Use <strong>Ctrl+S</strong> to save the file after making these changes.</p>
+  </li>
+</ol>
+
+<p>Now you’re ready to create an AI agent that uses MCP server tools to access external data sources and APIs.</p>
+
+<h2 id="connect-an-azure-ai-agent-to-a-remote-mcp-server">Connect an Azure AI Agent to a remote MCP server</h2>
+
+<p>In this task, you’ll connect to a remote MCP server, prepare the AI agent, and run a user prompt.</p>
+
+<ol>
+  <li>
+    <p>Open the <strong>agent.py</strong> file in the code editor.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: As you add code, be sure to maintain the correct indentation. Use the comment indentation levels as a guide.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add references</strong> and add the following code to import the classes:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add references</span>
+<span class="hljs-keyword">from</span> azure.identity <span class="hljs-keyword">import</span> DefaultAzureCredential
+<span class="hljs-keyword">from</span> azure.ai.projects <span class="hljs-keyword">import</span> AIProjectClient
+<span class="hljs-keyword">from</span> azure.ai.projects.models <span class="hljs-keyword">import</span> PromptAgentDefinition, MCPTool
+<span class="hljs-keyword">from</span> openai.types.responses.response_input_param <span class="hljs-keyword">import</span> McpApprovalResponse, ResponseInputParam
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Connect to the agents client</strong> and add the following code to connect to the Azure AI project using the current Azure credentials.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Connect to the agents client</span>
+<span class="hljs-keyword">with</span> (
+    DefaultAzureCredential() <span class="hljs-keyword">as</span> credential,
+    AIProjectClient(endpoint=project_endpoint, credential=credential) <span class="hljs-keyword">as</span> project_client,
+    project_client.get_openai_client() <span class="hljs-keyword">as</span> openai_client,
+):
+</code></pre>
+  </li>
+  <li>
+    <p>Under the comment <strong>Initialize agent MCP tool</strong>, add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Initialize agent MCP tool</span>
+mcp_tool = MCPTool(
+    server_label=<span class="hljs-string">"api-specs"</span>,
+    server_url=<span class="hljs-string">"https://learn.microsoft.com/api/mcp"</span>,
+    require_approval=<span class="hljs-string">"always"</span>,
+)
+</code></pre>
+
+    <p>This code will connect to the Microsoft Learn Docs remote MCP server. This is a cloud-hosted service that enables clients to access trusted and up-to-date information directly from Microsoft’s official documentation.</p>
+  </li>
+  <li>
+    <p>Under the comment <strong>Create a new agent with the MCP tool</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create a new agent with the MCP tool</span>
+agent = project_client.agents.create_version(
+    agent_name=<span class="hljs-string">"MyAgent"</span>,
+    definition=PromptAgentDefinition(
+        model=model_deployment,
+        instructions=<span class="hljs-string">"You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."</span>,
+        tools=[mcp_tool],
+    ),
+)
+print(<span class="hljs-string">f"Agent created (id: <span class="hljs-subst">{agent.id}</span>, name: <span class="hljs-subst">{agent.name}</span>, version: <span class="hljs-subst">{agent.version}</span>)"</span>)
+</code></pre>
+
+    <p>In this code, you provide instructions for the agent and provide it with the MCP tool definitions.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create a conversation thread</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create a conversation thread</span>
+conversation = openai_client.conversations.create()
+print(<span class="hljs-string">f"Created conversation (id: <span class="hljs-subst">{conversation.id}</span>)"</span>)
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Send initial request that will trigger the MCP tool</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Send initial request that will trigger the MCP tool</span>
+response = openai_client.responses.create(
+    conversation=conversation.id,
+    input=<span class="hljs-string">"Give me the Azure CLI commands to create an Azure Container App with a managed identity."</span>,
+   extra_body={<span class="hljs-string">"agent_reference"</span>: {<span class="hljs-string">"name"</span>: agent.name, <span class="hljs-string">"type"</span>: <span class="hljs-string">"agent_reference"</span>}},
+)
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Process any MCP approval requests that were generated</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock8" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock8" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Process any MCP approval requests that were generated</span>
+<span class="hljs-comment"># The agent may issue several tool calls, each needing its own approval,</span>
+<span class="hljs-comment"># so we loop until there are none left.</span>
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-comment"># Collect any MCP approval requests from the latest response</span>
+    input_list: ResponseInputParam = []
+    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> response.output:
+        <span class="hljs-keyword">if</span> item.type == <span class="hljs-string">"mcp_approval_request"</span>:
+            <span class="hljs-keyword">if</span> item.server_label == <span class="hljs-string">"api-specs"</span> <span class="hljs-keyword">and</span> item.id:
+                <span class="hljs-comment"># Automatically approve the MCP request to allow the agent to proceed</span>
+                input_list.append(
+                    McpApprovalResponse(
+                        type=<span class="hljs-string">"mcp_approval_response"</span>,
+                        approve=<span class="hljs-keyword">True</span>,
+                        approval_request_id=item.id,
+                    )
+                )
+
+    <span class="hljs-comment"># No more approvals needed -&gt; the agent has produced its final response</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> input_list:
+        <span class="hljs-keyword">break</span>
+
+    <span class="hljs-comment"># Send the approval response back and retrieve the next response</span>
+    response = openai_client.responses.create(
+        input=input_list,
+        previous_response_id=response.id,
+        extra_body={<span class="hljs-string">"agent_reference"</span>: {<span class="hljs-string">"name"</span>: agent.name, <span class="hljs-string">"type"</span>: <span class="hljs-string">"agent_reference"</span>}},
+    )
+
+print(<span class="hljs-string">f"\nAgent response: <span class="hljs-subst">{response.output_text}</span>"</span>)
+</code></pre>
+
+    <p>This code listens for any MCP approval requests in the agent’s response and automatically approves them.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Clean up resources by deleting the agent version</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock9" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock9" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Clean up resources by deleting the agent version</span>
+project_client.agents.delete_version(agent_name=agent.name, agent_version=agent.version)
+print(<span class="hljs-string">"Agent deleted"</span>)
+</code></pre>
+  </li>
+  <li>
+    <p>Save the code file (<em>CTRL+S</em>) when you’re finished.</p>
+  </li>
+</ol>
+
+<h2 id="test-the-connection-to-the-remote-mcp-server">Test the connection to the remote MCP server</h2>
+
+<p>Now you’re ready to run the application and see how the agent uses the MCP tool to retrieve information from the Microsoft Learn Docs remote MCP server.</p>
+
+<ol>
+  <li>
+    <p>In the integrated terminal, enter the following command to run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock10" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock10" class="mt-0"><code class="hljs nginx"><span class="hljs-attribute">az</span> login
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock11" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock11" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">agent</span><span class="hljs-selector-class">.py</span>
+</code></pre>
+  </li>
+  <li>
+    <p>Wait for the agent to process the prompt, using the MCP server to find a suitable tool to retrieve the requested information. You should see some output similar to the following:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock12" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock12" class="mt-0"><code class="hljs sql">Agent created (id: MyAgent:2, name: MyAgent, version: 2)
+Created conversation (id: conv_086911ecabcbc05700BBHIeNRoPSO5tKPHiXRkgHuStYzy27BS)
+
+Agent response: Here are Azure CLI commands to <span class="hljs-keyword">create</span> an Azure <span class="hljs-keyword">Container</span> App <span class="hljs-keyword">with</span> a <span class="hljs-keyword">managed</span> <span class="hljs-keyword">identity</span>:
+
+**<span class="hljs-number">1.</span> <span class="hljs-keyword">For</span> a <span class="hljs-keyword">System</span>-assigned <span class="hljs-keyword">Managed</span> <span class="hljs-keyword">Identity</span>**
+ <span class="hljs-string">``</span><span class="hljs-string">`sh
+ az containerapp create \
+ --name &lt;CONTAINERAPP_NAME&gt; \
+ --resource-group &lt;RESOURCE_GROUP&gt; \
+ --environment &lt;CONTAINERAPPS_ENVIRONMENT&gt; \
+ --image &lt;CONTAINER_IMAGE&gt; \
+ --identity 'system'
+</span></code></pre>
+
+    <p>[continued…]</p>
+
+    <p>Agent deleted</p>
+
+    <p>```</p>
+
+    <p>Notice that the agent was able to invoke the MCP tool to automatically fulfill the request.</p>
+  </li>
+  <li>
+    <p>You can update the input in the request to ask for different information. In each case, the agent will attempt to find technical documentation by using the MCP tool.</p>
+  </li>
+</ol>
+
+<h2 id="create-an-mcp-server-with-custom-tools">Create an MCP server with custom tools</h2>
+
+<p>In addition to connecting to remote MCP servers, you can also create your own custom MCP server tools and connect them to your agent. A Model Context Protocol (MCP) Server is a component that hosts callable tools. These tools are Python functions that can be exposed to AI agents. When tools are annotated with <code>@mcp.tool()</code>, they become discoverable to the client, allowing an AI agent to call them autonomously during a conversation or task. In this task, you’ll add tools that will allow an agent to perform inventory inquiries and recommendations.</p>
+
+<ol>
+  <li>
+    <p>Open the <strong>server.py</strong> file in the code editor.</p>
+
+    <p>In this code file, you’ll define the tools the agent can use to simulate a backend service for the retail store. Notice the server setup code at the top of the file. It uses <code>FastMCP</code> to quickly spin up an MCP server instance named “Inventory”. This server will host the tools you define and make them accessible to the agent during the lab.</p>
+  </li>
+  <li>
+    <p>Under the comment <strong>Add references</strong>, add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock13" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock13" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add references</span>
+<span class="hljs-keyword">from</span> fastmcp <span class="hljs-keyword">import</span> FastMCP
+</code></pre>
+  </li>
+  <li>
+    <p>Under the comment <strong>Create an MCP server</strong>, add the following code to create a new MCP server instance:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock14" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock14" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create an MCP server</span>
+mcp = FastMCP(name=<span class="hljs-string">"Inventory"</span>)
+</code></pre>
+
+    <p>This code initializes a new MCP server with the label “Inventory”.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add an inventory check mcp tool</strong> and add the following decorator above the function definition, which should now look like this:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock15" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock15" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add an inventory check mcp tool</span>
+<span class="hljs-meta">@mcp.tool()</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_inventory_levels</span><span class="hljs-params">()</span> -&gt; dict:</span>
+   <span class="hljs-comment"># continued...</span>
+</code></pre>
+
+    <p>This dictionary represents a sample inventory. The <code>@mcp.tool()</code> decorator registers the function as a tool on the MCP server, allowing the LLM to discover your function.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add a weekly sales mcp tool</strong> and add the following decorator above the function definition, which should now look like this:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock16" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock16" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add a weekly sales mcp tool</span>
+<span class="hljs-meta">@mcp.tool()</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_weekly_sales</span><span class="hljs-params">()</span> -&gt; dict:</span>
+   <span class="hljs-comment"># continued...</span>
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Run the MCP server</strong> and add the following code to start the server:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock17" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock17" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Run the MCP server</span>
+mcp.run(show_banner=<span class="hljs-keyword">False</span>)
+</code></pre>
+
+    <p>This code starts the MCP server, making your tools available for discovery and use by the agent. Setting <code>show_banner=False</code> prevents the startup banner from being printed to stdout, which would corrupt the MCP stdio protocol.</p>
+  </li>
+  <li>
+    <p>Save the file (<em>CTRL+S</em>).</p>
+  </li>
+</ol>
+
+<h2 id="implement-an-mcp-client-to-connect-to-the-custom-mcp-server">Implement an MCP client to connect to the custom MCP server</h2>
+
+<p>An MCP client is the component that connects to the MCP server to discover and call tools. You can think of it as the bridge between the agent and the server-hosted functions, enabling dynamic tool use in response to user prompts.</p>
+
+<ol>
+  <li>
+    <p>Navigate to the <strong>client.py</strong> file.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add references</strong> and add the following code to import the classes:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock18" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock18" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Add references</span>
+<span class="hljs-keyword">from</span> mcp <span class="hljs-keyword">import</span> ClientSession, StdioServerParameters
+<span class="hljs-keyword">from</span> mcp.client.stdio <span class="hljs-keyword">import</span> stdio_client
+</code></pre>
+  </li>
+  <li>
+    <p>In the <strong>connect_to_server</strong> method, find the comment <strong>Start the MCP server</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock19" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock19" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Start the MCP server</span>
+stdio_transport = <span class="hljs-keyword">await</span> exit_stack.enter_async_context(stdio_client(server_params))
+stdio, write = stdio_transport
+</code></pre>
+
+    <p>In a standard production setup, the server would run separately from the client. But for the sake of this lab, the client is responsible for starting the server using standard input/output transport. This creates a lightweight communication channel between the two components and simplifies the local development setup.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create an MCP client session</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock20" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock20" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create an MCP client session</span>
+session = <span class="hljs-keyword">await</span> exit_stack.enter_async_context(ClientSession(stdio, write))
+<span class="hljs-keyword">await</span> session.initialize()
+</code></pre>
+
+    <p>This creates a new client session using the input and output streams from the previous step. Calling <code>session.initialize</code> prepares the session to discover and call tools that are registered on the MCP server.</p>
+  </li>
+  <li>
+    <p>Under the comment <strong>List available tools</strong>, add the following code to verify that the client has connected to the server:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock21" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock21" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># List available tools</span>
+response = <span class="hljs-keyword">await</span> session.list_tools()
+tools = response.tools
+print(<span class="hljs-string">"\nConnected to server with tools:"</span>, [tool.name <span class="hljs-keyword">for</span> tool <span class="hljs-keyword">in</span> tools]) 
+</code></pre>
+
+    <p>Now your client session is ready for use with your Azure AI Agent.</p>
+  </li>
+</ol>
+
+<h2 id="connect-the-mcp-tools-to-your-agent">Connect the MCP tools to your agent</h2>
+
+<p>In this task, you’ll connect the MCP server tools to your agent so that it can call them in response to user prompts.</p>
+
+<blockquote>
+  <p><strong>Tip</strong>: As you add code, be sure to maintain the correct indentation. Use the comment indentation levels as a guide.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In the <strong>chat_loop</strong> method, find the comment <strong>Build a function for each tool</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock22" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock22" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Build a function for each tool</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_tool_func</span><span class="hljs-params">(tool_name)</span>:</span>
+    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tool_func</span><span class="hljs-params">(**kwargs)</span>:</span>
+        result = <span class="hljs-keyword">await</span> session.call_tool(tool_name, kwargs)
+        <span class="hljs-keyword">return</span> result
+
+    tool_func.__name__ = tool_name
+    <span class="hljs-keyword">return</span> tool_func
+
+<span class="hljs-comment"># Store the functions in a dictionary for easy access when processing function calls</span>
+functions_dict = {tool.name: make_tool_func(tool.name) <span class="hljs-keyword">for</span> tool <span class="hljs-keyword">in</span> tools}
+</code></pre>
+
+    <p>This code dynamically wraps tools available in the MCP server so that they can be called by the AI agent. Each tool is turned into an async function that the agent can invoke.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create FunctionTool definitions for the agent</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock23" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock23" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create FunctionTool definitions for the agent</span>
+mcp_function_tools: FunctionTool = []
+<span class="hljs-keyword">for</span> tool <span class="hljs-keyword">in</span> tools:
+    function_tool = FunctionTool(
+        name=tool.name,
+        description=tool.description,
+        parameters={
+            <span class="hljs-string">"type"</span>: <span class="hljs-string">"object"</span>,
+            <span class="hljs-string">"properties"</span>: {},
+            <span class="hljs-string">"additionalProperties"</span>: <span class="hljs-keyword">False</span>,
+        },
+        strict=<span class="hljs-keyword">True</span>
+    )
+    mcp_function_tools.append(function_tool)
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create the agent</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock24" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock24" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Create the agent</span>
+agent = project_client.agents.create_version(
+    agent_name=<span class="hljs-string">"inventory-agent"</span>,
+    definition=PromptAgentDefinition(
+        model=model_deployment,
+        instructions=<span class="hljs-string">"""
+        You are an inventory assistant. Here are some general guidelines:
+        - Recommend restock if item inventory &lt; 10  and weekly sales &gt; 15
+        - Recommend clearance if item inventory &gt; 20 and weekly sales &lt; 5
+        """</span>,
+        tools=mcp_function_tools
+    ),
+)
+</code></pre>
+
+    <p>With these instructions and tools, the agent is able to invoke the tools to retrieve inventory and sales data, and then use that information to provide helpful responses to the user.</p>
+  </li>
+  <li>
+    <p>Locate the comment <strong>Process function calls</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock25" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock25" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Process function calls</span>
+<span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> response.output:
+    <span class="hljs-keyword">if</span> item.type == <span class="hljs-string">"function_call"</span>:
+        <span class="hljs-comment"># Retrieve the matching function tool</span>
+        function_name = item.name
+        kwargs = json.loads(item.arguments)
+        required_function = functions_dict.get(function_name)
+
+        <span class="hljs-comment"># Invoke the function</span>
+        output = <span class="hljs-keyword">await</span> required_function(**kwargs)
+
+        <span class="hljs-comment"># Append the output text</span>
+        input_list.append(
+           FunctionCallOutput(
+              type=<span class="hljs-string">"function_call_output"</span>,
+              call_id=item.call_id,
+              output=output.content[<span class="hljs-number">0</span>].text,
+           )
+        )
+</code></pre>
+
+    <p>This code listens for any function calls in the agent’s response, invokes the corresponding tool function, and prepares the output to be sent back to the agent.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Send function call outputs back to the model and retrieve a response</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock26" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock26" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"># Send function call outputs back to the model and retrieve a response</span>
+<span class="hljs-keyword">if</span> input_list:
+   response = openai_client.responses.create(
+         input=input_list,
+         previous_response_id=response.id,
+         extra_body={<span class="hljs-string">"agent_reference"</span>: {<span class="hljs-string">"name"</span>: agent.name, <span class="hljs-string">"type"</span>: <span class="hljs-string">"agent_reference"</span>}},
+   )
+print(<span class="hljs-string">f"Agent response: <span class="hljs-subst">{response.output_text}</span>"</span>)
+</code></pre>
+  </li>
+  <li>
+    <p>Save the code file (<em>CTRL+S</em>) when you have finished.</p>
+  </li>
+</ol>
+
+<h2 id="test-the-custom-mcp-tools-with-your-agent">Test the custom MCP tools with your agent</h2>
+
+<ol>
+  <li>
+    <p>In the integrated terminal, enter the following command to run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock27" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock27" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.py</span>
+</code></pre>
+  </li>
+  <li>
+    <p>When prompted, enter a prompt such as:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock28" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock28" class="mt-0"><code class="hljs sql"><span class="hljs-keyword">Show</span> me the <span class="hljs-keyword">current</span> inventory <span class="hljs-keyword">levels</span> <span class="hljs-keyword">for</span> all products.
+</code></pre>
+
+    <blockquote>
+      <p><strong>Tip</strong>: If the app fails because the rate limit is exceeded. Wait a few seconds and try again. If there is insufficient quota available in your subscription, the model may not be able to respond.</p>
+    </blockquote>
+
+    <p>You should see some output similar to the following:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock29" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock29" class="mt-0"><code class="hljs php"> MessageRole.AGENT:
+ Agent response: Here are the current inventory levels <span class="hljs-keyword">for</span> all items:
+
+- Moisturizer: <span class="hljs-number">6</span>
+- Shampoo: <span class="hljs-number">8</span>
+- Body Spray: <span class="hljs-number">28</span>
+[continued ...]
+
+Would you like recommendations <span class="hljs-keyword">for</span> restocking <span class="hljs-keyword">or</span> clearance? <span class="hljs-keyword">If</span> so, I can check the weekly sales to advise accordingly.
+</code></pre>
+
+    <p>Notice that the agent was able to call the MCP tools to retrieve inventory and sales data, and then use that information to provide a helpful response to the user.</p>
+  </li>
+  <li>
+    <p>You can continue the conversation if you like. The thread is <em>stateful</em>, so it retains the conversation history - meaning that the agent has the full context for each response.</p>
+
+    <p>Try entering prompts such as:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock30" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock30" class="mt-0"><code class="hljs nginx"><span class="hljs-attribute">Are</span> there any products that should be restocked?
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock31" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock31" class="mt-0"><code class="hljs bash">Which products would you recommend <span class="hljs-keyword">for</span> clearance?
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock32" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock32" class="mt-0"><code class="hljs coffeescript">What are the best sellers <span class="hljs-keyword">this</span> week?
+</code></pre>
+  </li>
+  <li>
+    <p>Enter <code>quit</code> to exit the application.</p>
+
+    <p>You can also use <code>deactivate</code> to exit the Python virtual environment in the terminal.</p>
+  </li>
+</ol>
+
+<h2 id="clean-up">Clean up</h2>
+
+<p>When you’ve finished exploring the Foundry Toolkit for VS Code extension, you should clean up the resources to avoid incurring unnecessary Azure costs.</p>
+
+<h3 id="delete-your-model">Delete your model</h3>
+
+<ol>
+  <li>
+    <p>In VS Code, refresh the <strong>Azure Resources</strong> view.</p>
+  </li>
+  <li>
+    <p>Expand the <strong>Models</strong> subsection.</p>
+  </li>
+  <li>
+    <p>Right-click on your deployed model and select <strong>Delete</strong>.</p>
+  </li>
+</ol>
+
+<h3 id="delete-the-resource-group">Delete the resource group</h3>
+
+<ol>
+  <li>
+    <p>Open the <a href="https://portal.azure.com/">Azure portal</a>.</p>
+  </li>
+  <li>
+    <p>Navigate to the resource group containing your Microsoft Foundry resources.</p>
+  </li>
+  <li>
+    <p>Select <strong>Delete resource group</strong> and confirm the deletion.</p>
+  </li>
+</ol>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-agents" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./MCP tools_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./MCP tools_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./MCP tools_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./MCP tools_files/clipboard.min.js.download"></script>
+    <script src="./MCP tools_files/highlight.min.js.download"></script>
+    <script src="./MCP tools_files/script.js.download"></script>
+
+
+
+
+</body></html>

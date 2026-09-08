@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertex AI Scenario-Based Quiz - All 30 Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .instructions {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .progress-info {
+            flex: 1;
+        }
+
+        .progress-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-block:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .question-header {
+            background: #f9f9f9;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .scenario-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            display: inline-block;
+        }
+
+        .context {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .question-body {
+            padding: 20px;
+        }
+
+        .scenario-question {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .option:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 1em;
+        }
+
+        .option input[type="radio"]:checked + label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .option.selected {
+            background: #e8edf7;
+            border-color: #667eea;
+        }
+
+        .collapsible-section {
+            margin-top: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            background: #f5f5f5;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #333;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+
+        .collapsible-header:hover {
+            background: #efefef;
+        }
+
+        .collapsible-header.active {
+            background: #e8edf7;
+            color: #667eea;
+        }
+
+        .toggle-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0;
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-content.active {
+            max-height: 1500px;
+            padding: 20px;
+        }
+
+        .explanation-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            line-height: 1.6;
+        }
+
+        .explanation-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .explanation-correct {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .explanation-incorrect {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .takeaway {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .takeaway-bullet {
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .footer {
+            background: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .scenario-title {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Vertex AI Scenario-Based Quiz</h1>
+            <p>All 30 Questions - Interactive Learning</p>
+        </div>
+
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress-info">
+                    <div class="progress-label">Quiz Progress</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div id="progressText" style="margin-left: 20px; font-weight: 600; color: #667eea;">0/30</div>
+            </div>
+
+            <div class="instructions">
+                <strong>📝 Instructions:</strong>
+                <p>Select the best answer for each scenario. Your answers are saved automatically. Click "Explanation" and "Key Takeaways" after answering to review.</p>
+            </div>
+
+            <div id="questionsContainer"></div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Master all 30 Vertex AI scenarios to strengthen your PMLE exam preparation!</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                num: 1,
+                title: "Real-Time Fraud Detection API",
+                context: "Your company processes 10,000 credit card transactions per second. You've trained a Random Forest model that needs to score each transaction in <50ms and return a fraud probability. The model is already trained and ready for production.",
+                question: "You need to serve this model with guaranteed low latency and auto-scaling to handle traffic spikes. Which Vertex AI service should you use?",
+                options: [
+                    "A) Vertex AI Batch Prediction",
+                    "B) Vertex AI Endpoints",
+                    "C) Vertex AI Pipelines",
+                    "D) Vertex AI Custom Training"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Endpoints: Provides REST API with <100ms latency, auto-scaling, traffic splitting. Perfect for real-time inference.", style: "explanation-correct" },
+                    { text: "✗ A) Batch Prediction: Processes data asynchronously (hours), not real-time", style: "explanation-incorrect" },
+                    { text: "✗ C) Pipelines: Orchestrates workflows, not a serving mechanism", style: "explanation-incorrect" },
+                    { text: "✗ D) Custom Training: For model development, not serving", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Real-time inference with <100ms latency → Endpoints",
+                    "Need REST/gRPC API → Endpoints",
+                    "Auto-scaling required → Endpoints"
+                ]
+            },
+            {
+                num: 2,
+                title: "Overnight Batch Scoring of 500M Customer Records",
+                context: "Every night, you need to score 500 million customer records through a trained churn prediction model. Results should be written to BigQuery by 6 AM. The model is already trained and in the Model Registry.",
+                question: "Which Vertex AI service is most cost-effective and suitable for this use case?",
+                options: [
+                    "A) Vertex AI Endpoints with continuous scoring",
+                    "B) Vertex AI Batch Prediction",
+                    "C) Vertex AI Pipelines with custom training",
+                    "D) Vertex AI Feature Store"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Batch Prediction: Asynchronous processing of large datasets, cost-effective, outputs directly to BigQuery. No need for real-time latency.", style: "explanation-correct" },
+                    { text: "✗ A) Endpoints: Over-engineered for batch jobs, wasteful cost (real-time pricing)", style: "explanation-incorrect" },
+                    { text: "✗ C) Pipelines: Good for ML workflows, but not specifically for batch prediction", style: "explanation-incorrect" },
+                    { text: "✗ D) Feature Store: For feature management, not batch scoring", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Large-scale batch processing (>100M records) → Batch Prediction",
+                    "Output to BigQuery → Batch Prediction",
+                    "Non-real-time requirements → Batch Prediction",
+                    "Cost-conscious approach → Batch Prediction"
+                ]
+            },
+            {
+                num: 3,
+                title: "Data Preparation for AutoML Training",
+                context: "Your team has 50,000 customer support tickets with manual labels (urgent/not-urgent) scattered across multiple CSV files. You need to prepare this data for training a text classification model using Vertex AI AutoML.",
+                question: "Which Vertex AI service should you use to organize, validate, and prepare this labeled data?",
+                options: [
+                    "A) Vertex AI Workbench",
+                    "B) Vertex AI Datasets",
+                    "C) Vertex AI Data Labeling Service",
+                    "D) Vertex AI Feature Store"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Datasets: Manages labeled training data, validates schema, versions data, integrates with AutoML. Consolidates multiple data sources.", style: "explanation-correct" },
+                    { text: "✗ A) Workbench: IDE for development, not data management", style: "explanation-incorrect" },
+                    { text: "✗ C) Data Labeling: For creating labels, but data is already labeled", style: "explanation-incorrect" },
+                    { text: "✗ D) Feature Store: For pre-computed features for training/serving, not raw data", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Organize labeled training data → Datasets",
+                    "Data validation and versioning → Datasets",
+                    "Integration with AutoML → Datasets",
+                    "Multiple data sources consolidation → Datasets"
+                ]
+            },
+            {
+                num: 4,
+                title: "Automated Hyperparameter Optimization",
+                context: "You've built a custom TensorFlow model for image classification. Initial training gives 85% accuracy, but you suspect better hyperparameters could improve this. You need to systematically test different learning rates, batch sizes, and regularization values.",
+                question: "Which Vertex AI service should automate this hyperparameter search?",
+                options: [
+                    "A) Vertex AI Experiments",
+                    "B) Vertex AI Hyperparameter Tuning (HPO)",
+                    "C) Vertex AI TensorBoard",
+                    "D) Vertex AI Custom Training"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI HPO: Automated hyperparameter optimization using Bayesian search, grid search, or random search. Runs multiple training jobs with different hyperparameters and finds optimal values.", style: "explanation-correct" },
+                    { text: "✗ A) Experiments: Tracks different runs, but doesn't automate hyperparameter search", style: "explanation-incorrect" },
+                    { text: "✗ C) TensorBoard: Visualization tool, not optimization", style: "explanation-incorrect" },
+                    { text: "✗ D) Custom Training: Runs training jobs, but doesn't optimize hyperparameters automatically", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Systematic hyperparameter optimization → HPO",
+                    "Bayesian/Grid/Random search → HPO",
+                    "Improve model accuracy → HPO",
+                    "Avoid manual trial-and-error → HPO"
+                ]
+            },
+            {
+                num: 5,
+                title: "Feature Consistency Between Training and Production",
+                context: "Your team builds 50+ churn prediction models using customer features (age, purchase_frequency, lifetime_value). During development, each team recomputes these features differently. In production, served features sometimes differ from training features, causing model accuracy degradation.",
+                question: "Which Vertex AI service ensures features are consistent between training and serving?",
+                options: [
+                    "A) Vertex AI Datasets",
+                    "B) Vertex AI Model Registry",
+                    "C) Vertex AI Feature Store",
+                    "D) Vertex AI Pipelines"
+                ],
+                correct: 2,
+                explanation: [
+                    { text: "✓ Vertex AI Feature Store: Centralized feature repository with offline (training) and online (serving) stores. Ensures same features train/serve. Prevents training-serving skew.", style: "explanation-correct" },
+                    { text: "✗ A) Datasets: Stores raw data, not pre-computed features", style: "explanation-incorrect" },
+                    { text: "✗ B) Model Registry: Stores model artifacts, not features", style: "explanation-incorrect" },
+                    { text: "✗ D) Pipelines: Orchestrates workflows, doesn't manage features", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Prevent training-serving skew → Feature Store",
+                    "Centralized feature repository → Feature Store",
+                    "Multiple models sharing features → Feature Store",
+                    "Feature versioning & lineage → Feature Store"
+                ]
+            },
+            {
+                num: 6,
+                title: "End-to-End ML Workflow Automation",
+                context: "Your data science team manually performs: data preparation → feature engineering → model training → evaluation → deployment. This process takes 2 weeks for each model iteration. You need to automate this entire workflow to trigger daily.",
+                question: "Which Vertex AI service orchestrates this entire ML pipeline?",
+                options: [
+                    "A) Vertex AI Custom Training",
+                    "B) Vertex AI Pipelines",
+                    "C) Vertex AI Experiments",
+                    "D) Vertex AI AutoML"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Pipelines: Orchestrates multi-step ML workflows using Kubeflow DAGs. Automates data prep → training → evaluation → deployment with scheduling.", style: "explanation-correct" },
+                    { text: "✗ A) Custom Training: Runs training jobs, doesn't orchestrate workflows", style: "explanation-incorrect" },
+                    { text: "✗ C) Experiments: Tracks runs, doesn't orchestrate pipelines", style: "explanation-incorrect" },
+                    { text: "✗ D) AutoML: Only for training, not orchestration", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Multi-step workflow automation → Pipelines",
+                    "Scheduled recurring jobs → Pipelines",
+                    "Orchestrate components → Pipelines",
+                    "End-to-end ML automation → Pipelines"
+                ]
+            },
+            {
+                num: 7,
+                title: "Model Explainability for Loan Approval Rejection",
+                context: "Your bank deployed a model that automatically rejects loan applications. A customer challenges the decision and demands explanation. Your audit team needs to understand which features drove the rejection decision.",
+                question: "Which Vertex AI service provides feature attribution explanations?",
+                options: [
+                    "A) Vertex AI Model Monitoring",
+                    "B) Vertex AI Explainable AI (XAI)",
+                    "C) Vertex AI Experiments",
+                    "D) Vertex AI Model Registry"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI XAI: Provides feature attribution (SHAP, Integrated Gradients) showing which features influenced predictions. Critical for compliance and debugging.", style: "explanation-correct" },
+                    { text: "✗ A) Model Monitoring: Tracks performance drift, not explanations", style: "explanation-incorrect" },
+                    { text: "✗ C) Experiments: Tracks runs and metrics, not feature importance", style: "explanation-incorrect" },
+                    { text: "✗ D) Model Registry: Stores model versions, not explanations", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Feature attribution explanations → XAI",
+                    "Model interpretability → XAI",
+                    "Regulatory compliance (loan decisions, hiring) → XAI",
+                    "Debugging model behavior → XAI"
+                ]
+            },
+            {
+                num: 8,
+                title: "Production Model Performance Monitoring & Drift Detection",
+                context: "Your recommendation model has been in production for 3 months. Accuracy was 92% at launch, but today it's 78%. You suspect customer behavior changed (data drift) or model is overfitting to old patterns.",
+                question: "Which Vertex AI service detects and alerts on model performance degradation?",
+                options: [
+                    "A) Vertex AI Model Registry",
+                    "B) Vertex AI Experiments",
+                    "C) Vertex AI Model Monitoring",
+                    "D) Vertex AI TensorBoard"
+                ],
+                correct: 2,
+                explanation: [
+                    { text: "✓ Vertex AI Model Monitoring: Continuous monitoring of deployed models. Detects performance degradation, data drift, prediction distribution changes. Triggers retraining alerts.", style: "explanation-correct" },
+                    { text: "✗ A) Model Registry: Stores model versions, doesn't monitor performance", style: "explanation-incorrect" },
+                    { text: "✗ B) Experiments: Tracks training runs, not production monitoring", style: "explanation-incorrect" },
+                    { text: "✗ D) TensorBoard: Visualizes training metrics, not production monitoring", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Production model monitoring → Model Monitoring",
+                    "Data drift detection → Model Monitoring",
+                    "Performance degradation alerts → Model Monitoring",
+                    "Trigger retraining workflows → Model Monitoring"
+                ]
+            },
+            {
+                num: 9,
+                title: "Quick Prototyping Without ML Expertise",
+                context: "Your product manager wants a text classification model to categorize customer feedback (positive/negative/neutral). No ML experts available. Need to build and deploy in 2 days.",
+                question: "Which Vertex AI service enables non-experts to build models quickly?",
+                options: [
+                    "A) Vertex AI Custom Training",
+                    "B) Vertex AI AutoML",
+                    "C) Vertex AI Workbench",
+                    "D) Vertex AI Pipelines"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI AutoML: No-code model training for text, images, tabular data. Automatic feature engineering, model selection, hyperparameter tuning. Perfect for quick prototyping by non-experts.", style: "explanation-correct" },
+                    { text: "✗ A) Custom Training: Requires coding, ML expertise", style: "explanation-incorrect" },
+                    { text: "✗ C) Workbench: Requires data science knowledge", style: "explanation-incorrect" },
+                    { text: "✗ D) Pipelines: Requires ML workflow design knowledge", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "No-code model building → AutoML",
+                    "Rapid prototyping → AutoML",
+                    "Non-ML experts → AutoML",
+                    "Quick MVP development → AutoML"
+                ]
+            },
+            {
+                num: 10,
+                title: "Tracking & Comparing Multiple Model Experiments",
+                context: "Your data scientist is experimenting with different architectures (logistic regression, random forest, neural network) for churn prediction. Each run produces different metrics (accuracy, precision, recall, AUC). Team needs to track and compare all runs.",
+                question: "Which Vertex AI service tracks experiments and enables comparison?",
+                options: [
+                    "A) Vertex AI Model Registry",
+                    "B) Vertex AI Experiments",
+                    "C) Vertex AI Pipelines",
+                    "D) Vertex AI Batch Prediction"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Experiments: Logs parameters, metrics, artifacts for each training run. Compares runs side-by-side in UI. Enables reproducibility and best-practice tracking.", style: "explanation-correct" },
+                    { text: "✗ A) Model Registry: Stores final models, not experiment runs", style: "explanation-incorrect" },
+                    { text: "✗ C) Pipelines: Orchestrates workflows, doesn't track runs", style: "explanation-incorrect" },
+                    { text: "✗ D) Batch Prediction: Scores data, doesn't track experiments", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Experiment tracking & comparison → Experiments",
+                    "Parameter logging → Experiments",
+                    "Metric visualization → Experiments",
+                    "Run reproducibility → Experiments"
+                ]
+            },
+            {
+                num: 11,
+                title: "Processing 100GB of Images for Object Detection",
+                context: "You have 100GB of raw images that need preprocessing (resizing, normalization) and training a custom object detection model. Processing should run on GPUs in parallel.",
+                question: "Which Vertex AI service allows custom TensorFlow code with GPU distribution?",
+                options: [
+                    "A) Vertex AI AutoML",
+                    "B) Vertex AI Custom Training",
+                    "C) Vertex AI Pipelines",
+                    "D) Vertex AI Workbench"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Custom Training: Full control over training code. Supports TensorFlow, PyTorch, scikit-learn. Distributed training on GPUs/TPUs. Perfect for complex workflows.", style: "explanation-correct" },
+                    { text: "✗ A) AutoML: Limited to built-in architectures", style: "explanation-incorrect" },
+                    { text: "✗ C) Pipelines: Orchestration tool, not training framework", style: "explanation-incorrect" },
+                    { text: "✗ D) Workbench: Development IDE, not distributed training", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Custom ML code → Custom Training",
+                    "GPU/TPU distribution → Custom Training",
+                    "Complex preprocessing pipelines → Custom Training",
+                    "Framework flexibility → Custom Training"
+                ]
+            },
+            {
+                num: 12,
+                title: "Creating Labeled Dataset from Raw Documents",
+                context: "You have 10,000 invoices that need to be labeled (extract: invoice_id, amount, date, vendor_name). Your team manually extracts ~100 invoices/day, but at that pace, it will take 100 days to label all 10,000.",
+                question: "Which Vertex AI service accelerates data labeling?",
+                options: [
+                    "A) Vertex AI Datasets",
+                    "B) Vertex AI Workbench",
+                    "C) Vertex AI Data Labeling Service",
+                    "D) Vertex AI Document AI"
+                ],
+                correct: 2,
+                explanation: [
+                    { text: "✓ Vertex AI Data Labeling Service: Managed labeling with human annotators. Integrates with active learning to prioritize hardest samples. Reduces labeling time by 50-70%.", style: "explanation-correct" },
+                    { text: "✗ A) Datasets: Manages labeled data, doesn't label it", style: "explanation-incorrect" },
+                    { text: "✗ B) Workbench: Development IDE, not labeling service", style: "explanation-incorrect" },
+                    { text: "✗ D) Document AI: Extracts structured data from documents (different use case)", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Accelerate data labeling → Data Labeling Service",
+                    "Human annotation management → Data Labeling Service",
+                    "Active learning prioritization → Data Labeling Service",
+                    "Reduce labeling time & cost → Data Labeling Service"
+                ]
+            },
+            {
+                num: 13,
+                title: "Extracting Data from Business Documents (Invoices, Contracts)",
+                context: "Your company receives 1,000 invoices daily in PDF format. You need to extract structured data (amount, date, vendor, account_code) into a database automatically. Current manual process takes 4 hours/day.",
+                question: "Which Vertex AI service automates document data extraction?",
+                options: [
+                    "A) Vertex AI Workbench",
+                    "B) Vertex AI Document AI",
+                    "C) Vertex AI Data Labeling Service",
+                    "D) Vertex AI Datasets"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Document AI: Pre-trained models for document parsing (invoices, receipts, contracts). Extracts structured fields automatically. OCR + table extraction built-in.", style: "explanation-correct" },
+                    { text: "✗ A) Workbench: Development IDE", style: "explanation-incorrect" },
+                    { text: "✗ C) Data Labeling Service: For labeling, not extraction", style: "explanation-incorrect" },
+                    { text: "✗ D) Datasets: Data management, not extraction", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Document data extraction → Document AI",
+                    "OCR + structured data extraction → Document AI",
+                    "Invoice/receipt/contract processing → Document AI",
+                    "Automation of manual document processing → Document AI"
+                ]
+            },
+            {
+                num: 14,
+                title: "Deploying to Edge Devices (Mobile, IoT)",
+                context: "Your company builds a mobile app for offline object detection. Users need predictions even without internet. Model must run on-device with <100ms latency.",
+                question: "Which Vertex AI service supports edge deployment?",
+                options: [
+                    "A) Vertex AI Endpoints",
+                    "B) Vertex AI Batch Prediction",
+                    "C) Vertex AI Custom Training (with TFLite export)",
+                    "D) Vertex AI Workbench"
+                ],
+                correct: 2,
+                explanation: [
+                    { text: "✓ Vertex AI Custom Training: Train model, export to TensorFlow Lite (TFLite) for mobile/edge deployment. On-device inference without server calls.", style: "explanation-correct" },
+                    { text: "✗ A) Endpoints: Cloud-hosted, requires internet", style: "explanation-incorrect" },
+                    { text: "✗ B) Batch Prediction: Offline batch processing, not edge", style: "explanation-incorrect" },
+                    { text: "✗ D) Workbench: Development IDE only", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Edge device deployment (mobile, IoT) → Custom Training + TFLite export",
+                    "Offline inference → TFLite on-device",
+                    "Low-latency edge predictions → Edge deployment"
+                ]
+            },
+            {
+                num: 15,
+                title: "Development Environment for Data Scientists",
+                context: "Your data science team needs a Jupyter notebook environment pre-configured with TensorFlow, scikit-learn, and BigQuery access to start EDA immediately.",
+                question: "Which Vertex AI service provides managed Jupyter notebooks?",
+                options: [
+                    "A) Vertex AI Datasets",
+                    "B) Vertex AI Workbench",
+                    "C) Vertex AI Pipelines",
+                    "D) Vertex AI TensorBoard"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Workbench: Managed Jupyter notebook environment. Pre-configured kernels, GCP service integration (BigQuery, GCS). Per-user or managed notebooks.", style: "explanation-correct" },
+                    { text: "✗ A) Datasets: Data management, not development", style: "explanation-incorrect" },
+                    { text: "✗ C) Pipelines: Workflow orchestration", style: "explanation-incorrect" },
+                    { text: "✗ D) TensorBoard: Metrics visualization", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Jupyter notebook environment → Workbench",
+                    "Pre-configured ML libraries → Workbench",
+                    "GCP service integration → Workbench",
+                    "Rapid EDA setup → Workbench"
+                ]
+            },
+            {
+                num: 16,
+                title: "Building Recommendation System with Vector Search",
+                context: "Your e-commerce platform needs a recommendation engine based on semantic similarity of products. You have 1 million products, each represented as 768-dimensional embeddings. Need <100ms retrieval for top-10 recommendations.",
+                question: "Which Vertex AI service provides fast vector similarity search?",
+                options: [
+                    "A) Vertex AI Feature Store",
+                    "B) Vertex AI Matching Engine",
+                    "C) Vertex AI Batch Prediction",
+                    "D) Vertex AI Custom Training"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Matching Engine: Vector database for approximate nearest neighbor search. Handles millions of vectors with <100ms retrieval. Perfect for semantic search & recommendations.", style: "explanation-correct" },
+                    { text: "✗ A) Feature Store: For feature management, not vector search", style: "explanation-incorrect" },
+                    { text: "✗ C) Batch Prediction: Asynchronous, not real-time", style: "explanation-incorrect" },
+                    { text: "✗ D) Custom Training: For training, not serving", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Semantic/vector similarity search → Matching Engine",
+                    "Large-scale nearest neighbor search → Matching Engine",
+                    "Recommendation systems → Matching Engine",
+                    "Sub-100ms retrieval at scale → Matching Engine"
+                ]
+            },
+            {
+                num: 17,
+                title: "Building Conversational Chatbot with LLMs",
+                context: "Your company wants to build a customer support chatbot using Google's Gemini model. The chatbot should answer questions about your products using company documentation as context.",
+                question: "Which Vertex AI service enables RAG (Retrieval Augmented Generation) chatbots?",
+                options: [
+                    "A) Vertex AI Workbench",
+                    "B) Vertex AI Search & Conversation",
+                    "C) Vertex AI Custom Training",
+                    "D) Vertex AI Experiments"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Search & Conversation: Build conversational search & RAG systems. Retrieves relevant docs, passes to LLM for grounded responses. No hallucinations from context.", style: "explanation-correct" },
+                    { text: "✗ A) Workbench: Development IDE", style: "explanation-incorrect" },
+                    { text: "✗ C) Custom Training: For model training", style: "explanation-incorrect" },
+                    { text: "✗ D) Experiments: Experiment tracking", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Conversational AI with LLMs → Search & Conversation",
+                    "RAG (Retrieval Augmented Generation) → Search & Conversation",
+                    "Context-grounded responses → Search & Conversation",
+                    "Reduce LLM hallucinations → Search & Conversation"
+                ]
+            },
+            {
+                num: 18,
+                title: "Fine-Tuning Gemini for Domain-Specific Tasks",
+                context: "You want to improve Gemini model for your specific domain (healthcare/finance). Generic Gemini is too broad; you need domain-specific expertise.",
+                question: "Which Vertex AI service enables LLM fine-tuning?",
+                options: [
+                    "A) Vertex AI Generative AI with Prompt Tuning",
+                    "B) Vertex AI Prompt Engineering",
+                    "C) Vertex AI Custom Training",
+                    "D) Vertex AI AutoML"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Prompt Engineering: Tune and optimize prompts for LLMs. Adjust parameters like temperature, top-K, top-P. Also supports instruction tuning and fine-tuning on domain data.", style: "explanation-correct" },
+                    { text: "✗ A) Generative AI: Access to models, not fine-tuning", style: "explanation-incorrect" },
+                    { text: "✗ C) Custom Training: More complex, for full model training", style: "explanation-incorrect" },
+                    { text: "✗ D) AutoML: For non-LLM models", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Prompt optimization → Prompt Engineering",
+                    "Instruction tuning → Prompt Engineering",
+                    "Domain-specific LLM adaptation → Prompt Engineering",
+                    "Improve LLM output quality → Prompt Engineering"
+                ]
+            },
+            {
+                num: 19,
+                title: "Time-Series Forecasting (Demand, Sales, Revenue)",
+                context: "Your retail company needs to forecast daily sales for next 30 days to optimize inventory. You have 2 years of daily sales history with seasonality (weekly, yearly patterns).",
+                question: "Which Vertex AI service specializes in time-series forecasting?",
+                options: [
+                    "A) Vertex AI AutoML",
+                    "B) Vertex AI Forecasting",
+                    "C) Vertex AI Custom Training",
+                    "D) Vertex AI Pipelines"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Forecasting: Dedicated service for time-series forecasting. Handles seasonality, trends, auto ARIMA, Prophet, neural networks. Outputs confidence intervals.", style: "explanation-correct" },
+                    { text: "✗ A) AutoML: General-purpose, not time-series optimized", style: "explanation-incorrect" },
+                    { text: "✗ C) Custom Training: More work, less specialized", style: "explanation-incorrect" },
+                    { text: "✗ D) Pipelines: Orchestration, not forecasting", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Time-series forecasting → Forecasting",
+                    "Seasonality & trend handling → Forecasting",
+                    "Demand/sales/revenue prediction → Forecasting",
+                    "Auto model selection → Forecasting"
+                ]
+            },
+            {
+                num: 20,
+                title: "Model Performance Analysis Before Deployment",
+                context: "You've trained a model and now need to evaluate it thoroughly before production deployment. You need accuracy, precision, recall, confusion matrix, fairness metrics (disparate impact), and class distribution insights.",
+                question: "Which Vertex AI service provides comprehensive model evaluation?",
+                options: [
+                    "A) Vertex AI Experiments",
+                    "B) Vertex AI Model Evaluation",
+                    "C) Vertex AI TensorBoard",
+                    "D) Vertex AI Model Registry"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Model Evaluation: Automated model evaluation with classification/regression/NLP metrics. Fairness checks, class imbalance analysis, evaluation reports.", style: "explanation-correct" },
+                    { text: "✗ A) Experiments: Tracks runs, not comprehensive evaluation", style: "explanation-incorrect" },
+                    { text: "✗ C) TensorBoard: Visualizes training metrics", style: "explanation-incorrect" },
+                    { text: "✗ D) Model Registry: Stores models, doesn't evaluate", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Pre-deployment model evaluation → Model Evaluation",
+                    "Comprehensive metrics + fairness → Model Evaluation",
+                    "Quality gate before production → Model Evaluation",
+                    "Identify class imbalance issues → Model Evaluation"
+                ]
+            },
+            {
+                num: 21,
+                title: "Multi-Step AI Reasoning for Complex Problems",
+                context: "Your company needs to build a system that can solve complex, multi-step problems like 'Recommend products based on user profile, inventory availability, historical purchases, and current trends.' Requires reasoning beyond single inference.",
+                question: "Which Vertex AI service enables multi-step reasoning?",
+                options: [
+                    "A) Vertex AI Endpoints",
+                    "B) Vertex AI Reasoning Engine",
+                    "C) Vertex AI Feature Store",
+                    "D) Vertex AI Batch Prediction"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Reasoning Engine: Build reasoning systems for complex LLM tasks. Multi-step planning, long-context processing, tool orchestration. Decompose hard problems into steps.", style: "explanation-correct" },
+                    { text: "✗ A) Endpoints: Single inference only", style: "explanation-incorrect" },
+                    { text: "✗ C) Feature Store: Feature management", style: "explanation-incorrect" },
+                    { text: "✗ D) Batch Prediction: Batch scoring", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Multi-step reasoning → Reasoning Engine",
+                    "Complex problem decomposition → Reasoning Engine",
+                    "Tool orchestration → Reasoning Engine",
+                    "Long-context processing → Reasoning Engine"
+                ]
+            },
+            {
+                num: 22,
+                title: "Visualizing Training Metrics in Real-Time",
+                context: "Your custom TensorFlow training job is running. You need to monitor loss curves, accuracy progression, layer activations, and gradient distributions in real-time without connecting to the server via SSH.",
+                question: "Which Vertex AI service visualizes training metrics?",
+                options: [
+                    "A) Vertex AI Experiments",
+                    "B) Vertex AI TensorBoard",
+                    "C) Vertex AI Workbench",
+                    "D) Vertex AI Model Monitoring"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI TensorBoard: Real-time visualization of training metrics. Loss curves, accuracy plots, histograms, gradient distributions, layer activations. Cloud-hosted access.", style: "explanation-correct" },
+                    { text: "✗ A) Experiments: Logs metrics, doesn't real-time visualize", style: "explanation-incorrect" },
+                    { text: "✗ C) Workbench: Development IDE", style: "explanation-incorrect" },
+                    { text: "✗ D) Model Monitoring: Production monitoring only", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Real-time training visualization → TensorBoard",
+                    "Loss curves & accuracy plots → TensorBoard",
+                    "Debugging training progression → TensorBoard",
+                    "Distributed training visualization → TensorBoard"
+                ]
+            },
+            {
+                num: 23,
+                title: "Centralizing Trained Model Artifacts",
+                context: "Your team has 50+ trained models across different projects. Need a single registry to track versions, metadata (accuracy, training date, framework), and deployment history.",
+                question: "Which Vertex AI service manages model artifacts and versions?",
+                options: [
+                    "A) Vertex AI Datasets",
+                    "B) Vertex AI Model Registry",
+                    "C) Vertex AI Workbench",
+                    "D) Vertex AI Custom Training"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Model Registry: Centralized repository for trained models. Version control, metadata tracking, lineage, deployment history. Integrates with Endpoints for serving.", style: "explanation-correct" },
+                    { text: "✗ A) Datasets: Data management, not models", style: "explanation-incorrect" },
+                    { text: "✗ C) Workbench: Development IDE", style: "explanation-incorrect" },
+                    { text: "✗ D) Custom Training: Training service, not registry", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Model versioning & registry → Model Registry",
+                    "Metadata tracking → Model Registry",
+                    "Model governance → Model Registry",
+                    "Deployment lineage → Model Registry"
+                ]
+            },
+            {
+                num: 24,
+                title: "Autonomous AI Agents for Workflow Automation",
+                context: "Your company wants to automate customer support workflows: receive ticket → categorize → route to department → generate response → schedule follow-up. This requires multi-step reasoning, tool access, and autonomous decision-making.",
+                question: "Which Vertex AI service builds autonomous agents?",
+                options: [
+                    "A) Vertex AI Pipelines",
+                    "B) Vertex AI Agent Builder",
+                    "C) Vertex AI Search & Conversation",
+                    "D) Vertex AI Custom Training"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Vertex AI Agent Builder: Create autonomous agents that can reason, plan, and execute multi-step tasks. Integrates with tools/APIs. Used for workflow automation, customer support, sales.", style: "explanation-correct" },
+                    { text: "✗ A) Pipelines: Workflow orchestration, not autonomous agents", style: "explanation-incorrect" },
+                    { text: "✗ C) Search & Conversation: Chatbots, not autonomous agents", style: "explanation-incorrect" },
+                    { text: "✗ D) Custom Training: Model training only", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Autonomous agents → Agent Builder",
+                    "Multi-step workflow automation → Agent Builder",
+                    "Tool/API integration → Agent Builder",
+                    "Intelligent decision-making → Agent Builder"
+                ]
+            },
+            {
+                num: 25,
+                title: "Computer Vision - Image Classification",
+                context: "Your manufacturing company has 100,000 labeled images of defective vs. non-defective products. You need to build an image classifier to automatically catch defects on the production line.",
+                question: "Which Vertex AI service should you use?",
+                options: [
+                    "A) Vertex AI AutoML (Vision)",
+                    "B) Vertex AI Custom Training (Alternative for more control)",
+                    "C) Vertex AI Workbench",
+                    "D) Vertex AI Forecasting"
+                ],
+                correct: 0,
+                explanation: [
+                    { text: "✓ AutoML (Vision): Pre-built for image classification. Auto feature extraction, model selection, hyperparameter tuning. With 100K labeled images, achieves high accuracy quickly.", style: "explanation-correct" },
+                    { text: "✓ Custom Training: Also valid if you need model architecture control (CNNs, ResNet, EfficientNet)", style: "explanation-correct" },
+                    { text: "✗ C) Workbench: Development IDE", style: "explanation-incorrect" },
+                    { text: "✗ D) Forecasting: Time-series only", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Image classification with labeled data → AutoML (Vision)",
+                    "No-code image model → AutoML",
+                    "Production deployment on Edge → Custom Training + TFLite"
+                ]
+            },
+            {
+                num: 26,
+                title: "NLP - Sentiment Analysis at Scale",
+                context: "Your company receives 10 million customer reviews daily. You need to classify sentiment (positive/negative/neutral) and extract key phrases for each review.",
+                question: "Which approach best fits this scenario?",
+                options: [
+                    "A) Vertex AI AutoML (Text)",
+                    "B) Vertex AI Generative AI (Gemini) with Prompt Engineering",
+                    "C) Vertex AI Custom Training",
+                    "D) Vertex AI Workbench"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Generative AI: Use Gemini with few-shot prompting for sentiment analysis and key phrase extraction. No retraining needed, flexible, handles complex NLP tasks.", style: "explanation-correct" },
+                    { text: "✓ AutoML (Text): Also valid if you want dedicated fine-tuning on your domain", style: "explanation-correct" },
+                    { text: "✗ C) Custom Training: Over-engineering for this task", style: "explanation-incorrect" },
+                    { text: "✗ D) Workbench: Development IDE", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Scale NLP with LLMs → Generative AI + Prompt Engineering",
+                    "Few-shot learning → Generative AI",
+                    "Sentiment analysis at scale → Generative AI or AutoML"
+                ]
+            },
+            {
+                num: 27,
+                title: "Video Analysis - Action Recognition",
+                context: "Your sports app needs to classify actions in short video clips (jump, run, kick, throw) to provide real-time coaching feedback. You have 50,000 labeled video clips.",
+                question: "Which Vertex AI service handles video classification?",
+                options: [
+                    "A) Vertex AI AutoML (Video)",
+                    "B) Vertex AI Custom Training",
+                    "C) Vertex AI Video Service",
+                    "D) Vertex AI Batch Prediction"
+                ],
+                correct: 2,
+                explanation: [
+                    { text: "✓ Vertex AI Video: Specialized service for video analysis. Action recognition, scene detection, object tracking across frames. Pre-trained models for quick deployment.", style: "explanation-correct" },
+                    { text: "✓ AutoML (Video): Also good option with labeled video data", style: "explanation-correct" },
+                    { text: "✗ B) Custom Training: More work for temporal modeling", style: "explanation-incorrect" },
+                    { text: "✗ D) Batch Prediction: For scoring, not model building", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Video classification/action recognition → Video or AutoML (Video)",
+                    "Temporal pattern analysis → Video",
+                    "Sports/action detection → Video"
+                ]
+            },
+            {
+                num: 28,
+                title: "Tabular Data Classification - Customer Segmentation",
+                context: "You have customer data (age, income, purchase_history, location, device_type) and want to predict customer segment (high-value, regular, at-risk). Data is in CSV with 100K rows.",
+                question: "Which Vertex AI service is best for tabular data?",
+                options: [
+                    "A) Vertex AI AutoML (Tabular)",
+                    "B) Vertex AI Custom Training",
+                    "C) Vertex AI Forecasting",
+                    "D) Vertex AI Workbench"
+                ],
+                correct: 0,
+                explanation: [
+                    { text: "✓ AutoML (Tabular): Designed for tabular/structured data. Auto feature engineering, handles categorical/numerical features, missing values. No coding needed.", style: "explanation-correct" },
+                    { text: "✗ B) Custom Training: Overkill for simple tabular classification", style: "explanation-incorrect" },
+                    { text: "✗ C) Forecasting: Time-series only", style: "explanation-incorrect" },
+                    { text: "✗ D) Workbench: Development IDE", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Tabular data classification/regression → AutoML (Tabular)",
+                    "Quick model building from CSV → AutoML",
+                    "Feature engineering automation → AutoML"
+                ]
+            },
+            {
+                num: 29,
+                title: "Multi-Modal Model - Image + Text Generation",
+                context: "Your content generation platform needs to generate creative product descriptions given product images and category. Task requires understanding both image and text context.",
+                question: "Which Vertex AI service handles multi-modal tasks?",
+                options: [
+                    "A) Vertex AI AutoML",
+                    "B) Vertex AI Generative AI (Gemini)",
+                    "C) Vertex AI Custom Training",
+                    "D) Vertex AI Forecasting"
+                ],
+                correct: 1,
+                explanation: [
+                    { text: "✓ Generative AI (Gemini): Multi-modal model (image + text input). Generate creative content based on visual and textual context. Perfect for image→text generation.", style: "explanation-correct" },
+                    { text: "✗ A) AutoML: Single modality only", style: "explanation-incorrect" },
+                    { text: "✗ C) Custom Training: More complex for multi-modal", style: "explanation-incorrect" },
+                    { text: "✗ D) Forecasting: Time-series only", style: "explanation-incorrect" }
+                ],
+                takeaways: [
+                    "Multi-modal tasks (image + text) → Generative AI",
+                    "Image-to-text generation → Generative AI",
+                    "Creative content generation → Generative AI"
+                ]
+            },
+            {
+                num: 30,
+                title: "Critical Production Issue - Model Accuracy Dropped 15%",
+                context: "Your deployed recommendation model had 88% accuracy. Today, accuracy is 73%. Customer complaints increased. You need to quickly identify root cause (data drift, model degradation, feature quality).",
+                question: "Which Vertex AI service helps diagnose the issue?",
+                options: [
+                    "A) Vertex AI Model Monitoring (primary diagnosis)",
+                    "B) Vertex AI Explainable AI (secondary - understand features)",
+                    "C) Vertex AI Experiments (compare against baseline)",
+                    "D) All of above"
+                ],
+                correct: 0,
+                explanation: [
+                    { text: "✓ Model Monitoring: Detects data drift, performance degradation. Shows feature distribution changes, prediction volume changes.", style: "explanation-correct" },
+                    { text: "✓ XAI: Identifies which features changed most, causing predictions to shift.", style: "explanation-correct" },
+                    { text: "✓ Experiments: Compare current model against previous baseline to understand regression.", style: "explanation-correct" },
+                    { text: "Best Answer: A (Model Monitoring) for immediate diagnosis, then B & C for deeper analysis", style: "explanation-correct" }
+                ],
+                takeaways: [
+                    "Production issue diagnosis → Model Monitoring",
+                    "Data drift detection → Model Monitoring",
+                    "Root cause analysis → Model Monitoring + XAI",
+                    "Rollback decision → Experiments"
+                ]
+            }
+        ];
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach(q => {
+                const block = document.createElement('div');
+                block.className = 'question-block';
+                block.setAttribute('data-question', q.num);
+
+                let optionsHTML = '';
+                q.options.forEach((opt, idx) => {
+                    optionsHTML += `
+                        <div class="option" onclick="selectOption(this, ${q.num}, ${idx})">
+                            <input type="radio" name="q${q.num}" value="${idx}" id="q${q.num}_${idx}">
+                            <label for="q${q.num}_${idx}">${opt}</label>
+                        </div>
+                    `;
+                });
+
+                let explanationHTML = q.explanation.map(exp =>
+                    `<div class="explanation-item"><span class="${exp.style}">${exp.text}</span></div>`
+                ).join('');
+
+                let takeawaysHTML = q.takeaways.map(ta =>
+                    `<div class="takeaway"><span class="takeaway-bullet">→</span><span>${ta}</span></div>`
+                ).join('');
+
+                block.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">${q.num}</span>
+                        <div class="scenario-title">${q.title}</div>
+                        <div class="context">${q.context}</div>
+                    </div>
+                    <div class="question-body">
+                        <div class="scenario-question">${q.question}</div>
+                        <div class="options">${optionsHTML}</div>
+                        <div class="collapsible-section">
+                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                <span>📖 Explanation</span>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="collapsible-content">${explanationHTML}</div>
+                        </div>
+                        <div class="collapsible-section">
+                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                <span>💡 Key Takeaways</span>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="collapsible-content">${takeawaysHTML}</div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(block);
+            });
+
+            loadAnswers();
+            updateProgress();
+        }
+
+        function selectOption(element, qNum, optIdx) {
+            const radio = element.querySelector('input');
+            const parent = radio.closest('.question-block');
+
+            parent.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            radio.checked = true;
+
+            saveAnswers();
+            updateProgress();
+
+            // Auto-expand explanation
+            const explanationSection = parent.querySelector('.collapsible-section');
+            if (explanationSection) {
+                const header = explanationSection.querySelector('.collapsible-header');
+                if (!header.classList.contains('active')) {
+                    expandCollapsible(header);
+                }
+            }
+        }
+
+        function toggleCollapsible(header) {
+            if (header.classList.contains('active')) {
+                collapseCollapsible(header);
+            } else {
+                expandCollapsible(header);
+            }
+        }
+
+        function expandCollapsible(header) {
+            header.classList.add('active');
+            header.querySelector('.toggle-icon').classList.add('active');
+            header.nextElementSibling.classList.add('active');
+        }
+
+        function collapseCollapsible(header) {
+            header.classList.remove('active');
+            header.querySelector('.toggle-icon').classList.remove('active');
+            header.nextElementSibling.classList.remove('active');
+        }
+
+        function updateProgress() {
+            const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${answered}/${total}`;
+        }
+
+        function saveAnswers() {
+            const answers = {};
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                answers[radio.name] = radio.value;
+            });
+            localStorage.setItem('vertexQuizAnswers', JSON.stringify(answers));
+        }
+
+        function loadAnswers() {
+            const saved = localStorage.getItem('vertexQuizAnswers');
+            if (saved) {
+                const answers = JSON.parse(saved);
+                Object.keys(answers).forEach(name => {
+                    const radio = document.querySelector(`input[name="${name}"][value="${answers[name]}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.option').classList.add('selected');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuestions();
+        });
+
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'radio') {
+                saveAnswers();
+            }
+        });
+    </script>
+</body>
+</html>

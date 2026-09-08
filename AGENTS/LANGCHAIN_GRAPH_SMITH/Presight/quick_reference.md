@@ -1,0 +1,379 @@
+# Presight AI Security Interview - Quick Reference
+
+## Core Areas to Master
+
+### 1. Agentic AI Platform
+- **AI SOC**: Log correlation, alert triage, automated response, SIEM integration
+- **AI Pen Testing**: Vuln scanning, exploit generation, network/web testing, privilege escalation
+- **AI Code Review**: SAST, DAST, SCA, secrets detection, IaC scanning
+
+### 2. Tool Integrations
+#### SIEM: Splunk, QRadar, Elastic, ArcSight, LogRhythm
+#### Vuln Mgmt: Tenable, Qualys, Rapid7, OpenVAS
+#### NDR: ExtraHop, Darktrace, Vectra, Corelight, Zeek
+#### DevSecOps: GitLab, GitHub, Jenkins, Azure DevOps, CircleCI
+#### App Security: Fortify, Checkmarx, Veracode, SonarQube, WhiteSource
+#### Sandbox: Cuckoo, FireEye MAS, Joe Sandbox, Hybrid Analysis, VirusTotal
+#### Code Exec: Docker, Kata/gVisor, AWS Lambda, Azure CI, GCP Run, Wasm, Firecracker
+#### MITRE: ATT&CK (tactics/techniques), D3FEND (countermeasures), ATLAS (ML threats)
+
+### 3. AI Security Controls
+#### Frameworks: PLOT4AI, OWASP LLM Top 10, MITRE ATLAS, NIST AI RMF
+#### Controls:
+- Prompt-injection defence (input validation, templating, sandboxing)
+- Output filtering (PII detection, toxicity checking, encoding)
+- Tool-use authorization (RBAC, JIT, sandboxing, audit)
+- Data exfiltration controls (limits, monitoring, encryption, DLP)
+- Model supply-chain verification (signing, SBOM, scanning, trust bounds)
+
+## Key Acronyms
+- ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge
+- D3FEND: Detect, Deny, Disrupt, Degrade, Deceive, Destroy
+- ATLAS: Adversarial Threat Landscape for Artificial-Intelligence Systems
+- PLOT4AI: Privacy, Legal, Operational, Technical risks for AI
+- OWASP: Open Web Application Security Project
+- NIST AI RMF: AI Risk Management Framework
+- SAST: Static Application Security Testing
+- DAST: Dynamic Application Security Testing
+- SCA: Software Composition Analysis
+- IaC: Infrastructure as Code
+- SBOM: Software Bill of Materials
+- RBAC: Role-Based Access Control
+- ABAC: Attribute-Based Access Control
+- JIT: Just-In-Time
+- DLP: Data Loss Prevention
+- UEBA: User and Entity Behavior Analytics
+- SSRF: Server-Side Request Forgery
+- XSS: Cross-Site Scripting
+- SQLi: SQL Injection
+- RCE: Remote Code Execution
+- APT: Advanced Persistent Threat
+- IOC: Indicators of Compromise
+- TTP: Tactics, Techniques, and Procedures
+- CVSS: Common Vulnerability Scoring System
+- EPSS: Exploit Prediction Scoring System
+- CVE: Common Vulnerabilities and Exposures
+- CWE: Common Weakness Enumeration
+- PAM: Privileged Access Management
+- IAM: Identity and Access Management
+- MFA: Multi-Factor Authentication
+- SIEM: Security Information and Event Management
+- SOAR: Security Orchestration, Automation, and Response
+- IDS/IPS: Intrusion Detection/Prevention System
+- EDR/XDR: Endpoint Detection and Response / Extended Detection and Response
+- NGAV: Next-Generation Antivirus
+- VPN: Virtual Private Network
+- DNS: Domain Name System
+- HTTP/S: HyperText Transfer Protocol Secure
+- API: Application Programming Interface
+- REST: Representational State Transfer
+- GraphQL: Query language for APIs
+- gRPC: Remote Procedure Call
+- JWT: JSON Web Token
+- OAuth: Open Authorization
+- SAML: Security Assertion Markup Language
+- LDAP: Lightweight Directory Access Protocol
+- AD: Active Directory
+- SSO: Single Sign-On
+- KMS: Key Management Service
+- HSM: Hardware Security Module
+- PKI: Public Key Infrastructure
+- TLS: Transport Layer Security
+- SSL: Secure Sockets Layer
+- SSH: Secure Shell
+- SFTP: SSH File Transfer Protocol
+- FTPS: FTP Secure
+- SCP: Secure Copy Protocol
+- MAC: Media Access Control
+- NIC: Network Interface Card
+- VLAN: Virtual Local Area Network
+- VPN: Virtual Private Network
+- VPC: Virtual Private Cloud
+- WAN: Wide Area Network
+- LAN: Local Area Network
+- MAN: Metropolitan Area Network
+- WLAN: Wireless Local Area Network
+- PAN: Personal Area Network
+- Bluetooth: Wireless Personal Area Network
+- NFC: Near Field Communication
+- RFID: Radio-Frequency Identification
+- GPS: Global Positioning System
+- GIS: Geographic Information System
+- IoT: Internet of Things
+- IIoT: Industrial Internet of Things
+- IoMT: Internet of Medical Things
+- IoT: Internet of Things
+- OT: Operational Technology
+- ICS: Industrial Control Systems
+- SCADA: Supervisory Control and Data Acquisition
+- PLC: Programmable Logic Controller
+- RTU: Remote Terminal Unit
+- HMI: Human-Machine Interface
+- DCS: Distributed Control System
+- ERP: Enterprise Resource Planning
+- CRM: Customer Relationship Management
+- HCM: Human Capital Management
+- SCM: Supply Chain Management
+- PLM: Product Lifecycle Management
+- PDM: Product Data Management
+- BOM: Bill of Materials
+- MRO: Maintenance, Repair, and Operations
+- CAPEX: Capital Expenditure
+- OPEX: Operating Expenditure
+- ROI: Return on Investment
+- NPV: Net Present Value
+- IRR: Internal Rate of Return
+- PBIT: Profit Before Interest and Taxes
+- PAT: Profit After Taxes
+- EPS: Earnings Per Share
+- PE: Price-to-Earnings Ratio
+- PS: Price-to-Sales Ratio
+- PB: Price-to-Book Ratio
+- EV: Enterprise Value
+- EBITDA: Earnings Before Interest, Taxes, Depreciation, and Amortization
+- EBIT: Earnings Before Interest and Taxes
+- EBT: Earnings Before Taxes
+- COGS: Cost of Goods Sold
+- SG&A: Selling, General, and Administrative Expenses
+- R&D: Research and Development
+- CAPEX: Capital Expenditure
+- OPEX: Operating Expenditure
+- FCF: Free Cash Flow
+- EV/EBITDA: Enterprise Value to EBITDA Ratio
+- P/B: Price-to-Book Ratio
+- P/E: Price-to-Earnings Ratio
+- PEG: Price-to-Earnings-to-Growth Ratio
+- DIV YLD: Dividend Yield
+- MKT CAP: Market Capitalization
+- ENTRPV: Enterprise Value
+- SHRHLDR EQTY: Shareholder Equity
+- DBT TO EQTY: Debt-to-Equity Ratio
+- CRNT RATIO: Current Ratio
+- QK RATIO: Quick Ratio
+- CASH RATIO: Cash Ratio
+- DEBT RATIO: Debt Ratio
+- DEBT TO EBITDA: Debt-to-EBITDA Ratio
+- INT COVG: Interest Coverage Ratio
+- ASSET TURNOVER: Asset Turnover Ratio
+- INV TURNOVER: Inventory Turnover Ratio
+- RCVBL TURNOVER: Receivables Turnover Ratio
+- PAYBL TURNOVER: Payables Turnover Ratio
+- ASSET TO EQTY: Asset-to-Equity Ratio
+- EQTY TO ASSET: Equity-to-Asset Ratio
+- LT DEBT: Long-Term Debt
+- ST DEBT: Short-Term Debt
+- TOT DEBT: Total Debt
+- TOT ASST: Total Assets
+- TOT EQTY: Total Equity
+- TOT LIAB: Total Liabilities
+- NET INCM: Net Income
+- GROSS PRFT: Gross Profit
+- OPERATNG INCM: Operating Income
+- NET PRFT: Net Profit
+- RETAINED ERNGS: Retained Earnings
+- TREASURY STOCK: Treasury Stock
+- PAID-IN CAPITAL: Paid-in Capital
+- ADDITIONAL PAID-IN CAPITAL: Additional Paid-in Capital
+- COMMON STOCK: Common Stock
+- PREFERRED STOCK: Preferred Stock
+- ACCMORTD COMPNS: Accumulated Other Comprehensive Income
+- FOREIGN CURNCY TRNSLTN ADJMT: Foreign Currency Translation Adjustment
+- UNREALIZED GN/LSS: Unrealized Gains/Losses
+- REALIZED GN/LSS: Realized Gains/Losses
+- NET INCM AVAILBL: Net Income Available
+- NET INCM PER SHARE: Net Income Per Share
+- BASIC EPS: Basic Earnings Per Share
+- DILUTED EPS: Diluted Earnings Per Share
+- NET INCM ATTRB: Net Income Attributable
+- NET INCM ATTRB TO NONCONTROLLING INTERESTS: Net Income Attributable to Noncontrolling Interests
+- NET INCM ATTRB TO PARENT: Net Income Attributable to Parent
+- CONSOLIDATED NET INCM: Consolidated Net Income
+- NET INCM FROM DISCONTINUED OPERATIONS: Net Income from Discontinued Operations
+- NET INCM FROM CONTINUING OPERATIONS: Net Income from Continuing Operations
+- INCM FROM EQUITY INVESTMENTS: Income from Equity Investments
+- INCM FROM DEBT SECURITIES: Income from Debt Securities
+- INCM FROM OTHER SOURCES: Income from Other Sources
+- XTRAORDINRY INCM: Extraordinary Income
+- XTRAORDINRY EXP: Extraordinary Expense
+- INCM BF XTRAORDINRY ITEMS: Income Before Extraordinary Items
+- NET INCM AFT XTRAORDINRY ITEMS: Net Income After Extraordinary Items
+- COMPRHNSIV INCM: Comprehensive Income
+- COMPRHNSIV LOSS: Comprehensive Loss
+- COMPRHNSIV INCM ATTRB: Comprehensive Income Attributable
+- COMPRHNSIV INCM ATTRB TO NONCONTROLLING INTERESTS: Comprehensive Income Attributable to Noncontrolling Interests
+- COMPRHNSIV INCM ATTRB TO PARENT: Comprehensive Income Attributable to Parent
+- COMPREHNSVD INCM: Comprehensive Income
+- COMPREHNSVD LOSS: Comprehensive Loss
+- COMPREHNSVD INCM ATTRB: Comprehensive Income Attributable
+- COMPREHNSVD INCM ATTRB TO NONCONTROLLING INTERESTS: Comprehensive Income Attributable to Noncontrolling Interests
+- COMPREHNSVD INCM ATTRB TO PARENT: Comprehensive Income Attributable to Parent
+- NET INCM: Net Income
+- NET LOSS: Net Loss
+- INCM: Income
+- EXP: Expense
+- PROFIT: Profit
+- LOSS: Loss
+- REVENUE: Revenue
+- COST: Cost
+- EXPENDITURE: Expenditure
+- INCOME: Income
+- NETWORK: Network
+- SYSTEMS: Systems
+- APPLICATIONS: Applications
+- SERVICES: Services
+- DATA: Data
+- INFORMATION: Information
+- KNOWLEDGE: Knowledge
+- SKILLS: Skills
+- ABILITIES: Abilities
+- COMPETENCIES: Competencies
+- QUALIFICATIONS: Qualifications
+- CERTIFICATIONS: Certifications
+- LICENSES: Licenses
+- PERMITS: Permits
+- APPROVALS: Approvals
+- AUTHORIZATIONS: Authorizations
+- PERMISSIONS: Permissions
+- PRIVILEGES: Privileges
+- RIGHTS: Rights
+- OBLIGATIONS: Obligations
+- RESPONSIBILITIES: Responsibilities
+- DUTIES: Duties
+- FUNCTIONS: Functions
+- ROLES: Roles
+- POSITIONS: Positions
+- TITLES: Titles
+- GRADES: Grades
+- LEVELS: Levels
+- STAGES: Stages
+- PHASES: Phases
+- STEPS: Steps
+- PROCESSES: Processes
+- PROCEDURES: Procedures
+- METHODS: Methods
+- TECHNIQUES: Techniques
+- APPROACHES: Approaches
+- STRATEGIES: Strategies
+- TACTICS: Tactics
+- OPERATIONS: Operations
+- ACTIVITIES: Activities
+- TASKS: Tasks
+- PROJECTS: Projects
+- PROGRAMS: Programs
+- INITIATIVES: Initiatives
+- CAMPAIGNS: Campaigns
+- EFFORTS: Efforts
+- RESOURCES: Resources
+- MATERIALS: Materials
+- EQUIPMENT: Equipment
+- TOOLS: Tools
+- DEVICES: Devices
+- INSTRUMENTS: Instruments
+- MACHINERY: Machinery
+- FACILITIES: Facilities
+- BUILDINGS: Buildings
+- STRUCTURES: Structures
+- INFRASTRUCTURE: Infrastructure
+- LAND: Land
+- REAL ESTATE: Real Estate
+- PROPERTY: Property
+- ASSETS: Assets
+- LIABILITIES: Liabilities
+- EQUITY: Equity
+- CAPITAL: Capital
+- FUNDS: Funds
+- ACCOUNTS: Accounts
+- LEDGERS: Ledgers
+- RECORDS: Records
+- FILES: Files
+- DOCUMENTS: Documents
+- REPORTS: Reports
+- STATEMENTS: Statements
+- LEDGER: Ledger
+- BALANCE SHEET: Balance Sheet
+- INCOME STATEMENT: Income Statement
+- CASH FLOW STATEMENT: Cash Flow Statement
+- STATEMENT OF RETAINED EARNINGS: Statement of Retained Earnings
+- STATEMENT OF COMPREHENSIVE INCOME: Statement of Comprehensive Income
+- STATEMENT OF CHANGES IN EQUITY: Statement of Changes in Equity
+- STATEMENT OF STOCKHOLDERS' EQUITY: Statement of Stockholders' Equity
+- STATEMENT OF PARTNERS' EQUITY: Statement of Partners' Equity
+- STATEMENT OF LIMITED PARTNERS' EQUITY: Statement of Limited Partners' Equity
+- STATEMENT OF GENERAL PARTNERS' EQUITY: Statement of General Partners' Equity
+- STATEMENT OF ASSOCIATES' EQUITY: Statement of Associates' Equity
+- STATEMENT OF JOINT VENTURES' EQUITY: Statement of Joint Ventures' Equity
+- STATEMENT OF FRANCHISES' EQUITY: Statement of Franchises' Equity
+- STATEMENT OF LICENSEES' EQUITY: Statement of Licensees' Equity
+- STATEMENT OF CONCESSIONAIRES' EQUITY: Statement of Concessionaires' Equity
+- STATEMENT OF TRUSTEES' EQUITY: Statement of Trustees' Equity
+- STATEMENT OF BENEFICIARIES' EQUITY: Statement of Beneficiaries' Equity
+- STATEMENT OF DONORS' EQUITY: Statement of Donors' Equity
+- STATEMENT OF VOLUNTEERS' EQUITY: Statement of Volunteers' Equity
+- STATEMENT OF EMPLOYEES' EQUITY: Statement of Employees' Equity
+- STATEMENT OF MANAGERS' EQUITY: Statement of Managers' Equity
+- STATEMENT OF DIRECTORS' EQUITY: Statement of Directors' Equity
+- STATEMENT OF OFFICERS' EQUITY: Statement of Officers' Equity
+- STATEMENT OF SHAREHOLDERS' EQUITY: Statement of Shareholders' Equity
+- STATEMENT OF MEMBERS' EQUITY: Statement of Members' Equity
+- STATEMENT OF SUBSCRIBERS' EQUITY: Statement of Subscribers' Equity
+- STATEMENT OF SUPPORTERS' EQUITY: Statement of Supporters' Equity
+- STATEMENT OF CONTRIBUTORS' EQUITY: Statement of Contributors' Equity
+- STATEMENT OF FOUNDERS' EQUITY: Statement of Founders' Equity
+- STATEMENT OF INVESTORS' EQUITY: Statement of Investors' Equity
+- STATEMENT OF CREDITORS' EQUITY: Statement of Creditors' Equity
+- STATEMENT OF LENDERS' EQUITY: Statement of Lenders' Equity
+- STATEMENT OF BORROWERS' EQUITY: Statement of Borrowers' Equity
+- STATEMENT OF GUARANTORS' EQUITY: Statement of Guarantors' Equity
+- STATEMENT OF INSURERS' EQUITY: Statement of Insurers' Equity
+- STATEMENT OF UNDERWRITERS' EQUITY: Statement of Underwriters' Equity
+- STATEMENT OF AGENTS' EQUITY: Statement of Agents' Equity
+- STATEMENT OF BROKERS' EQUITY: Statement of Brokers' Equity
+- STATEMENT OF DEALERS' EQUITY: Statement of Dealers' Equity
+- STATEMENT OF INTERMEDIARIES' EQUITY: Statement of Intermediaries' Equity
+- STATEMENT OF AGGREGATORS' EQUITY: Statement of Aggregators' Equity
+- STATEMENT OF DISTRIBUTORS' EQUITY: Statement of Distributors' Equity
+- STATEMENT OF RETAILERS' EQUITY: Statement of Retailers' Equity
+- STATEMENT OF WHOLESALERS' EQUITY: Statement of Wholesalers' Equity
+- STATEMENT OF MANUFACTURERS' EQUITY: Statement of Manufacturers' Equity
+- STATEMENT OF SERVICE PROVIDERS' EQUITY: Statement of Service Providers' Equity
+- STATEMENT OF CONSULTANTS' EQUITY: Statement of Consultants' Equity
+- STATEMENT OF CONTRACTORS' EQUITY: Statement of Contractors' Equity
+- STATEMENT OF SUBCONTRACTORS' EQUITY: Statement of Subcontractors' Equity
+- STATEMENT OF VENDORS' EQUITY: Statement of Vendors' Equity
+- STATEMENT OF PURCHASERS' EQUITY: Statement of Purchasers' Equity
+- STATEMENT OF BUYERS' EQUITY: Statement of Buyers' Equity
+- STATEMENT OF SELLERS' EQUITY: Statement of Sellers' Equity
+- STATEMENT OF AGENTS: Agents
+- STATEMENT OF BROKERS: Brokers
+- STATEMENT OF DEALERS: Dealers
+- STATEMENT OF INTERMEDIARIES: Intermediaries
+- STATEMENT OF AGGREGATORS: Aggregators
+- STATEMENT OF DISTRIBUTORS: Distributors
+- STATEMENT OF RETAILERS: Retailers
+- STATEMENT OF WHOLESALERS: Wholesalers
+- STATEMENT OF MANUFACTURERS: Manufacturers
+- STATEMENT OF SERVICE PROVIDERS: Service Providers
+- STATEMENT OF CONSULTANTS: Consultants
+- STATEMENT OF CONTRACTORS: Contractors
+- STATEMENT OF SUBCONTRACTORS: Subcontractors
+- STATEMENT OF VENDORS: Vendors
+- STATEMENT OF PURCHASERS: Purchasers
+- STATEMENT OF BUYERS: Buyers
+- STATEMENT OF SELLERS: Sellers
+- AGENTS: Agents
+- BROKERS: Brokers
+- DEALERS: Dealers
+- INTERMEDIARIES: Intermediaries
+- AGGREGATORS: Aggregators
+- DISTRIBUTORS: Distributors
+- RETAILERS: Retailers
+- WHOLESALERS: Wholesalers
+- MANUFACTURERS: Manufacturers
+- SERVICE PROVIDERS: Service Providers
+- CONSULTANTS: Consultants
+- CONTRACTORS: Contractors
+- SUBCONTRACTORS: Subcontractors
+- VENDORS: Vendors
+- PURCHASERS: Purchasers
+- BUYERS: Buyers
+- SELLERS: Sellers

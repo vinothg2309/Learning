@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Develop a vision-enabled chat app | 
+            
+            Develop computer vision solutions in Azure
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./1_genai_vision_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./1_genai_vision_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./1_genai_vision_files/vs.min.css">
+        <script src="./1_genai_vision_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./1_genai_vision_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop computer vision solutions in Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-vision" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-vision">
+                Develop computer vision solutions in Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#create-a-microsoft-foundry-project">Create a Microsoft Foundry project</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#deploy-a-model">Deploy a model</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#test-the-model-in-the-playground">Test the model in the playground</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#create-a-client-application">Create a client application</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#sign-into-azure-and-run-the-app">Sign into Azure and run the app</a></li><li class="nav-item"><a class="nav-link active" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/01-gen-ai-vision.html#clean-up">Clean up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="develop-a-vision-enabled-chat-app">Develop a vision-enabled chat app</h1>
+
+<p>In this exercise, you use a generative AI model to generate responses to prompts that include images. You’ll develop an app that provides AI assistance with fresh produce in a grocery store by using Microsoft Foundry and the OpenAI SDK.</p>
+
+<p>While this exercise is based on the OpenAI Python SDK, you can develop AI chat applications using multiple language-specific SDKs; including:</p>
+
+<ul>
+  <li><a href="https://www.nuget.org/packages/OpenAI">OpenAI Projects for Microsoft .NET</a></li>
+  <li><a href="https://www.npmjs.com/package/openai">OpenAI Projects for JavaScript</a></li>
+</ul>
+
+<p>This exercise takes approximately <strong>30</strong> minutes.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors.</p>
+</blockquote>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before starting this exercise, ensure you have:</p>
+
+<ul>
+  <li>An active <a href="https://azure.microsoft.com/pricing/purchase-options/azure-account">Azure subscription</a></li>
+  <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed</li>
+  <li><a href="https://www.python.org/downloads/release/python-31312/">Python version <strong>3.13.xx</strong></a> installed*</li>
+  <li><a href="https://git-scm.com/install/">Git</a> installed and configured</li>
+  <li><a href="https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> installed</li>
+</ul>
+
+<blockquote>
+  <p>* Python 3.14 is available, but some dependencies are not yet compiled for that release. The lab has been successfully tested with Python 3.13.12.</p>
+</blockquote>
+
+<h2 id="create-a-microsoft-foundry-project">Create a Microsoft Foundry project</h2>
+
+<p>Microsoft Foundry uses projects to organize models, resources, data, and other assets used to develop an AI solution.</p>
+
+<ol>
+  <li>
+    <p>In a web browser, open the <a href="https://ai.azure.com/">Microsoft Foundry portal</a> at <code>https://ai.azure.com</code> to start building; signing in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in.</p>
+  </li>
+  <li>If it is not already enabled, in the tool bar the top of the page, enable the <strong>New Foundry</strong> option. Then, if prompted, create a new project with a unique name; expanding the <strong>Advanced options</strong> area to specify the following settings for your project:
+    <ul>
+      <li><strong>Foundry resource</strong>: <em>Use the default name for your resource (usually {project_name}-resource)</em></li>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+      <li><strong>Resource group</strong>: <em>Create or select a resource group</em></li>
+      <li><strong>Region</strong>: Select any available region</li>
+    </ul>
+  </li>
+  <li>
+    <p>Wait for your project to be created. Then, on the home page for your project, note that the API key, project endpoint, and Azure OpenAI endpoint are displayed here.</p>
+
+    <blockquote>
+      <p><strong>TIP</strong>: You’re going to need the Azure OpenAI endpoint later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="deploy-a-model">Deploy a model</h2>
+
+<p>You’ll need a model that can process image-based input.</p>
+
+<ol>
+  <li>Now you’re ready to explore models. On the <strong>Discover</strong> page, select the <strong>Models</strong> tab to view the Microsoft Foundry model catalog.</li>
+  <li>
+    <p>Search for and deploy the <code>gpt-5.2</code> model using the default settings. Deployment may take a minute or so.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: Model deployments are subject to regional quotas. If you don’t have enough quota to deploy the model in your project’s region, you can use a different model - such as gpt-5.2-mini, or gpt-4o. Alternatively, you can create a new project in a different region.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>When the model has been deployed, view the model playground page that is opened, in which you can chat with the model.</p>
+
+    <blockquote>
+      <p><strong>TIP</strong>: Note the model deployment name (which by default should be <em>gpt-5.2</em>) - you’ll need this later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="test-the-model-in-the-playground">Test the model in the playground</h2>
+
+<p>Now you can test your model deployment with an image-based prompt in the chat playground.</p>
+
+<ol>
+  <li>
+    <p>In a new browser tab, download <a href="https://microsoftlearning.github.io/mslearn-ai-vision/Labfiles/gen-ai-vision/mango.jpeg">mango.jpeg</a> from <code>https://microsoftlearning.github.io/mslearn-ai-vision/Labfiles/gen-ai-vision/mango.jpeg</code> and save it to a folder on your local file system.</p>
+  </li>
+  <li>
+    <p>Navigate back to the chat playground page for your model deployment in the Foundry portal.</p>
+  </li>
+  <li>
+    <p>In the main chat session panel, under the chat input box, use the attach button (<strong>📎</strong>) to upload the <em>mango.jpeg</em> image file, and then add the text <code>What desserts could I make with this fruit?</code> and submit the prompt.</p>
+
+    <p><a href="./1_genai_vision_files/chat-playground-image-new.png" target="_blank"><img src="./1_genai_vision_files/chat-playground-image-new.png" alt="Screenshot of the chat playground page."></a></p>
+  </li>
+  <li>
+    <p>Review the response, which should hopefully provide relevant guidance for desserts you can make using a mango.</p>
+  </li>
+</ol>
+
+<h2 id="create-a-client-application">Create a client application</h2>
+
+<p>Now that you’ve deployed the model, you can use the deployment in a client application.</p>
+
+<h3 id="get-application-files-from-github">Get application files from GitHub</h3>
+
+<p>The initial application files you’ll need to develop the translation application are provided in a GitHub repo.</p>
+
+<ol>
+  <li>Open Visual Studio Code.</li>
+  <li>
+    <p>Open the command palette (<em>Ctrl+Shift+P</em>) and use the <code>Git:clone</code> command to clone the <code>https://github.com/microsoftlearning/mslearn-ai-vision</code> repo to a local folder (it doesn’t matter which one). Then open it.</p>
+
+    <p>You may be prompted to confirm you trust the authors.</p>
+  </li>
+  <li>In Visual Studio Code, view the <strong>Extensions</strong> pane; and if it is not already installed, install the <strong>Python</strong> extension.</li>
+  <li>
+    <p>In the <strong>Command Palette</strong>, use the command <code>python:select interpreter</code>. Then select an existing environment if you have one, or create a new <strong>Venv</strong> environment based on your Python 3.13.x installation.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: If you are prompted to install dependencies, you can install the ones in the <em>requirements.txt</em> file in the <em>/labfiles/gen-ai-vision/python</em> folder; but it’s OK if you don’t - we’ll install them later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="prepare-the-application-configuration">Prepare the application configuration</h3>
+
+<ol>
+  <li>
+    <p>After the repo has been cloned, open the folder in VS Code (<strong>File &gt; Open Folder</strong>), and navigate to the <code>/labfiles/gen-ai-vision/python</code> folder.</p>
+  </li>
+  <li>
+    <p>In the VS Code Explorer pane, review the files in the folder:</p>
+
+    <ul>
+      <li><code>.env</code> - A configuration file for application settings.</li>
+      <li><code>image-chat-app.py</code> - The Python code file for the image application.</li>
+      <li><code>requirements.txt</code> - A file listing the package dependencies.</li>
+      <li><code>mystery-fruit.jpeg</code> - An image of a fruit.</li>
+    </ul>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, in the <strong>python</strong> folder, select the <strong>.env</strong> file to open it. Then update the configuration values to include the <strong>Azure OpenAI endpoint</strong> for your Foundry resource, and the model deployment name for the generative AI model you deployed.</p>
+
+    <blockquote>
+      <p><strong>Important</strong>: Be sure to add the <code>https://{foundry-resource-name}.openai.azure.com/openai/v1/</code> Azure OpenAI endpoint, <u>not</u> the project endpoint!</p>
+    </blockquote>
+
+    <p>Save the modified configuration file.</p>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, right-click the <strong>python</strong> folder containing the application files, and select <strong>Open in integrated terminal</strong> (or open a terminal in the <strong>Terminal</strong> menu and navigate to the <em>/labfiles/gen-ai-vision/python</em> folder.)</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Opening the terminal in Visual Studio Code will automatically activate the Python environment. You may need to enable running scripts on your system.</p>
+    </blockquote>
+  </li>
+  <li>Ensure that the terminal is open in the <strong>/labfiles/gen-ai-vision/python</strong> folder with the prefix <strong>(.venv)</strong> to indicate that the Python environment you created is active.</li>
+  <li>
+    <p>Install the required Python packages by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="hljs css"> <span class="hljs-selector-tag"><span class="hljs-selector-tag">pip</span></span> <span class="hljs-selector-tag"><span class="hljs-selector-tag">install</span></span> <span class="hljs-selector-tag"><span class="hljs-selector-tag">-r</span></span> <span class="hljs-selector-tag"><span class="hljs-selector-tag">requirements</span></span><span class="hljs-selector-class"><span class="hljs-selector-class">.txt</span></span>
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="write-code-to-get-an-openai-chat-client-for-your-model">Write code to get an OpenAI chat client for your model</h3>
+
+<blockquote>
+  <p><strong>Tip</strong>: As you add code, be sure to maintain the correct indentation.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In VS Code, open the <code>image-chat-app.py</code> file.</p>
+  </li>
+  <li>
+    <p>In the code file, note the existing statements that have been added at the top of the file to import the necessary SDK namespaces. Then, Find the comment <strong>Add references</strong>, add the following code to reference the namespaces in the libraries you installed previously:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"><span class="hljs-comment"># Add references</span></span>
+<span class="hljs-keyword"><span class="hljs-keyword">from</span></span> openai <span class="hljs-keyword"><span class="hljs-keyword">import</span></span> OpenAI
+<span class="hljs-keyword"><span class="hljs-keyword">from</span></span> azure.identity <span class="hljs-keyword"><span class="hljs-keyword">import</span></span> DefaultAzureCredential, get_bearer_token_provider
+</code></pre>
+  </li>
+  <li>
+    <p>In the <strong>main</strong> function, under the comment <strong>Get configuration settings</strong>, note that the code loads the project connection string and model deployment name values you defined in the configuration file.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create an OpenAI client</strong>, and add the following code to connect to your Azure AI Foundry project:</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: Be careful to maintain the correct indentation level for your code.</p>
+    </blockquote>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"><span class="hljs-comment"># Create an OpenAI client</span></span>
+credential = DefaultAzureCredential()
+token_provider = get_bearer_token_provider(credential, <span class="hljs-string"><span class="hljs-string">"https://ai.azure.com/.default"</span></span>)
+client = OpenAI(
+    base_url=openai_endpoint,
+    api_key=token_provider()
+)
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="write-code-to-submit-a-url-based-image-prompt">Write code to submit a URL-based image prompt</h3>
+
+<ol>
+  <li>
+    <p>Note that the code includes a loop to allow a user to input a prompt until they enter “quit”. Then in the loop section, find the comment <strong>Get a response to image input</strong>, add the following code to submit a prompt that includes the following image:</p>
+
+    <p><a href="./1_genai_vision_files/orange.jpeg" target="_blank"><img src="./1_genai_vision_files/orange.jpeg" alt="A photo of an orange."></a></p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"><span class="hljs-comment"># Get a response to image input</span></span>
+image_url = <span class="hljs-string"><span class="hljs-string">"https://microsoftlearning.github.io/mslearn-ai-vision/Labfiles/gen-ai-vision/orange.jpeg"</span></span>
+response = client.responses.create(
+     model=model_deployment,
+     input=[
+         {<span class="hljs-string"><span class="hljs-string">"role"</span></span>: <span class="hljs-string"><span class="hljs-string">"developer"</span></span>, <span class="hljs-string"><span class="hljs-string">"content"</span></span>: system_message},
+         { <span class="hljs-string"><span class="hljs-string">"role"</span></span>: <span class="hljs-string"><span class="hljs-string">"user"</span></span>, <span class="hljs-string"><span class="hljs-string">"content"</span></span>: [  
+             { <span class="hljs-string"><span class="hljs-string">"type"</span></span>: <span class="hljs-string"><span class="hljs-string">"input_text"</span></span>, <span class="hljs-string"><span class="hljs-string">"text"</span></span>: prompt},
+             { <span class="hljs-string"><span class="hljs-string">"type"</span></span>: <span class="hljs-string"><span class="hljs-string">"input_image"</span></span>, <span class="hljs-string"><span class="hljs-string">"image_url"</span></span>: image_url}
+         ]} 
+     ]
+)
+print(response.output_text)
+</code></pre>
+  </li>
+  <li>
+    <p>Save your changes to the code file.</p>
+  </li>
+</ol>
+
+<h2 id="sign-into-azure-and-run-the-app">Sign into Azure and run the app</h2>
+
+<ol>
+  <li>
+    <p>In the terminal pane, use the following command to sign into Azure.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-powershell"> az login
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: In most scenarios, just using <em>az login</em> will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the <em>–tenant</em> parameter. See <a href="https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively">Sign into Azure interactively using the Azure CLI</a> for details.</p>
+    </blockquote>
+  </li>
+  <li>When prompted, follow the instructions to sign into Azure. Then complete the sign in process in the command line, viewing (and confirming if necessary) the details of the subscription containing your Foundry resource.</li>
+  <li>
+    <p>After you have signed in, enter the following command to run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag"><span class="hljs-selector-tag">python</span></span> <span class="hljs-selector-tag"><span class="hljs-selector-tag">image-chat-app</span></span><span class="hljs-selector-class"><span class="hljs-selector-class">.py</span></span>
+</code></pre>
+  </li>
+  <li>
+    <p>When prompted, enter the following prompt:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="hljs coffeescript">Suggest some recipes that include <span class="hljs-keyword"><span class="hljs-keyword">this</span></span> fruit
+</code></pre>
+  </li>
+  <li>Review the response. Then enter <code>quit</code> to exit the program.</li>
+</ol>
+
+<h3 id="modify-the-code-to-upload-a-local-image-file">Modify the code to upload a local image file</h3>
+
+<ol>
+  <li>
+    <p>In the code editor for your app code, in the loop section, find the code you added previously under the comment <strong>Get a response to image input</strong>. Then modify the code as follows, to upload this local image file:</p>
+
+    <p><a href="./1_genai_vision_files/mystery-fruit.jpeg" target="_blank"><img src="./1_genai_vision_files/mystery-fruit.jpeg" alt="A photo of a dragon fruit."></a></p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="language-python hljs"><span class="hljs-comment"><span class="hljs-comment"># Get a response to image input</span></span>
+image_path = Path(<span class="hljs-string"><span class="hljs-string">"mystery-fruit.jpeg"</span></span>)
+image_format = <span class="hljs-string"><span class="hljs-string">"jpeg"</span></span>
+<span class="hljs-keyword"><span class="hljs-keyword">with</span></span> open(image_path, <span class="hljs-string"><span class="hljs-string">"rb"</span></span>) <span class="hljs-keyword"><span class="hljs-keyword">as</span></span> image_file:
+     image_data = base64.b64encode(image_file.read()).decode(<span class="hljs-string"><span class="hljs-string">"utf-8"</span></span>)
+
+data_url = <span class="hljs-string"><span class="hljs-string">f"data:image/</span><span class="hljs-subst"><span class="hljs-string"><span class="hljs-subst">{image_format}</span></span></span><span class="hljs-string">;base64,</span><span class="hljs-subst"><span class="hljs-string"><span class="hljs-subst">{image_data}</span></span></span><span class="hljs-string">"</span></span>
+
+response = client.responses.create(
+     model=model_deployment,
+     input=[
+         {<span class="hljs-string"><span class="hljs-string">"role"</span></span>: <span class="hljs-string"><span class="hljs-string">"developer"</span></span>, <span class="hljs-string"><span class="hljs-string">"content"</span></span>: system_message},
+         { <span class="hljs-string"><span class="hljs-string">"role"</span></span>: <span class="hljs-string"><span class="hljs-string">"user"</span></span>, <span class="hljs-string"><span class="hljs-string">"content"</span></span>: [  
+             { <span class="hljs-string"><span class="hljs-string">"type"</span></span>: <span class="hljs-string"><span class="hljs-string">"input_text"</span></span>, <span class="hljs-string"><span class="hljs-string">"text"</span></span>: prompt},
+             { <span class="hljs-string"><span class="hljs-string">"type"</span></span>: <span class="hljs-string"><span class="hljs-string">"input_image"</span></span>, <span class="hljs-string"><span class="hljs-string">"image_url"</span></span>: data_url}
+         ]} 
+     ]
+)
+ print(response.output_text)
+</code></pre>
+  </li>
+  <li>
+    <p>Use the <strong>CTRL+S</strong> command to save your changes to the code file.</p>
+  </li>
+  <li>
+    <p>In the terminal, enter the following command to run the app:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock8" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock8" class="mt-0"><code class="hljs css"><span class="hljs-selector-tag"><span class="hljs-selector-tag">python</span></span> <span class="hljs-selector-tag"><span class="hljs-selector-tag">image-chat-app</span></span><span class="hljs-selector-class"><span class="hljs-selector-class">.py</span></span>
+</code></pre>
+  </li>
+  <li>
+    <p>When prompted, enter the following prompt:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock9" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock9" class="mt-0"><code class="hljs coffeescript">What <span class="hljs-keyword"><span class="hljs-keyword">is</span></span> <span class="hljs-keyword"><span class="hljs-keyword">this</span></span> fruit? What recipes could I use it <span class="hljs-keyword"><span class="hljs-keyword">in</span></span>?
+</code></pre>
+  </li>
+  <li>
+    <p>Review the response. Then enter <code>quit</code> to exit the program.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: In this simple app, we haven’t implemented logic to retain conversation history; so the model will treat each prompt as a new request with no context of the previous prompt.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="clean-up">Clean up</h2>
+
+<p>If you’ve finished exploring Azure AI Foundry portal, you should delete the resources you have created in this exercise to avoid incurring unnecessary Azure costs.</p>
+
+<ol>
+  <li>Open the <a href="https://portal.azure.com/">Azure portal</a> and view the contents of the resource group where you deployed the resources used in this exercise.</li>
+  <li>On the toolbar, select <strong>Delete resource group</strong>.</li>
+  <li>Enter the resource group name and confirm that you want to delete it.</li>
+</ol>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./1_genai_vision_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./1_genai_vision_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./1_genai_vision_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./1_genai_vision_files/clipboard.min.js.download"></script>
+    <script src="./1_genai_vision_files/highlight.min.js.download"></script>
+    <script src="./1_genai_vision_files/script.js.download"></script>
+
+
+
+</body></html>

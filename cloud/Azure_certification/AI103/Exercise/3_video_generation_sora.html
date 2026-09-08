@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Generate video with Sora in Microsoft Foundry | 
+            
+            Develop computer vision solutions in Azure
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./3_video_generation_sora_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./3_video_generation_sora_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./3_video_generation_sora_files/vs.min.css">
+        <script src="./3_video_generation_sora_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./3_video_generation_sora_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <!-- <img src="https://github.com/MicrosoftLearning/Jekyll-Theme/raw/master/assets/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;"/>-->
+            <span class="my-1 title text-black">Develop computer vision solutions in Azure</span>
+            <span class="ml-2">
+                <a href="https://microsoftlearning.github.io/mslearn-ai-vision" class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
+                    </svg>
+                    &nbsp;Home
+                </a>
+            </span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/mslearn-ai-vision">
+                Develop computer vision solutions in Azure
+            </a>
+            <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#understand-responsible-ai-considerations">Understand responsible AI considerations</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#prerequisites">Prerequisites</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#create-a-microsoft-foundry-project">Create a Microsoft Foundry project</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#deploy-a-model">Deploy a model</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#test-the-model-in-the-playground">Test the model in the playground</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#create-a-video-generation-application">Create a video generation application</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#summary">Summary</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/mslearn-ai-vision/Instructions/Exercises/03-generate-video.html#clean-up">Clean up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="generate-video-with-sora-in-microsoft-foundry">Generate video with Sora in Microsoft Foundry</h1>
+
+<p>Sora is an AI model from OpenAI that creates realistic and imaginative video scenes from text instructions. The model can generate a wide range of video content, including realistic scenes, animations, and special effects. It supports several video resolutions and durations, and can also use reference images and remix existing videos.</p>
+
+<p>In this exercise, you’ll explore how to deploy the Sora model and generate video content using the Microsoft Foundry portal. You’ll also build an application that generates videos from images, polls for completion status, and remixes existing videos.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: To complete this exercise, you need an Azure subscription that has access to a video generation model, such as <strong><em>Sora 2</em></strong>. Some of the technologies used in this exercise are in preview or in active development. You may experience some unexpected behavior, warnings, or errors. Video generation can take 1 to 5 minutes to complete depending on your settings.</p>
+</blockquote>
+
+<p>This exercise will take approximately <strong>45</strong> minutes.</p>
+
+<h2 id="understand-responsible-ai-considerations">Understand responsible AI considerations</h2>
+
+<p>Azure OpenAI’s video generation models include built-in Responsible AI (RAI) protections to help ensure safe and compliant use.</p>
+
+<p>The Sora 2 model enforces several content restrictions:</p>
+
+<ul>
+  <li>Only content suitable for audiences under 18</li>
+  <li>Copyrighted characters and copyrighted music are rejected</li>
+  <li>Real people—including public figures—cannot be generated</li>
+  <li>Input images with faces of humans are currently rejected</li>
+</ul>
+
+<p>Azure provides input and output moderation across all image generation models, along with Azure-specific safeguards such as content filtering and abuse monitoring. These systems help detect and prevent the generation or misuse of harmful, unsafe, or policy-violating content.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before starting this exercise, ensure you have:</p>
+
+<ul>
+  <li>An active <a href="https://azure.microsoft.com/pricing/purchase-options/azure-account">Azure subscription</a></li>
+  <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> installed</li>
+  <li><a href="https://www.python.org/downloads/">Python version 3.13 or higher</a> installed</li>
+  <li><a href="https://git-scm.com/install/">Git</a> installed and configured</li>
+  <li><a href="https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> installed</li>
+</ul>
+
+<h2 id="create-a-microsoft-foundry-project">Create a Microsoft Foundry project</h2>
+
+<p>Microsoft Foundry uses projects to organize models, resources, data, and other assets used to develop an AI solution.</p>
+
+<ol>
+  <li>
+    <p>In a web browser, open the <a href="https://ai.azure.com/">Microsoft Foundry portal</a> at <code>https://ai.azure.com</code> to start building; signing in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in.</p>
+  </li>
+  <li>If it is not already enabled, in the tool bar the top of the page, enable the <strong>New Foundry</strong> option. Then, if prompted, create a new project with a unique name; expanding the <strong>Advanced options</strong> area to specify the following settings for your project:
+    <ul>
+      <li><strong>Foundry resource</strong>: <em>Use the default name for your resource (usually {project_name}-resource)</em></li>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+      <li><strong>Resource group</strong>: <em>Create or select a resource group</em></li>
+      <li><strong>Region</strong>: Select any available region</li>
+    </ul>
+  </li>
+  <li>Select <strong>Create</strong>. Wait for your project to be created.</li>
+  <li>
+    <p>On the home page for your project, note that the API key, project endpoint, and OpenAI endpoint are displayed here.</p>
+
+    <blockquote>
+      <p><strong>TIP</strong>: You’re going to need the Azure OpenAI endpoint later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="deploy-a-model">Deploy a model</h2>
+
+<p>You’ll need a model that can process image-based input.</p>
+
+<ol>
+  <li>Now you’re ready to explore models. On the <strong>Discover</strong> page, select the <strong>Models</strong> tab to view the Microsoft Foundry model catalog.</li>
+  <li>
+    <p>Search for and deploy the <code>Sora-2</code> model using the default settings. Deployment may take a minute or so.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Access to video-generation models is restricted - you may need to register your subscription for the Sora-2 model to be availalable.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>When the model has been deployed, view the model playground page that is opened, in which you can chat with the model.</p>
+
+    <blockquote>
+      <p><strong>TIP</strong>: Note the model deployment name (which by default should be <em>Sora-2</em>) - you’ll need this later!</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="test-the-model-in-the-playground">Test the model in the playground</h2>
+
+<p>Now you can test your vide-generation model deployment in the chat playground.</p>
+
+<ol>
+  <li>
+    <p>In the playground, enter the following prompt into the text box:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="hljs bash"> A director giving a presentation <span class="hljs-keyword">in</span> a modern conference room.
+</code></pre>
+  </li>
+  <li>
+    <p>Set the video duration to 4 seconds.</p>
+  </li>
+  <li>
+    <p>Select <strong>Generate</strong> to start the video generation process.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Video generation typically takes 1 to 5 minutes depending on your settings. The content generation APIs include content moderation filters. If Azure OpenAI recognizes your prompt as harmful content, it won’t return a generated video.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>When the AI-generated video is ready, it will appear on the page. Review the generated video.</p>
+  </li>
+  <li>
+    <p>In the video details pane text box, edit the video by submitting the following instructions:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="hljs sql"> <span class="hljs-keyword">Use</span> an inviting instrumental <span class="hljs-keyword">as</span> the background music.
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="create-a-video-generation-application">Create a video generation application</h2>
+
+<p>Now that you’ve explored the playground, let’s build a Python application that programmatically generates videos using the Sora 2 API.</p>
+
+<h3 id="get-application-files-from-github">Get application files from GitHub</h3>
+
+<p>The initial application files you’ll need to develop the translation application are provided in a GitHub repo.</p>
+
+<ol>
+  <li>Open Visual Studio Code.</li>
+  <li>
+    <p>Open the command palette (<em>Ctrl+Shift+P</em>) and use the <code>Git:clone</code> command to clone the <code>https://github.com/microsoftlearning/mslearn-ai-vision</code> repo to a local folder (it doesn’t matter which one). Then open it.</p>
+
+    <p>You may be prompted to confirm you trust the authors.</p>
+  </li>
+  <li>In Visual Studio Code, view the <strong>Extensions</strong> pane; and if it is not already installed, install the <strong>Python</strong> extension.</li>
+  <li>
+    <p>In the <strong>Command Palette</strong>, use the command <code>python:select interpreter</code>. Then select an existing environment if you have one, or create a new <strong>Venv</strong> environment based on your Python 3.1x installation.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>: If you are prompted to install dependencies, you can install the ones in the <em>requirements.txt</em> file in the <em>/labfiles/video-generation/python</em> folder; but it’s OK if you don’t - we’ll install them later!</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Tip</strong>: If you prefer to use the terminal, you can create your <strong>Venv</strong> environment with <code>python -m venv labenv</code>, then activate it with <code>\labenv\Scripts\activate</code>.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="prepare-the-application-configuration">Prepare the application configuration</h3>
+
+<ol>
+  <li>
+    <p>After the repo has been cloned, open the folder in VS Code (<strong>File &gt; Open Folder</strong>), and navigate to the <code>/labfiles/video-generation/python</code> folder.</p>
+  </li>
+  <li>
+    <p>In the VS Code Explorer pane, review the files in the folder:</p>
+
+    <ul>
+      <li><code>.env</code> - A configuration file for application settings.</li>
+      <li><code>video-app.py</code> - The Python code file for the video application.</li>
+      <li><code>requirements.txt</code> - A file listing the package dependencies.</li>
+      <li><code>reference.png</code> - An image file that you can use as a reference for video generation.</li>
+    </ul>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, in the <strong>python</strong> folder, select the <strong>.env</strong> file to open it. Then update the configuration values to include the <strong>Azure OpenAI endpoint</strong> for your Foundry resource, and the model deployment name for your video-generation model.</p>
+
+    <blockquote>
+      <p><strong>Important</strong>:Be sure to add the <code>https://{foundry-resource-name}.openai.azure.com/openai/v1/</code> Azure openAI endpoint, <u>not</u> the project endpoint!</p>
+    </blockquote>
+
+    <p>Save the modified configuration file.</p>
+  </li>
+  <li>
+    <p>In the <strong>Explorer</strong> pane, right-click the <strong>python</strong> folder containing the application files, and select <strong>Open in integrated terminal</strong> (or open a terminal in the <strong>Terminal</strong> menu and navigate to the <em>/labfiles/video-generation/python</em> folder.)</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Opening the terminal in Visual Studio Code will automatically activate the Python environment. You may need to enable running scripts on your system.</p>
+    </blockquote>
+  </li>
+  <li>Ensure that the terminal is open in the <strong>/labfiles/video-generation/python</strong>* folder with the prefix <strong>(.venv)</strong> to indicate that the Python environment you created is active.</li>
+  <li>
+    <p>Install the required Python packages by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="hljs css"> <span class="hljs-selector-tag">pip</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">-r</span> <span class="hljs-selector-tag">requirements</span><span class="hljs-selector-class">.txt</span>
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="write-code-to-generate-videos-from-an-image-reference">Write code to generate videos from an image reference</h3>
+
+<blockquote>
+  <p><strong>Tip</strong>: As you add code, be sure to maintain the correct indentation.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In VS Code, open the <code>video-app.py</code> file.</p>
+  </li>
+  <li>
+    <p>Find the comment <strong>Add references</strong> and add the following code for the necessary imports:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Add references</span>
+ <span class="hljs-keyword">import</span> time
+ <span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv
+ <span class="hljs-keyword">from</span> openai <span class="hljs-keyword">import</span> OpenAI
+ <span class="hljs-keyword">from</span> azure.identity <span class="hljs-keyword">import</span> DefaultAzureCredential, get_bearer_token_provider
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Get the token provider for Azure OpenAI authentication</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-python hljs">    
+ <span class="hljs-comment"># Get the token provider for Azure OpenAI authentication</span>
+ token_provider = get_bearer_token_provider(
+     DefaultAzureCredential(), <span class="hljs-string">"https://cognitiveservices.azure.com/.default"</span>
+ )
+
+ <span class="hljs-comment">#Initialize the OpenAI client with the endpoint and token provider</span>
+ client = OpenAI(
+     base_url=endpoint,
+     api_key=token_provider,
+ )
+</code></pre>
+  </li>
+  <li>
+    <p>In the main function, find the comment <strong>Generate a video from a text prompt</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Generate a video from a text prompt</span>
+ video = client.videos.create(
+     model=model_deployment,
+     prompt=<span class="hljs-string">"A peaceful mountain lake at sunrise with mist rising from the water"</span>,
+     size=<span class="hljs-string">"1280x720"</span>,
+     seconds=<span class="hljs-string">'4'</span>,
+ )
+ video = poll_video_status(video.id)
+</code></pre>
+  </li>
+  <li>
+    <p>In the main function, find the comment <strong>Generate a video from a reference image</strong> and add the following code:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Generate a video from a reference image</span>
+ video = generate_video_from_image(
+     image_path=<span class="hljs-string">"reference.png"</span>,
+     prompt=<span class="hljs-string">"The scene comes to life with gentle movement and ambient lighting"</span>,
+     size=<span class="hljs-string">"1280x720"</span>,
+     seconds=<span class="hljs-string">'4'</span>
+ )
+ <span class="hljs-keyword">if</span> video.status == <span class="hljs-string">"completed"</span>:
+     download_video(video.id, <span class="hljs-string">"image_based_video.mp4"</span>)
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Poll video status until completion</strong> and add the following code to complete the <code>poll_video_status</code> function:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Poll video status until completion</span>
+ video = client.videos.retrieve(video_id)
+    
+ <span class="hljs-keyword">while</span> video.status <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">"completed"</span>, <span class="hljs-string">"failed"</span>, <span class="hljs-string">"cancelled"</span>]:
+     print(<span class="hljs-string">f"Status: <span class="hljs-subst">{video.status}</span>. Waiting 20 seconds..."</span>)
+     time.sleep(<span class="hljs-number">20</span>)
+     video = client.videos.retrieve(video_id)
+    
+ <span class="hljs-keyword">if</span> video.status == <span class="hljs-string">"completed"</span>:
+     print(<span class="hljs-string">"Video successfully completed!"</span>)
+ <span class="hljs-keyword">else</span>:
+     print(<span class="hljs-string">f"Video creation ended with status: <span class="hljs-subst">{video.status}</span>"</span>)
+    
+ <span class="hljs-keyword">return</span> video
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Remix an existing video</strong> and add the following code to complete the <code>remix_video</code> function:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock8" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock8" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Remix an existing video</span>
+ video = client.videos.remix(
+     video_id=video_id,
+     prompt=prompt,
+ )
+    
+ print(<span class="hljs-string">f"Remix started. New video ID: <span class="hljs-subst">{video.id}</span>"</span>)
+ print(<span class="hljs-string">f"Initial status: <span class="hljs-subst">{video.status}</span>"</span>)
+    
+ <span class="hljs-comment"># Poll for completion</span>
+ video = poll_video_status(video.id)
+ <span class="hljs-keyword">return</span> video
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Download the completed video</strong> and add the following code to complete the <code>download_video</code> function:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock9" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock9" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Download the completed video</span>
+ print(<span class="hljs-string">f"Downloading video <span class="hljs-subst">{video_id}</span>..."</span>)
+ content = client.videos.download_content(video_id, variant=<span class="hljs-string">"video"</span>)
+ content.write_to_file(output_filename)
+ print(<span class="hljs-string">f"Saved video to <span class="hljs-subst">{output_filename}</span>"</span>)
+</code></pre>
+  </li>
+  <li>
+    <p>Find the comment <strong>Create the video with an image reference</strong> and add the following code to complete the <code>generate_video_from_image</code> function:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock10" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock10" class="mt-0"><code class="language-python hljs"> <span class="hljs-comment"># Create the video with an image reference</span>
+ video = client.videos.create(
+     model=model_deployment,
+     prompt=prompt,
+     size=size,
+     seconds=seconds,
+     input_reference=open(image_path, <span class="hljs-string">"rb"</span>),
+ )
+</code></pre>
+  </li>
+  <li>
+    <p>Save the file (<strong>Ctrl+S</strong>).</p>
+  </li>
+</ol>
+
+<h3 id="sign-into-azure-and-run-the-app">Sign into Azure and run the app</h3>
+
+<ol>
+  <li>
+    <p>In the terminal pane, use the following command to sign into Azure.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock11" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock11" class="mt-0"><code class="language-powershell"> az login
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: In most scenarios, just using <em>az login</em> will be sufficient. However, if you have subscriptions in multiple tenants, you may need to specify the tenant by using the <em>–tenant</em> parameter. See <a href="https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively">Sign into Azure interactively using the Azure CLI</a> for details.</p>
+    </blockquote>
+  </li>
+  <li>When prompted, follow the instructions to sign into Azure. Then complete the sign in process in the command line, viewing (and confirming if necessary) the details of the subscription containing your Foundry resource.</li>
+  <li>
+    <p>After you have signed in, enter the following command to run the application:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock12" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock12" class="mt-0"><code class="hljs css"> <span class="hljs-selector-tag">python</span> <span class="hljs-selector-tag">video-app</span><span class="hljs-selector-class">.py</span>
+</code></pre>
+  </li>
+  <li>Observe the output as the application:
+    <ul>
+      <li>Creates a video from a text prompt</li>
+      <li>Polls for the video status until completion</li>
+      <li>Downloads the completed video</li>
+      <li>Remixes the video with a new style</li>
+      <li>Downloads the remixed video</li>
+    </ul>
+
+    <blockquote>
+      <p><strong>Note</strong>: Video generation typically takes 1-5 minutes per video. Be patient while waiting for the status to change to “completed”.</p>
+    </blockquote>
+  </li>
+  <li>When the application finishes, check your project folder for <code>original_video.mp4</code>, <code>remixed_video.mp4</code>, and <code>image_based_video.mp4</code>.</li>
+</ol>
+
+<h2 id="summary">Summary</h2>
+
+<p>In this exercise, you used the Microsoft Foundry portal to explore video generation with the Sora model, and built a Python application that programmatically generates videos. You learned how to:</p>
+
+<ul>
+  <li>Generate videos from text prompts and reference images</li>
+  <li>Poll for video generation status until completion</li>
+  <li>Download completed videos</li>
+  <li>Remix existing videos with new prompts</li>
+</ul>
+
+<p>The Sora 2 API provides powerful video generation capabilities through a simple asynchronous workflow: create a job, poll for status, and download the result.</p>
+
+<h2 id="clean-up">Clean up</h2>
+
+<p>When you finish exploring video generation in Foundry, you should delete the resources you’ve created to avoid unnecessary Azure costs.</p>
+
+<ul>
+  <li>Navigate to the <a href="https://portal.azure.com/">Azure portal</a> at <code>https://portal.azure.com</code>.</li>
+  <li>In the Azure portal, on the <strong>Home</strong> page, select <strong>Resource groups</strong>.</li>
+  <li>Select the resource group that you created for this exercise.</li>
+  <li>At the top of the <strong>Overview</strong> page for your resource group, select <strong>Delete resource group</strong>.</li>
+  <li>Enter the resource group name to confirm you want to delete it, and select <strong>Delete</strong>.</li>
+</ul>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                © 2025 Microsoft &nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkId=2259814">Consumer Health Privacy </a>&nbsp;|&nbsp;
+                  <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use </a>&nbsp;|&nbsp;
+                  <a href="https://www.microsoft.com/trademarks">Trademarks </a>&nbsp;|&nbsp;
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/mslearn-ai-vision" target="_blank" class="ml-2">
+                    Source
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./3_video_generation_sora_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./3_video_generation_sora_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./3_video_generation_sora_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./3_video_generation_sora_files/clipboard.min.js.download"></script>
+    <script src="./3_video_generation_sora_files/highlight.min.js.download"></script>
+    <script src="./3_video_generation_sora_files/script.js.download"></script>
+
+
+
+</body></html>
